@@ -1,0 +1,253 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = []
+# ///
+"""Check and prepare everything Exiled Exchange 2 needs, then run it from source.
+
+    ./run              check, install, build what changed, start
+    ./run --check      same, without starting
+    ./run --rebuild    force a full rebuild
+    ./run --debug      also expose DevTools on 127.0.0.1:9333
+
+Unknown arguments go to Electron. Why it is set up this way: wayland/README.md.
+"""
+
+import argparse
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+from collections.abc import Iterable, Iterator
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+RENDERER = ROOT / 'renderer'
+MAIN = ROOT / 'main'
+IPC = ROOT / 'ipc'
+ELECTRON = MAIN / 'node_modules/electron/dist/electron'
+NIRI_RULE = ROOT / 'wayland/niri-window-rule.kdl'
+
+USER_DATA = Path.home() / '.config/exiled-exchange-2'
+APP_CONFIG = USER_DATA / 'apt-data/config.json'
+SINGLETON_LOCK = USER_DATA / 'SingletonLock'
+
+NIRI_CONFIG = Path.home() / '.config/niri/config.kdl'
+POE2_APP_ID = '2694490'
+GAME_CONFIG = 'pfx/drive_c/users/steamuser/Documents/My Games/Path of Exile 2/poe2_production_Config.ini'
+
+MIN_NODE = 22  # upstream CI builds on 24
+HOTKEY = 'Alt + D'
+UPSTREAM_HOTKEY_LOCKED = 'Ctrl + Alt + D'
+
+
+def info(message: str) -> None:
+    print(f'[run] {message}', flush=True)
+
+
+def warn(message: str) -> None:
+    print(f'[run] warning: {message}', file=sys.stderr, flush=True)
+
+
+def die(message: str) -> None:
+    sys.exit(f'[run] error: {message}')
+
+
+def sh(command: list[str], cwd: Path) -> None:
+    info(f'{cwd.relative_to(ROOT)}: {" ".join(command)}')
+    subprocess.run(command, cwd=cwd, check=True)
+
+
+def check_tools() -> None:
+    for tool in ('node', 'npm'):
+        if not shutil.which(tool):
+            die(f'{tool} is not installed')
+    version = subprocess.run(['node', '--version'], capture_output=True, text=True, check=True).stdout
+    major = int(version.strip().removeprefix('v').split('.')[0])
+    if major < MIN_NODE:
+        die(f'node {MIN_NODE}+ is required, found {version.strip()}')
+
+
+def check_not_running() -> None:
+    """The app rewrites its config while running, and only one instance can run."""
+    try:
+        owner = os.readlink(SINGLETON_LOCK)
+    except OSError:
+        return
+    pid = owner.rpartition('-')[2]
+    if pid.isdigit() and Path(f'/proc/{pid}').exists():
+        die(f'already running as pid {pid}; quit it from the tray first')
+
+
+def x_display() -> str:
+    display = os.environ.get('DISPLAY')
+    if not display:
+        die('DISPLAY is not set: the app needs X11 (xwayland-satellite on niri)')
+    number = re.fullmatch(r':(\d+)(\.\d+)?', display)
+    if number and not Path(f'/tmp/.X11-unix/X{number[1]}').exists():
+        die(f'no X server on DISPLAY={display}')
+    return display
+
+
+def niri_config_files() -> Iterator[Path]:
+    """config.kdl and what it includes, so that split configs are covered."""
+    pending, seen = [NIRI_CONFIG], set()
+    while pending:
+        path = pending.pop()
+        if path in seen or not path.is_file():
+            continue
+        seen.add(path)
+        yield path
+        includes = re.findall(r'^\s*include\b.*?"([^"]+)"', path.read_text(), re.MULTILINE)
+        pending.extend((path.parent / Path(name).expanduser()) for name in includes)
+
+
+def uncommented(path: Path) -> str:
+    return re.sub(r'^\s*//.*$', '', path.read_text(), flags=re.MULTILINE)
+
+
+def check_niri() -> None:
+    if not os.environ.get('NIRI_SOCKET'):
+        return
+    configs = [uncommented(path) for path in niri_config_files()]
+    has_rule = any(
+        re.search(r'exiled-exchange-2.*?open-fullscreen false', config, re.DOTALL)
+        for config in configs
+    )
+    if not has_rule:
+        die(
+            f'niri has no window rule for the overlay, which would replace the game.\n'
+            f'Add {NIRI_RULE.relative_to(ROOT)} to your niri config, or include it.'
+        )
+    if any(re.search(r'^\s*Alt\+D\b', config, re.MULTILINE | re.IGNORECASE) for config in configs):
+        warn(f'niri binds Alt+D right now, so {HOTKEY} never reaches the app')
+
+
+def steam_libraries() -> Iterator[Path]:
+    steam = Path.home() / '.local/share/Steam/steamapps'
+    yield steam
+    try:
+        folders = (steam / 'libraryfolders.vdf').read_text()
+    except OSError:
+        return
+    for path in re.findall(r'"path"\s+"([^"]+)"', folders):
+        yield Path(path) / 'steamapps'
+
+
+def find_game_config() -> Path | None:
+    for library in steam_libraries():
+        path = library / 'compatdata' / POE2_APP_ID / GAME_CONFIG
+        if path.is_file():
+            return path
+    return None
+
+
+def prepare_app_config() -> None:
+    """Bring an existing config in line; a new one gets these as the fork's defaults."""
+    if not APP_CONFIG.is_file() or not APP_CONFIG.stat().st_size:
+        return
+    config = json.loads(APP_CONFIG.read_text())
+    changed = []
+
+    if config.get('hideOverlayOnBlur') is not True:
+        config['hideOverlayOnBlur'] = True
+        changed.append('overlay hidden unless in use')
+
+    if not config.get('gameConfig') and (game_config := find_game_config()):
+        config['gameConfig'] = str(game_config)
+        changed.append('game config path')
+
+    price_check = next(w for w in config['widgets'] if w['wmType'] == 'price-check')
+    if price_check['hotkeyLocked'] == UPSTREAM_HOTKEY_LOCKED:  # a rebinding is left alone
+        price_check.update(hotkey=None, hotkeyLocked=HOTKEY)
+        changed.append(f'price check on {HOTKEY}')
+
+    if changed:
+        temporary = APP_CONFIG.with_suffix('.json.run')
+        temporary.write_text(json.dumps(config))
+        temporary.replace(APP_CONFIG)
+        info(f'app config updated: {", ".join(changed)}')
+
+
+def install(package: Path) -> None:
+    installed = package / 'node_modules/.package-lock.json'
+    lock = package / 'package-lock.json'
+    if not installed.exists() or lock.stat().st_mtime > installed.stat().st_mtime:
+        sh(['npm', 'ci'], package)
+
+
+def newest(paths: Iterable[Path]) -> float:
+    times = [
+        file.stat().st_mtime
+        for path in paths
+        for file in ([path] if path.is_file() else path.rglob('*'))
+        if file.is_file()
+    ]
+    return max(times, default=0)
+
+
+def stale(output: Path, sources: Iterable[Path]) -> bool:
+    return not output.exists() or newest(sources) > output.stat().st_mtime
+
+
+def build(force: bool) -> None:
+    renderer_output = RENDERER / 'dist/index.html'
+    renderer_sources = [RENDERER / 'src', RENDERER / 'public', RENDERER / 'index.html', IPC]
+    rebuilt_renderer = force or stale(renderer_output, renderer_sources)
+    if rebuilt_renderer:
+        sh(['npm', 'run', 'make-index-files'], RENDERER)
+        sh(['npm', 'run', 'build'], RENDERER)
+
+    if force or stale(MAIN / 'dist/main.js', [MAIN / 'src', MAIN / 'build', IPC]):
+        sh(['npm', 'run', 'build'], MAIN)
+
+    # The built-in server serves the UI from the directory holding main.js.
+    if rebuilt_renderer or not (MAIN / 'dist/index.html').exists():
+        shutil.rmtree(MAIN / 'dist/assets', ignore_errors=True)  # file names are content hashes
+        shutil.copytree(RENDERER / 'dist', MAIN / 'dist', dirs_exist_ok=True)
+
+
+def start(display: str, debug: bool, electron_args: list[str]) -> None:
+    arguments = [str(ELECTRON), '.', '--ozone-platform=x11', '--no-updates']
+    if debug:
+        arguments.append('--remote-debugging-port=9333')
+    arguments += electron_args
+
+    environment = {**os.environ, 'DISPLAY': display, 'XDG_SESSION_TYPE': 'x11'}
+    for name in ('WAYLAND_DISPLAY', 'ELECTRON_OZONE_PLATFORM_HINT'):
+        environment.pop(name, None)
+
+    os.chdir(MAIN)
+    os.execve(ELECTRON, arguments, environment)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--check', action='store_true', help='prepare everything, but do not start')
+    parser.add_argument('--rebuild', action='store_true', help='force a full rebuild')
+    parser.add_argument('--debug', action='store_true', help='expose DevTools on 127.0.0.1:9333')
+    args, electron_args = parser.parse_known_args()
+
+    check_tools()
+    check_not_running()
+    display = x_display()
+    check_niri()
+
+    install(RENDERER)
+    install(MAIN)
+    if not ELECTRON.exists():
+        die(f'{ELECTRON.relative_to(ROOT)} is missing: its install script did not run')
+    build(args.rebuild)
+    prepare_app_config()
+
+    if args.check:
+        info('ready')
+    else:
+        start(display, args.debug, electron_args)
+
+
+if __name__ == '__main__':
+    main()

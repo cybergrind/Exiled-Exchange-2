@@ -162,7 +162,7 @@ export const defaultConfig = (): Config => ({
   overlayBackground: "rgba(129, 139, 149, 0.15)",
   overlayBackgroundClose: true,
   overlayAlwaysClose: false,
-  hideOverlayOnBlur: false,
+  hideOverlayOnBlur: true,
   restoreClipboard: false,
   showAttachNotification: true,
   commands: [

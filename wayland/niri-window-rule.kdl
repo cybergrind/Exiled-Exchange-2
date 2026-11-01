@@ -1,0 +1,12 @@
+// Exiled Exchange 2 (PoE2 overlay): an X11 window the size of the game. It asks for
+// fullscreen, which would replace the game and ignore open-floating.
+window-rule {
+    match app-id=r#"^exiled-exchange-2$"#
+    open-fullscreen false
+    open-floating true
+    // Above the work area's top by the height of the bar (18 here), to line up with the game.
+    default-floating-position x=0 y=-18 relative-to="top-left"
+    focus-ring { off; }
+    border { off; }
+    shadow { off; }
+}

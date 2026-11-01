@@ -98,6 +98,11 @@ export class OverlayWindow {
       this.onOverlayActive();
 
       OverlayController.activateOverlay();
+      if (process.platform === "linux") {
+        // activateOverlay() only moves the X focus. Once the window has been
+        // hidden, Chromium does not notice, and the keyboard never reaches it.
+        this.window?.focus();
+      }
       this.poeWindow.isActive = false;
     }
   };
