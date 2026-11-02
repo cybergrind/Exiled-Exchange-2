@@ -15,6 +15,8 @@ import type { ItemPairs, PairTable } from "../../background/market/types.ts";
 
 export interface LadderItem {
   name: string;
+  /** Row text; by default the name without the words the category shares. */
+  label?: string;
   ns: string;
   icon?: string;
   /** poe.ninja line: value in divines and the 7-day sparkline change, %. */
@@ -110,10 +112,15 @@ const SHARED_WORD_SHARE = 0.75;
  * Seeking" among essences, "Omen of Light" -> "Light" among omens. A name
  * that would lose every word keeps it in full.
  */
+/** Words, with a bracketed part such as "(Level 8)" kept as one. */
+function nameWords(name: string): string[] {
+  return name.match(/\([^)]*\)|\S+/g) ?? [];
+}
+
 export function shortNames(names: readonly string[]): Map<string, string> {
   const counts = new Map<string, number>();
   for (const name of names) {
-    for (const word of new Set(name.split(/\s+/))) {
+    for (const word of new Set(nameWords(name))) {
       counts.set(word, (counts.get(word) ?? 0) + 1);
     }
   }
@@ -126,7 +133,7 @@ export function shortNames(names: readonly string[]): Map<string, string> {
   );
   const out = new Map<string, string>();
   for (const name of names) {
-    const words = name.split(/\s+/).filter((word) => !shared.has(word));
+    const words = nameWords(name).filter((word) => !shared.has(word));
     while (words[0] === "of") words.shift();
     out.set(name, words.length ? words.join(" ") : name);
   }
@@ -176,7 +183,7 @@ export function buildLadder(input: LadderInput): Ladder {
   const labels = shortNames(items.map((item) => item.name));
   const rows: LadderRow[] = valued.map(({ item, value, ordering }, i) => ({
     name: item.name,
-    label: labels.get(item.name) ?? item.name,
+    label: item.label ?? labels.get(item.name) ?? item.name,
     ns: item.ns,
     icon: item.icon,
     rank: i + 1,

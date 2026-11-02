@@ -131,6 +131,20 @@
             <related-items :item="item.value" :click-position="clickPosition" />
           </template>
         </ladder-panel>
+        <div
+          v-else-if="itemVariants && item?.isOk()"
+          class="pointer-events-auto mt-6 flex flex-col"
+          style="width: 28rem; max-width: 100%"
+        >
+          <unique-panel
+            class="border-4 border-gray-800"
+            :name="itemVariants.name"
+            :variants="itemVariants.variants"
+            :current="itemVariants.current"
+            :format-price="formatDivine"
+          />
+          <related-items :item="item.value" :click-position="clickPosition" />
+        </div>
         <related-items
           v-else-if="item?.isOk()"
           class="pointer-events-auto"
@@ -162,12 +176,14 @@ import UiPopover from "@/web/ui/Popover.vue";
 import CheckedItem from "./CheckedItem.vue";
 import BackgroundInfo from "./BackgroundInfo.vue";
 import { MainProcess, Host } from "@/web/background/IPC";
-import { usePoeninja } from "../background/Prices";
+import { displayRounding, usePoeninja } from "../background/Prices";
 import { useLeagues } from "@/web/background/Leagues";
 import { AppConfig } from "@/web/Config";
 import { ItemCategory, ItemRarity, parseClipboard, ParsedItem } from "@/parser";
 import RelatedItems from "./related-items/RelatedItems.vue";
 import LadderPanel from "./ladder/LadderPanel.vue";
+import UniquePanel from "./uniques/UniquePanel.vue";
+import { useUniqueLines } from "@/web/background/uniquesStore";
 import { ladderFor } from "./ladder/useLadder";
 import { getDetailsId } from "./trends/getDetailsId";
 import RateLimiterState from "./trade/RateLimiterState.vue";
@@ -237,6 +253,7 @@ export default defineComponent({
     BackgroundInfo,
     RelatedItems,
     LadderPanel,
+    UniquePanel,
     RateLimiterState,
     CheckPositionCircle,
     ItemQuickPrice,
@@ -268,7 +285,9 @@ export default defineComponent({
       xchgRateCurrency,
       initialLoading: xchgRateLoading,
       queuePricesFetch,
+      autoCurrency,
     } = usePoeninja();
+    const uniqueLines = useUniqueLines();
 
     nextTick(() => {
       props.config.wmWants = "hide";
@@ -395,6 +414,22 @@ export default defineComponent({
       return id ? ladderFor(id) : null;
     });
 
+    // A unique's rune versions (WP-52), when it has any.
+    const itemVariants = computed(() => {
+      if (!item.value?.isOk()) return null;
+      const id = getDetailsId(item.value.value);
+      if (id?.ns !== "UNIQUE" || !id.variant) return null;
+      const variants = uniqueLines.variantsFor(id.name);
+      if (variants.length < 2) return null;
+      return { name: id.name, variants, current: id.variant };
+    });
+
+    function formatDivine(div: number): string {
+      const value = autoCurrency(div);
+      const unit = value.currency === "exalted" ? "ex" : value.currency;
+      return `${displayRounding(value.min, true)} ${unit}`;
+    }
+
     const clickPosition = computed(() => {
       if (isBrowserShown.value) {
         return "inventory";
@@ -459,6 +494,8 @@ export default defineComponent({
       t,
       clickPosition,
       itemLadder,
+      itemVariants,
+      formatDivine,
       isBrowserShown,
       iframeEl,
       closePriceCheck,

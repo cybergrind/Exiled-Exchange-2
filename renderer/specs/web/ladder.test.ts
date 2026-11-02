@@ -224,8 +224,8 @@ describe("buildLadder over the Ritual (omens) category", () => {
 
 describe("buildLadder over every category in the relay fixture", () => {
   // The fixture is trimmed: of the 14 exchange categories it holds Currency
-  // (7 lines) and Ritual (all 38); the rest are unique categories, which the
-  // ladder does not serve but must not break on.
+  // (7 lines) and Ritual (all 38); the rest are unique categories and tablets,
+  // which the exchange ladder does not serve but must not break on.
   const types = OVERVIEW.itemOverviews.map((o) => o.type);
 
   it("covers the recorded categories", () => {
@@ -235,6 +235,8 @@ describe("buildLadder over every category in the relay fixture", () => {
       "UniqueArmours",
       "UniqueFlasks",
       "UniqueSanctumRelics",
+      "UniqueTablets",
+      "PrecursorTablets",
     ]);
   });
 
@@ -336,6 +338,17 @@ describe("shortNames", () => {
     ]);
     expect(short.get("Omen of the Liege")).toBe("the Liege");
     expect(short.get("Omen of Light")).toBe("Light");
+  });
+
+  it("keeps a bracketed part whole, so no bracket is left open", () => {
+    const short = shortNames([
+      "Uncut Skill Gem (Level 8)",
+      "Uncut Skill Gem (Level 15)",
+      "Uncut Support Gem (Level 1)",
+      "Uncut Spirit Gem (Level 12)",
+    ]);
+    expect(short.get("Uncut Skill Gem (Level 8)")).toBe("Skill (Level 8)");
+    expect(short.get("Uncut Support Gem (Level 1)")).toBe("Support (Level 1)");
   });
 
   it("keeps the full name when nothing would be left, or nothing is shared", () => {

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   appendHistoryFile,
+  readHistoryPoints,
   historyLines,
   historyUrl,
   isUsableBootSnapshot,
@@ -164,6 +165,31 @@ describe("writeSnapshotFile", () => {
   });
 });
 
+describe("readHistoryPoints (WP-31)", () => {
+  it("reads and parses the league's history through the route", async () => {
+    const text =
+      '{"v":1,"hour":7200,"pairs":{}}\n{"v":1,"hour":3600,"pairs":{}}\n';
+    const fetch = fakeFetch(200, text);
+    const points = await readHistoryPoints(fetch, "Forbidden Rites");
+    expect(fetch).toHaveBeenCalledWith("/market/forbidden-rites.history", {
+      cache: "no-store",
+    });
+    expect(points.map((p) => ("hour" in p ? p.hour : p.day))).toEqual([
+      7200, 3600,
+    ]);
+  });
+
+  it("is empty when there is no history or the route fails", async () => {
+    expect(await readHistoryPoints(fakeFetch(404), "Forbidden Rites")).toEqual(
+      [],
+    );
+    const down = vi.fn<FetchLike>(async () => {
+      throw new Error("offline");
+    });
+    expect(await readHistoryPoints(down, "Forbidden Rites")).toEqual([]);
+  });
+});
+
 describe("appendHistoryFile", () => {
   it("POSTs NDJSON lines", async () => {
     const fetch = fakeFetch(204);
@@ -189,39 +215,23 @@ describe("appendHistoryFile", () => {
 });
 
 describe("historyLines", () => {
-  it("writes one line per hour per pair of the league", () => {
+  it("writes one line per hour with every pair of the league (WP-30)", () => {
     const hours = entries();
     const lines = historyLines(hours, "Forbidden Rites").map((line) =>
       JSON.parse(line),
     );
-
-    let expected = 0;
-    for (const entry of hours) {
-      for (const pairs of Object.values(
-        aggregatePairs([entry], "Forbidden Rites"),
-      )) {
-        expected += Object.keys(pairs).length;
-      }
-    }
-    expect(lines).toHaveLength(expected);
-
-    const etcher = lines.filter(
-      (l) => l.id === ETCHER_ID && l.quote === "exalted",
-    );
-    expect(etcher.map((l) => l.hour)).toEqual(cxHourIds());
-    const newest = etcher.at(-1);
-    const own = aggregatePairs([hours.at(-1)!], "Forbidden Rites")[ETCHER_ID]
-      .exalted!;
-    expect(newest).toEqual({
-      hour: hours.at(-1)!.hour,
-      id: ETCHER_ID,
-      quote: "exalted",
-      typical: own.typical,
-      low: own.low,
-      high: own.high,
-      traded: own.traded,
-      quoteTraded: own.quoteTraded,
-    });
+    expect(lines.map((l) => l.hour)).toEqual(cxHourIds());
+    const newest = lines.at(-1);
+    const table = aggregatePairs([hours.at(-1)!], "Forbidden Rites");
+    expect(Object.keys(newest.pairs).sort()).toEqual(Object.keys(table).sort());
+    const own = table[ETCHER_ID].exalted!;
+    expect(newest.pairs[ETCHER_ID].exalted).toEqual([
+      own.typical,
+      own.low,
+      own.high,
+      own.traded,
+      own.quoteTraded,
+    ]);
   });
 
   it("leaves out other leagues and writes nothing for no hours", () => {
@@ -230,7 +240,9 @@ describe("historyLines", () => {
     );
     // The recorded Runes of Aldur markets are the Etcher's only.
     expect(lines.length).toBeGreaterThan(0);
-    expect(lines.every((l) => l.id === ETCHER_ID)).toBe(true);
+    expect(lines.every((l) => Object.keys(l.pairs).join() === ETCHER_ID)).toBe(
+      true,
+    );
     expect(historyLines([], "Forbidden Rites")).toEqual([]);
   });
 });

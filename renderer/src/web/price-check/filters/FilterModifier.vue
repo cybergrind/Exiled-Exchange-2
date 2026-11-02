@@ -1,5 +1,10 @@
 <template>
-  <div :class="$style['filter']">
+  <div
+    :class="[
+      $style['filter'],
+      tabletRating && $style[`tier-${tabletRating.tier}`],
+    ]"
+  >
     <div v-if="showSourceInfo" :class="$style['mods']">
       <div class="pl-5 py-1" v-for="(source, idx) of filter.sources" :key="idx">
         <source-info :source="source" :filter="filter" />
@@ -114,6 +119,11 @@
                 filter.sources.length > 1 ? ` x ${filter.sources.length}` : null
               }}</span
             >
+            <tablet-mod-badge
+              v-if="tabletRating"
+              :rating="tabletRating"
+              :roll="tabletRoll"
+            />
             <filter-modifier-tiers :filter="filter" :item="item" />
             <filter-modifier-item-has-empty
               :filter="filter"
@@ -164,6 +174,8 @@ import { FilterTag, StatFilter, INTERNAL_TRADE_IDS } from "./interfaces";
 import SourceInfo from "./SourceInfo.vue";
 import FilterModifierItemIsElemental from "./FilterModifierItemIsElemental.vue";
 import { CLIENT_STRINGS as _$ } from "@/assets/data";
+import TabletModBadge from "../tablets/TabletModBadge.vue";
+import { rollPosition, tabletModRating } from "../tablets/tabletRating";
 
 export default defineComponent({
   components: {
@@ -175,6 +187,7 @@ export default defineComponent({
     StatRollSlider,
     UiPopover,
     FilterModifierItemIsElemental,
+    TabletModBadge,
   },
   emits: ["submit"],
   props: {
@@ -192,6 +205,19 @@ export default defineComponent({
     },
   },
   setup(props, ctx) {
+    // Valued tablet mods (research/tablets/values.md), magic and rare only.
+    const tabletRating = computed(() =>
+      props.item.category === ItemCategory.Tablet &&
+      (props.item.rarity === ItemRarity.Magic ||
+        props.item.rarity === ItemRarity.Rare)
+        ? tabletModRating(props.item.info.refName, props.filter.statRef)
+        : undefined,
+    );
+    const tabletRoll = computed(() =>
+      tabletRating.value
+        ? rollPosition(tabletRating.value, props.filter.roll?.value)
+        : undefined,
+    );
     const showTag = computed(
       () =>
         props.filter.tag !== FilterTag.Property &&
@@ -333,6 +359,8 @@ export default defineComponent({
       inputMin,
       inputMax,
       tag: computed(() => props.filter.tag),
+      tabletRating,
+      tabletRoll,
       // TODO: change
       changeStep: computed(() => (props.filter.roll!.dp ? 0.01 : 1)),
       showInputs: computed(
@@ -404,6 +432,20 @@ export default defineComponent({
   @apply border-b border-gray-700;
   display: flex;
   position: relative;
+}
+
+/* Valued tablet mods: a coloured edge beside the tier badge. */
+.tier-money {
+  box-shadow: inset 3px 0 0 theme("colors.yellow.500");
+}
+.tier-good {
+  box-shadow: inset 3px 0 0 theme("colors.green.600");
+}
+.tier-multiplier {
+  box-shadow: inset 3px 0 0 theme("colors.blue.600");
+}
+.tier-niche {
+  box-shadow: inset 3px 0 0 theme("colors.gray.500");
 }
 
 .rollInput {

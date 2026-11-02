@@ -39,11 +39,21 @@ export interface SnapshotRules {
   leagueSlug: (league: string) => string;
   /** Throws on anything that is not a version-1 snapshot. */
   parseSnapshot: (text: string) => Snapshot;
+  /**
+   * history.ts's mergeHistory. When given, a history POST rewrites the file
+   * with each hour stored once (WP-30); without it, lines are appended.
+   */
+  mergeHistory?: (
+    existing: string,
+    incoming: string,
+    nowMs: number,
+  ) => { text: string };
 }
 
 export type MarketAction =
   | "read-snapshot"
   | "write-snapshot"
+  | "read-history"
   | "append-history";
 
 export interface MarketTarget {
@@ -69,7 +79,7 @@ export function isMarketUrl(url: string | undefined): boolean {
 const NAME = /^\/market\/([^/]+)\.(json|history)$/;
 
 /**
- * GET and PUT /market/<slug>.json, POST /market/<slug>.history. Anything
+ * GET and PUT /market/<slug>.json, GET and POST /market/<slug>.history. Anything
  * else under /market is refused: no query, no encoding, no subdirectory, and
  * the slug must pass snapshot.ts's isValidSlug. Undefined for other URLs.
  */
@@ -116,6 +126,18 @@ export function parseMarketRoute(
       allow: "GET, PUT",
     };
   }
+  if (method === "GET") {
+    return {
+      ok: true,
+      target: {
+        action: "read-history",
+        slug,
+        file: `${slug}.history.ndjson`,
+        maxBytes: 0,
+        contentType: "",
+      },
+    };
+  }
   if (method === "POST") {
     return {
       ok: true,
@@ -131,8 +153,8 @@ export function parseMarketRoute(
   return {
     ok: false,
     status: 405,
-    message: "History takes POST",
-    allow: "POST",
+    message: "History takes GET and POST",
+    allow: "GET, POST",
   };
 }
 
@@ -313,6 +335,19 @@ export async function handleMarketRequest(
     };
   }
 
+  if (target.action === "read-history") {
+    const text = await disk.read(target.file);
+    if (text === undefined) return plain(404, "No history for this league");
+    return {
+      status: 200,
+      headers: {
+        "content-type": `${HISTORY_CONTENT_TYPE}; charset=utf-8`,
+        "cache-control": "no-store",
+      },
+      body: text,
+    };
+  }
+
   if (mediaType(header(req, "content-type")) !== target.contentType) {
     return plain(415, `Expected content-type ${target.contentType}`);
   }
@@ -332,6 +367,13 @@ export async function handleMarketRequest(
 
   const history = validateHistoryBody(body.text);
   if (!history.ok) return plain(history.status, history.message);
-  if (history.lines > 0) await disk.append(target.file, history.text);
+  if (history.lines === 0) return { status: 204, headers: {}, body: "" };
+  if (rules.mergeHistory) {
+    const existing = (await disk.read(target.file)) ?? "";
+    const merged = rules.mergeHistory(existing, history.text, Date.now());
+    if (merged.text !== existing) await disk.replace(target.file, merged.text);
+  } else {
+    await disk.append(target.file, history.text);
+  }
   return { status: 204, headers: {}, body: "" };
 }

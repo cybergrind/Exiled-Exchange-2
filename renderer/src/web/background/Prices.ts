@@ -2,15 +2,12 @@ import { shallowRef, watch, readonly, computed } from "vue";
 import { createGlobalState } from "@vueuse/core";
 import { Host } from "@/web/background/IPC";
 import { useLeagues } from "./Leagues";
+import { useUniqueLines } from "./uniquesStore";
 import { useMarket } from "./marketStore";
 import type { MarketLoadResult } from "./marketStore";
 import { RELAY_NAMESPACE_MAP } from "./market/relayNamespaces.ts";
 import { SNAPSHOT_VERSION } from "./market/snapshot.ts";
-import type {
-  Snapshot,
-  SnapshotRelay,
-  SnapshotUniques,
-} from "./market/snapshot.ts";
+import type { Snapshot, SnapshotRelay } from "./market/snapshot.ts";
 import {
   appendHistoryFile,
   historyLines,
@@ -88,7 +85,12 @@ type PriceDatabase = Array<{
 /** One poe.ninja category, for the ladder (guide/poe-source.html, D6). */
 export interface CategoryLines {
   type: string;
-  lines: Array<{ name: string; primaryValue: number; totalChange?: number }>;
+  lines: Array<{
+    name: string;
+    variant?: string;
+    primaryValue: number;
+    totalChange?: number;
+  }>;
 }
 
 /** The first complete JSON object in `text`; the rest is ignored. */
@@ -216,8 +218,7 @@ export const usePoeninja = createGlobalState(() => {
   let relayState:
     | { league: string; text: string; fetchedAt: string; etag?: string }
     | undefined;
-  // Not fetched by the app (WP-50 owns it); kept so a write does not drop it.
-  let savedUniques: { league: string; uniques: SnapshotUniques } | undefined;
+  const uniques = useUniqueLines();
 
   let priceCache = new Map<string, CurrencyValue>();
   // PRICES_DB is not reactive; this counts its replacements so computed
@@ -252,6 +253,11 @@ export const usePoeninja = createGlobalState(() => {
     const cxLoad = market.load(league.id).catch((e) => {
       console.warn(e);
       return undefined;
+    });
+    // poe.ninja unique lines (WP-50): at most hourly, on their own.
+    const uniquesLoad = uniques.refresh(league.id).catch((e) => {
+      console.warn(e);
+      return false;
     });
     let relayOk = false;
     try {
@@ -318,7 +324,10 @@ export const usePoeninja = createGlobalState(() => {
     }
 
     const cx = await cxLoad;
-    if (relayOk || cx?.fetched.length) await persist(league.id, cx);
+    const uniquesNew = await uniquesLoad;
+    if (relayOk || cx?.fetched.length || uniquesNew) {
+      await persist(league.id, cx);
+    }
   }
 
   function setupCoreCurrencies() {
@@ -374,9 +383,7 @@ export const usePoeninja = createGlobalState(() => {
     if (!isUsableBootSnapshot(snapshot, leagueId, Date.now())) return;
     if (leagues.selectedId.value !== leagueId) return;
 
-    if (snapshot.uniques) {
-      savedUniques = { league: leagueId, uniques: snapshot.uniques };
-    }
+    if (snapshot.uniques) uniques.restore(leagueId, snapshot.uniques);
     // Queued ahead of the refresh's own load, which replaces it when it can.
     if (snapshot.cx) market.restore(leagueId, snapshot.cx);
     if (snapshot.relay && !PRICES_DB.length) {
@@ -425,9 +432,8 @@ export const usePoeninja = createGlobalState(() => {
       cx: cxBlock,
       relay,
     };
-    if (savedUniques?.league === leagueId) {
-      snapshot.uniques = savedUniques.uniques;
-    }
+    const uniquesBlock = uniques.snapshotBlock(leagueId);
+    if (uniquesBlock) snapshot.uniques = uniquesBlock;
     try {
       await writeSnapshotFile(localFetch, snapshot);
     } catch (e) {
@@ -494,11 +500,23 @@ export const usePoeninja = createGlobalState(() => {
           )
         : undefined);
     if (!entry) return undefined;
+    return parsedCategory(entry);
+  }
+
+  /** Every line of one poe.ninja overview type, e.g. "PrecursorTablets". */
+  function overviewLines(type: string): CategoryLines | undefined {
+    if (dbVersion.value === 0 || !PRICES_DB.length) return undefined;
+    const entry = PRICES_DB.find((db) => db.type === type);
+    return entry ? parsedCategory(entry) : undefined;
+  }
+
+  function parsedCategory(entry: PriceDatabase[number]): CategoryLines {
     let category = categoryCache.get(entry.type);
     if (!category) {
       const overview = firstJsonObject(entry.lines) as {
         lines: Array<{
           name: string;
+          variant?: string;
           primaryValue: number;
           sparkline?: { totalChange?: number };
         }>;
@@ -507,6 +525,7 @@ export const usePoeninja = createGlobalState(() => {
         type: entry.type,
         lines: overview.lines.map((line) => ({
           name: line.name,
+          variant: line.variant,
           primaryValue: line.primaryValue,
           totalChange: line.sparkline?.totalChange,
         })),
@@ -737,6 +756,7 @@ export const usePoeninja = createGlobalState(() => {
     xchgRateCurrency: readonly(selectedCoreCurrency),
     findPriceByQuery,
     categoryLines,
+    overviewLines,
     divineValueByQuery,
     autoCurrency,
     queuePricesFetch,

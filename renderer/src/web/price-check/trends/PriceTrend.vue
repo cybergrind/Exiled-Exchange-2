@@ -41,6 +41,7 @@
         </div>
         <item-quick-price
           class="flex-1 text-base justify-center"
+          :class="{ 'opacity-50': priceData.confidence?.dim }"
           :price="priceData.price"
           :fraction="filters.stackSize != null"
           :item-img="item.info.icon"
@@ -56,8 +57,10 @@
         >
           <div
             v-if="priceData.change"
-            @click="openNinja"
+            @click="openTrend"
+            data-trend
             :class="$style['trend-btn']"
+            :title="hasHistory ? 'Price history' : 'Open poe.ninja'"
           >
             <div class="text-center">
               <div class="leading-tight">
@@ -122,6 +125,31 @@
         </div>
       </template>
     </div>
+    <div
+      v-if="priceData.confidence"
+      data-confidence
+      class="-mt-3 mb-3 text-center text-sm"
+      :class="priceData.confidence.dim ? 'text-yellow-500' : 'text-gray-500'"
+    >
+      {{ priceData.confidence.text }}
+    </div>
+    <div
+      v-if="priceData.tablet"
+      data-tablet-summary
+      :data-level="priceData.tablet.level"
+      class="-mt-2 mb-3 text-center"
+    >
+      <div
+        data-tablet-headline
+        class="text-base font-semibold"
+        :class="TABLET_LEVEL_CLASS[priceData.tablet.level]"
+      >
+        {{ priceData.tablet.headline }}
+      </div>
+      <div data-tablet-note class="text-sm text-gray-500">
+        {{ priceData.tablet.detail }}
+      </div>
+    </div>
     <pair-rates
       v-if="priceData.exchange"
       class="-mt-2 mb-3"
@@ -129,6 +157,23 @@
       :selected="priceData.exchange.selected"
       :as-of-hour="priceData.exchange.asOfHour"
       :ninja-text="priceData.exchange.ninjaText"
+    />
+    <button
+      v-if="hasHistory && !priceData.change && !showHistory"
+      data-history-toggle
+      class="-mt-2 mb-3 w-full rounded text-sm text-gray-500 hover:bg-gray-700 hover:text-gray-300"
+      @click="showHistory = true"
+    >
+      <i class="fas fa-chart-area pr-1"></i>Price history
+    </button>
+    <price-history
+      v-if="showHistory && hasHistory && pairId"
+      class="-mt-2 mb-3"
+      :points="history.points.value"
+      :pair-id="pairId"
+      :quote="historyQuote"
+      :ninja="Boolean(priceData.url)"
+      @ninja="openNinja"
     />
   </template>
   <div
@@ -146,7 +191,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, watch } from "vue";
+import { defineComponent, PropType, computed, shallowRef, watch } from "vue";
 import { useI18nNs } from "@/web/i18n";
 import {
   CurrencyValue,
@@ -157,11 +202,31 @@ import { isValuableBasetype, getDetailsId } from "./getDetailsId";
 import { trendFromSparkline } from "./trend";
 import { headlinePrice } from "./headlinePrice";
 import PairRates from "./PairRates.vue";
+import PriceHistory from "./PriceHistory.vue";
+import { historySeries } from "./historySeries";
+import { useMarketHistory } from "@/web/background/marketHistory";
+import { useUniqueLines } from "@/web/background/uniquesStore";
+import { confidenceNote } from "./confidenceNote";
+import type { ConfidenceNote } from "./confidenceNote";
+import { tabletSummary } from "./tabletNote";
+import type { TabletSummary } from "./tabletNote";
+import { unparsedRef } from "../tablets/tabletRating";
+import type { TabletVerdictLevel } from "../tablets/tabletRating";
+
+// Matches the tier badges on the mods (TabletModBadge.vue).
+const TABLET_LEVEL_CLASS: Record<TabletVerdictLevel, string> = {
+  money: "text-yellow-400",
+  combo: "text-green-400",
+  good: "text-green-400",
+  multiplier: "text-blue-400",
+  niche: "text-gray-300",
+  none: "text-gray-400",
+};
 import { useMarket } from "@/web/background/marketStore";
 import type { ItemPairs, QuoteCurrency } from "@/web/background/market/types";
 import ItemQuickPrice from "@/web/ui/ItemQuickPrice.vue";
 import VueApexcharts from "vue3-apexcharts";
-import { ParsedItem } from "@/parser";
+import { ItemCategory, ParsedItem } from "@/parser";
 import { artificialSlowdown } from "../trade/artificial-slowdown";
 import { ItemFilters } from "../filters/interfaces";
 import { AppConfig } from "@/web/Config";
@@ -178,6 +243,7 @@ export default defineComponent({
     UiItemImg,
     CoreCurrencyImg,
     PairRates,
+    PriceHistory,
   },
   props: {
     item: {
@@ -193,6 +259,9 @@ export default defineComponent({
     const { t } = useI18nNs("trade_result");
     const { findPriceByQuery, autoCurrency, xchgRateCurrency } = usePoeninja();
     const market = useMarket();
+    const uniqueLines = useUniqueLines();
+    const history = useMarketHistory();
+    const showHistory = shallowRef(false);
 
     const volumeSetting = computed(
       () => AppConfig<PriceCheckWidget>("price-check")!.currencyVolume,
@@ -202,6 +271,7 @@ export default defineComponent({
       () => props.item,
       (item) => {
         slowdown.reset(item);
+        showHistory.value = false;
       },
       { immediate: true },
     );
@@ -244,6 +314,8 @@ export default defineComponent({
           asOfHour?: number;
           ninjaText?: string;
         };
+        confidence?: ConfidenceNote;
+        tablet?: TabletSummary;
       } = {
         price: headline.price,
         change: entry?.sparkline.data
@@ -259,6 +331,45 @@ export default defineComponent({
           asOfHour: market.asOfHour.value,
           ninjaText: entry ? ninjaReference(entry, isDivine) : undefined,
         };
+      }
+
+      if (detailsId.ns === "UNIQUE" && detailsId.variant) {
+        const line = uniqueLines.lineFor(detailsId.name, detailsId.variant);
+        if (line) data.confidence = confidenceNote(line.listingCount);
+      }
+
+      if (
+        props.item.category === ItemCategory.Tablet &&
+        detailsId.ns === "ITEM"
+      ) {
+        const line = uniqueLines.tabletLineFor(
+          detailsId.name,
+          detailsId.variant,
+        );
+        if (line) data.confidence = confidenceNote(line.listingCount);
+        const normal = findPriceByQuery({
+          ns: "ITEM",
+          name: detailsId.name,
+          variant: "Normal",
+        });
+        data.tablet = tabletSummary(
+          detailsId.name,
+          detailsId.variant,
+          [
+            ...props.item.statsByType.map((calc) => ({
+              statRef: calc.stat.ref,
+              value: calc.sources.reduce(
+                (sum, source) => sum + (source.contributes?.value ?? 0),
+                0,
+              ),
+            })),
+            // Valued mods the parser does not know (UNPARSED_REFS).
+            ...props.item.unknownModifiers.map((mod) => ({
+              statRef: unparsedRef(mod.text),
+            })),
+          ],
+          normal ? formatPrice(autoCurrency(normal.primaryValue)) : undefined,
+        );
       }
 
       if (!entry) return data;
@@ -283,6 +394,48 @@ export default defineComponent({
       return data;
     });
 
+    const coreQuote = computed(() =>
+      xchgRateCurrency.value?.id === "chaos" ? "chaos" : "exalted",
+    );
+
+    const pairId = computed(() => {
+      const detailsId = getDetailsId(props.item);
+      return detailsId
+        ? market.pairIdFor(detailsId.ns, detailsId.name)
+        : undefined;
+    });
+
+    watch(
+      () => [pairId.value, market.league.value] as const,
+      ([id, league]) => {
+        if (id && league) history.ensure(league);
+      },
+      { immediate: true },
+    );
+
+    const historyQuote = computed<QuoteCurrency>(
+      () => priceData.value?.exchange?.selected ?? coreQuote.value,
+    );
+
+    const hasHistory = computed(() => {
+      const id = pairId.value;
+      if (!id || history.league.value !== market.league.value) return false;
+      const now = Date.now();
+      return (["exalted", "chaos", "divine"] as const).some(
+        (q) => historySeries(history.points.value, id, q, "all", now) != null,
+      );
+    });
+
+    function openNinja() {
+      const url = priceData.value?.url;
+      if (url) window.open(url);
+    }
+
+    function formatPrice(value: CurrencyValue): string {
+      const unit = value.currency === "exalted" ? "ex" : value.currency;
+      return `${displayRounding(value.min, true)} ${unit}`;
+    }
+
     function ninjaReference(
       entry: { primaryValue: number; maxVolumeCurrency?: string },
       isDivine: boolean,
@@ -298,15 +451,22 @@ export default defineComponent({
     return {
       t,
       priceData,
-      openNinja() {
-        const url = priceData.value?.url;
-        if (url) window.open(url);
+      openNinja,
+      openTrend() {
+        if (hasHistory.value) showHistory.value = !showHistory.value;
+        else openNinja();
       },
+      history,
+      showHistory,
+      hasHistory,
+      pairId,
+      historyQuote,
       isValuableBasetype: computed(() => {
         return isValuableBasetype(props.item);
       }),
       slowdown,
       volumeSetting,
+      TABLET_LEVEL_CLASS,
     };
   },
 });

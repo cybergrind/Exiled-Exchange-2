@@ -76,6 +76,32 @@ describe("ladder data", () => {
     expect(row.icon).toMatch(/^https?:|\.png|\.webp/);
   });
 
+  it("ranks a tablet among every tablet base, rarity and unique", async () => {
+    const { ladderFor } = await import("@/web/price-check/ladder/useLadder");
+    const result = ladderFor({
+      ns: "ITEM",
+      name: "Ritual Tablet",
+      variant: "Magic",
+    })!;
+    expect(result.category).toBe("Tablets");
+    expect(result.ladder.total).toBe(24 + 9);
+    const row = result.ladder.rows.find((r) => r.checked)!;
+    expect(row.label).toBe("Ritual · Magic");
+    expect(row.value!.source).toBe("ninja");
+    expect(row.change).toBe(54.44);
+    expect(row.icon).toBeTruthy();
+
+    const unique = ladderFor({
+      ns: "UNIQUE",
+      name: "Freedom of Faith",
+      variant: "Ritual Tablet",
+    })!;
+    expect(unique.category).toBe("Tablets");
+    expect(unique.ladder.rows.find((r) => r.checked)!.label).toBe(
+      "Freedom of Faith",
+    );
+  });
+
   it("has no ladder for items outside the exchange categories", async () => {
     const { ladderFor } = await import("@/web/price-check/ladder/useLadder");
     expect(ladderFor({ ns: "UNIQUE", name: "Temporalis" })).toBeNull();

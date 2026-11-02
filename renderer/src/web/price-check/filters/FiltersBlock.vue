@@ -233,6 +233,7 @@
             :key="stat.type + '/' + stat.text"
             :stat="stat"
             :item-text="item.rawText"
+            :rating="unknownTabletRating(stat.text)"
           />
         </template>
         <template v-if="showMissingFracturedWarning">
@@ -316,6 +317,7 @@ import Popover from "@/web/ui/Popover.vue";
 import { getItemEditorType } from "../item-editor/item-editor.js";
 import { ItemEditorType } from "@/parser/meta.js";
 import { CATALYST_TYPES } from "@/assets/data/index.js";
+import { tabletModRating, unparsedRef } from "../tablets/tabletRating";
 
 export default defineComponent({
   name: "FiltersBlock",
@@ -432,6 +434,13 @@ export default defineComponent({
         }
       }),
       showUnknownMods,
+      unknownTabletRating(text: string) {
+        return props.item.category === ItemCategory.Tablet &&
+          (props.item.rarity === ItemRarity.Magic ||
+            props.item.rarity === ItemRarity.Rare)
+          ? tabletModRating(props.item.info.refName, unparsedRef(text))
+          : undefined;
+      },
       hasStats: computed(
         () =>
           props.stats.length ||

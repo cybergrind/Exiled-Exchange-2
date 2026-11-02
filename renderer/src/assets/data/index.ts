@@ -154,6 +154,51 @@ function itemNamesFromLines(items: Generator<BaseType>) {
   };
 }
 
+// Additive, generated fixes to a language's items.ndjson, which dataParser
+// overwrites. en: uniques F11 found missing or misspelt (WP-53 in
+// guide/poe-source.html); names and bases from the official trade item list,
+// icons from poe.ninja, tags and size from the base type's row.
+const ITEMS_PATCH_LANGUAGES = new Set(["en"]);
+
+async function loadItemsPatch(language: string): Promise<string[]> {
+  if (!ITEMS_PATCH_LANGUAGES.has(language)) return [];
+  const res = await fetch(
+    `${import.meta.env.BASE_URL}data/${language}/items-patch.ndjson`,
+  );
+  if (!res.ok) return [];
+  return (await res.text()).split("\n").filter((line) => line.trim());
+}
+
+const MISSING_ICON = "%NOT_FOUND%";
+
+// items.ndjson wins; patch rows answer only what it cannot: a missing item,
+// or the icon of one it has as "%NOT_FOUND%".
+function withPatch(
+  find: typeof ITEM_BY_REF,
+  patch: string[],
+  prop: "name" | "refName",
+): typeof ITEM_BY_REF {
+  const linesByKey = new Map<string, string[]>();
+  for (const line of patch) {
+    const item = JSON.parse(line) as BaseType;
+    const key = `${item.namespace}::${item[prop]}`;
+    linesByKey.set(key, [...(linesByKey.get(key) ?? []), line]);
+  }
+  return function (ns, name) {
+    const found = find(ns, name);
+    const lines = linesByKey.get(`${ns}::${name}`);
+    if (!lines) return found;
+    const rows = lines.map((line) => JSON.parse(line) as BaseType);
+    if (!found?.length) return rows;
+    const icon = rows.find((row) => row.icon !== MISSING_ICON)?.icon;
+    return icon
+      ? found.map((item) =>
+          item.icon === MISSING_ICON ? { ...item, icon } : item,
+        )
+      : found;
+  };
+}
+
 async function loadItems(language: string) {
   const ndjson = await (
     await fetch(`${import.meta.env.BASE_URL}data/${language}/items.ndjson`)
@@ -204,9 +249,30 @@ async function loadItems(language: string) {
     };
   }
 
-  ITEM_BY_TRANSLATED = commonFind(indexNames, "name");
-  ITEM_BY_REF = commonFind(indexRefNames, "refName");
-  ITEMS_ITERATOR = ndjsonFindLines<BaseType>(ndjson);
+  const byTranslated = commonFind(indexNames, "name");
+  const patch = await loadItemsPatch(language);
+  ITEM_BY_TRANSLATED = withPatch(byTranslated, patch, "name");
+  ITEM_BY_REF = withPatch(
+    commonFind(indexRefNames, "refName"),
+    patch,
+    "refName",
+  );
+  // Patch rows for names items.ndjson already has (spelling-only fixes) serve
+  // lookups only, so name lists don't show them twice.
+  const newPatchLines = patch.filter((line) => {
+    const item = JSON.parse(line) as BaseType;
+    return !byTranslated(item.namespace, item.name)?.length;
+  });
+  const findLines = ndjsonFindLines<BaseType>(
+    ndjson + newPatchLines.map((line) => line + "\n").join(""),
+  );
+  ITEMS_ITERATOR = function* (searchString, andIncludes) {
+    for (const item of findLines(searchString, andIncludes)) {
+      // dataParser leaves a unique it cannot name as a row without name or
+      // refName; the patch supplies those uniques.
+      if (item.refName != null) yield item;
+    }
+  };
   GEM_NS_NAMES = itemNamesFromLines(ITEMS_ITERATOR('": "GEM"'));
   UNIQUE_NS_NAMES = itemNamesFromLines(ITEMS_ITERATOR('": "UNIQUE"'));
   ITEM_NS_NAMES = itemNamesFromLines(ITEMS_ITERATOR('": "ITEM"'));

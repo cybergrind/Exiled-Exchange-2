@@ -87,6 +87,16 @@ describe("useMarket", () => {
     expect(market.errors.value.length).toBeGreaterThan(0);
   });
 
+  it("names the GGG id behind an item's pairs, for its history", async () => {
+    const { useMarket } = await import("@/web/background/marketStore");
+    const market = useMarket();
+    await market.load("Forbidden Rites", NOW_MS);
+    expect(market.pairIdFor(ETCHER.ns, ETCHER.name)).toBe(
+      "Metadata/Items/Currency/CurrencyMagicQuality",
+    );
+    expect(market.pairIdFor("ITEM", "Not An Item")).toBeUndefined();
+  });
+
   it("has nothing for an item the feed does not trade", async () => {
     const { useMarket } = await import("@/web/background/marketStore");
     expect(useMarket().valueFor("ITEM", "Not An Item", "exalted")).toBeNull();

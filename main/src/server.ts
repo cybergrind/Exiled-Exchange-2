@@ -20,6 +20,10 @@ import {
   type MarketDisk,
 } from "../../renderer/src/web/background/market/marketFiles";
 import * as snapshotRules from "../../renderer/src/web/background/market/snapshot";
+import { mergeHistory } from "../../renderer/src/web/background/market/history";
+
+// Each history POST is merged so an hour is stored once (WP-30).
+const marketRules = { ...snapshotRules, mergeHistory };
 
 export const server = createServer();
 const websocketServer = new WebSocketServer({ noServer: true });
@@ -73,7 +77,7 @@ export function addMarketRoutes(server: Server, dir: string) {
     handleMarketRequest(
       { method: req.method, url: req.url, headers: req.headers, body: req },
       disk,
-      snapshotRules,
+      marketRules,
     )
       .then((answer) => {
         const { status, headers, body } = answer ?? {

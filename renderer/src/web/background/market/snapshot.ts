@@ -2,6 +2,7 @@
 // Written by the update-prices CLI and, later, the app through main's route;
 // read by the app at start. Pure: no file access here. Erasable TypeScript.
 import type { PairTable } from "./types.ts";
+import type { UniqueLine } from "./uniques.ts";
 
 export const SNAPSHOT_VERSION = 1;
 
@@ -22,8 +23,10 @@ export interface SnapshotRelay {
 }
 
 export interface SnapshotUniques {
+  /** When the newest unique type answered. */
   fetchedAt: string;
-  lines: unknown[];
+  /** All unique types, merged per type by uniques.ts's mergeUniqueLines. */
+  lines: UniqueLine[];
 }
 
 export interface Snapshot {
@@ -34,7 +37,7 @@ export interface Snapshot {
   cx: SnapshotCx | null;
   /** Null when the relay has never answered for this file. */
   relay: SnapshotRelay | null;
-  /** Added by WP-50; absent until then. */
+  /** Added by WP-50; absent in older files and until uniques are fetched. */
   uniques?: SnapshotUniques;
 }
 
@@ -66,6 +69,18 @@ export function serializeSnapshot(snapshot: Snapshot): string {
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/** The fields every reader of a unique line relies on. */
+function isUniqueLineShape(line: unknown): boolean {
+  return (
+    isObject(line) &&
+    typeof line.type === "string" &&
+    typeof line.name === "string" &&
+    typeof line.baseType === "string" &&
+    typeof line.primaryValue === "number" &&
+    typeof line.listingCount === "number"
+  );
 }
 
 /** Throws on anything that is not a version-1 snapshot. */
@@ -109,6 +124,18 @@ export function parseSnapshot(text: string): Snapshot {
     !(isObject(relay) && typeof relay.fetchedAt === "string")
   ) {
     throw new Error("Snapshot relay block is malformed");
+  }
+  const uniques = value.uniques;
+  if (
+    uniques !== undefined &&
+    !(
+      isObject(uniques) &&
+      typeof uniques.fetchedAt === "string" &&
+      Array.isArray(uniques.lines) &&
+      uniques.lines.every(isUniqueLineShape)
+    )
+  ) {
+    throw new Error("Snapshot uniques block is malformed");
   }
   return value as unknown as Snapshot;
 }

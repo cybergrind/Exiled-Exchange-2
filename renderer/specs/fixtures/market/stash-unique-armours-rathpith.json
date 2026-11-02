@@ -1,0 +1,197 @@
+{
+ "core": {
+  "items": [
+   {
+    "id": "divine",
+    "name": "Divine Orb",
+    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lNb2RWYWx1ZXMiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/2986e220b3/CurrencyModValues.png",
+    "category": "Currency",
+    "detailsId": "divine-orb"
+   },
+   {
+    "id": "exalted",
+    "name": "Exalted Orb",
+    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lBZGRNb2RUb1JhcmUiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/ad7c366789/CurrencyAddModToRare.png",
+    "category": "Currency",
+    "detailsId": "exalted-orb"
+   },
+   {
+    "id": "chaos",
+    "name": "Chaos Orb",
+    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxSYXJlIiwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/c0ca392a78/CurrencyRerollRare.png",
+    "category": "Currency",
+    "detailsId": "chaos-orb"
+   }
+  ],
+  "rates": {
+   "exalted": 688.4,
+   "chaos": 10.04
+  },
+  "primary": "divine",
+  "secondary": "chaos"
+ },
+ "lines": [
+  {
+   "id": 709,
+   "itemId": "Rathpith Globe Runemastered Plumed Focus",
+   "detailsId": "rathpith-globe-runemastered-plumed-focus",
+   "name": "Rathpith Globe",
+   "baseType": "Runemastered Plumed Focus",
+   "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9Gb2NpL1VuaXF1ZXMvUmF0aHBpdGhHbG9iZSIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/51e4da7cb9/RathpithGlobe.png",
+   "flavourText": "The Vaal emptied their slaves of beating hearts,\r\nand left a mountain of twitching dead.",
+   "levelRequired": 75,
+   "category": "[Focus]",
+   "primaryValue": 19.5,
+   "listingCount": 6,
+   "corrupted": false,
+   "sparkLine": {
+    "totalChange": 91.18,
+    "data": [
+     0,
+     28.56,
+     null,
+     59.8,
+     78.43,
+     null,
+     91.18
+    ]
+   },
+   "explicitModifiers": [
+    {
+     "text": "(60-100)% increased [EnergyShield|Energy Shield]",
+     "optional": false,
+     "statIds": [
+      "local_energy_shield_+%"
+     ]
+    },
+    {
+     "text": "+(60-100) to maximum Life",
+     "optional": false,
+     "statIds": [
+      "base_maximum_life"
+     ]
+    },
+    {
+     "text": "Non-[Channelling] [Spell|Spells] cost an additional 6% of your maximum Life",
+     "optional": false,
+     "statIds": [
+      "base_life_cost_+_with_non_channelling_spells_%_maximum_life"
+     ]
+    },
+    {
+     "text": "Non-[Channelling] [Spell|Spells] have 3% increased [Critical|Critical Hit Chance] per 100 maximum Life",
+     "optional": false,
+     "statIds": [
+      "spell_critical_strike_chance_+%_per_100_max_life_with_non_channelling_skills"
+     ]
+    },
+    {
+     "text": "Non-[Channelling] [Spell|Spells] deal 6% increased Damage per 100 maximum Life",
+     "optional": false,
+     "statIds": [
+      "spell_damage_+%_per_100_max_life_with_non_channelling_skills"
+     ]
+    }
+   ],
+   "propertyModifiers": [
+    {
+     "text": "[EnergyShield|Energy Shield]: (37-48)",
+     "optional": false
+    },
+    {
+     "text": "[Ward|Runic Ward]: 106",
+     "optional": false
+    }
+   ],
+   "requirementModifiers": [
+    {
+     "text": "Level: 75",
+     "optional": false
+    },
+    {
+     "text": "[Intelligence|Int]: 91",
+     "optional": false
+    }
+   ]
+  },
+  {
+   "id": 217,
+   "itemId": "Rathpith Globe Sacred Focus",
+   "detailsId": "rathpith-globe-sacred-focus",
+   "name": "Rathpith Globe",
+   "baseType": "Sacred Focus",
+   "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9Gb2NpL1VuaXF1ZXMvUmF0aHBpdGhHbG9iZSIsInciOjIsImgiOjMsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/51e4da7cb9/RathpithGlobe.png",
+   "flavourText": "The Vaal emptied their slaves of beating hearts,\r\nand left a mountain of twitching dead.",
+   "levelRequired": 75,
+   "category": "[Focus]",
+   "primaryValue": 6.74,
+   "listingCount": 1589,
+   "corrupted": false,
+   "sparkLine": {
+    "totalChange": 0.05,
+    "data": [
+     0,
+     -3.01,
+     null,
+     -18.69,
+     3.29,
+     null,
+     0.05
+    ]
+   },
+   "explicitModifiers": [
+    {
+     "text": "(60-100)% increased [EnergyShield|Energy Shield]",
+     "optional": false,
+     "statIds": [
+      "local_energy_shield_+%"
+     ]
+    },
+    {
+     "text": "+(60-100) to maximum Life",
+     "optional": false,
+     "statIds": [
+      "base_maximum_life"
+     ]
+    },
+    {
+     "text": "Non-[Channelling] [Spell|Spells] cost an additional 6% of your maximum Life",
+     "optional": false,
+     "statIds": [
+      "base_life_cost_+_with_non_channelling_spells_%_maximum_life"
+     ]
+    },
+    {
+     "text": "Non-[Channelling] [Spell|Spells] have 3% increased [Critical|Critical Hit Chance] per 100 maximum Life",
+     "optional": false,
+     "statIds": [
+      "spell_critical_strike_chance_+%_per_100_max_life_with_non_channelling_skills"
+     ]
+    },
+    {
+     "text": "Non-[Channelling] [Spell|Spells] deal 6% increased Damage per 100 maximum Life",
+     "optional": false,
+     "statIds": [
+      "spell_damage_+%_per_100_max_life_with_non_channelling_skills"
+     ]
+    }
+   ],
+   "propertyModifiers": [
+    {
+     "text": "[EnergyShield|Energy Shield]: (130-167)",
+     "optional": false
+    }
+   ],
+   "requirementModifiers": [
+    {
+     "text": "Level: 75",
+     "optional": false
+    },
+    {
+     "text": "[Intelligence|Int]: 107",
+     "optional": false
+    }
+   ]
+  }
+ ]
+}

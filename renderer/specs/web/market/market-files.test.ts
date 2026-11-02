@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import * as snapshotRules from "@/web/background/market/snapshot.ts";
+import { mergeHistory } from "@/web/background/market/history.ts";
 import {
   collectBody,
   handleMarketRequest,
@@ -141,14 +142,21 @@ describe("parseMarketRoute", () => {
     }
   });
 
-  it("allows only GET and PUT on a snapshot, POST on history", () => {
+  it("allows only GET and PUT on a snapshot, GET and POST on history", () => {
     for (const method of ["POST", "DELETE", "PATCH"]) {
       expect(parse(method, "/market/forbidden-rites.json")).toMatchObject({
         ok: false,
         status: 405,
       });
     }
-    for (const method of ["GET", "PUT", "DELETE"]) {
+    expect(parse("GET", "/market/forbidden-rites.history")).toMatchObject({
+      ok: true,
+      target: {
+        action: "read-history",
+        file: "forbidden-rites.history.ndjson",
+      },
+    });
+    for (const method of ["PUT", "DELETE"]) {
       expect(parse(method, "/market/forbidden-rites.history")).toMatchObject({
         ok: false,
         status: 405,
@@ -339,7 +347,56 @@ describe("handleMarketRequest", () => {
     expect(ops).toEqual([]);
   });
 
-  it("appends history lines", async () => {
+  it("merges history so each hour is stored once (WP-30)", async () => {
+    const { disk, files, ops } = memoryDisk();
+    const rules = { ...snapshotRules, mergeHistory };
+    const hour = Math.floor(Date.now() / 3_600_000) * 3600 - 3600;
+    const line = (h: number) =>
+      JSON.stringify({
+        v: 1,
+        hour: h,
+        pairs: { x: { exalted: [1, 1, 1, 2, 2] } },
+      });
+    // An app start re-sends recent hours: the first is already stored.
+    for (const body of [
+      line(hour - 3600),
+      `${line(hour - 3600)}\n${line(hour)}`,
+    ]) {
+      const res = await handleMarketRequest(
+        request("POST", "/market/forbidden-rites.history", body, NDJSON_TYPE),
+        disk,
+        rules,
+      );
+      expect(res?.status).toBe(204);
+    }
+    expect(files["forbidden-rites.history.ndjson"]).toBe(
+      `${line(hour - 3600)}\n${line(hour)}\n`,
+    );
+    // Rewritten whole, atomically, never appended.
+    expect(ops.every((op) => !op.startsWith("append"))).toBe(true);
+  });
+
+  it("serves the history file for the chart (WP-31)", async () => {
+    const text = '{"v":1,"hour":1,"pairs":{}}\n';
+    const { disk } = memoryDisk({ "forbidden-rites.history.ndjson": text });
+    const res = await handleMarketRequest(
+      request("GET", "/market/forbidden-rites.history"),
+      disk,
+      snapshotRules,
+    );
+    expect(res?.status).toBe(200);
+    expect(res?.headers["content-type"]).toMatch(/^application\/x-ndjson/);
+    expect(res?.body).toBe(text);
+
+    const none = await handleMarketRequest(
+      request("GET", "/market/runes-of-aldur.history"),
+      disk,
+      snapshotRules,
+    );
+    expect(none?.status).toBe(404);
+  });
+
+  it("appends history lines when no merge is given", async () => {
     const { disk, files } = memoryDisk();
     for (const body of ['{"hour":1}\n', '{"hour":2}']) {
       const res = await handleMarketRequest(

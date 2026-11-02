@@ -2,6 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import { updateSnapshot } from "@/web/background/market/update.ts";
 import type { HttpGet, SnapshotStore } from "@/web/background/market/update.ts";
 import { parseSnapshot } from "@/web/background/market/snapshot.ts";
+import {
+  UNIQUE_OVERVIEW_URL,
+  STASH_TYPES,
+} from "@/web/background/market/uniques.ts";
 import { cxHour, cxHourIds, fixture } from "./prices-harness";
 
 const NEWEST = cxHourIds().at(-1)!;
@@ -52,6 +56,19 @@ function fakeHttp(overrides: Record<string, Route> = {}) {
         status: 200,
         body: fixture("relay-overview-forbidden-rites.json"),
         headers: { etag: '"relay-v1"' },
+      };
+    }
+    if (url.startsWith(UNIQUE_OVERVIEW_URL)) {
+      const type = new URL(url).searchParams.get("type");
+      const file = {
+        UniqueWeapons: "stash-unique-weapons.json",
+        UniqueArmours: "stash-unique-armours.json",
+      }[type ?? ""];
+      if (file) return { status: 200, body: fixture(file), headers: {} };
+      return {
+        status: 404,
+        body: fixture("stash-wrong-type.json"),
+        headers: {},
       };
     }
     const hour = /currency-exchange\/poe2\/(\d+)$/.exec(url);
@@ -231,5 +248,79 @@ describe("updateSnapshot", () => {
     });
     expect(result.status).toBe("fresh");
     expect(http).not.toHaveBeenCalled();
+  });
+
+  it("writes each fetched hour to the league's history once (WP-30)", async () => {
+    const { store, files } = memoryStore();
+    const hoursIn = () =>
+      files
+        .get("forbidden-rites.history.ndjson")!
+        .trimEnd()
+        .split("\n")
+        .map((line) => JSON.parse(line).hour);
+
+    await updateSnapshot({
+      league: "Forbidden Rites",
+      nowMs: NOW,
+      http: fakeHttp(),
+      store,
+      log,
+    });
+    expect(hoursIn()).toEqual(cxHourIds());
+
+    // A later run that fetches nothing new leaves the history as it was.
+    await updateSnapshot({
+      league: "Forbidden Rites",
+      nowMs: NOW + 60_000,
+      http: fakeHttp(),
+      store,
+      log,
+    });
+    expect(hoursIn()).toEqual(cxHourIds());
+  });
+
+  describe("unique lines (WP-50)", () => {
+    const run = (http: HttpGet, store: SnapshotStore, nowMs = NOW) =>
+      updateSnapshot({ league: "Forbidden Rites", nowMs, http, store, log });
+    const uniqueCalls = (http: ReturnType<typeof fakeHttp>) =>
+      http.mock.calls.filter(([url]) => url.startsWith(UNIQUE_OVERVIEW_URL));
+    const snapshotOf = (files: Map<string, string>) =>
+      parseSnapshot(files.get("forbidden-rites.json")!);
+
+    it("asks for each unique type once and stores the lines", async () => {
+      const { store, files } = memoryStore();
+      const http = fakeHttp();
+      await run(http, store);
+      expect(uniqueCalls(http)).toHaveLength(STASH_TYPES.length);
+      const uniques = snapshotOf(files).uniques!;
+      expect(uniques.fetchedAt).toBe(new Date(NOW).toISOString());
+      const names = uniques.lines.map((l) => `${l.name} / ${l.baseType}`);
+      expect(names).toContain("Tidebreaker / Runeforged Pointed Maul");
+      expect(names).toContain("Svalinn / Crucible Tower Shield");
+    });
+
+    it("asks again only after an hour", async () => {
+      const { store } = memoryStore();
+      await run(fakeHttp(), store);
+      const soon = fakeHttp();
+      await run(soon, store, NOW + 30 * 60_000);
+      expect(uniqueCalls(soon)).toHaveLength(0);
+      const later = fakeHttp();
+      await run(later, store, NOW + 61 * 60_000);
+      expect(uniqueCalls(later)).toHaveLength(STASH_TYPES.length);
+    });
+
+    it("keeps a type's last lines when it fails, and never fails the update", async () => {
+      const { store, files } = memoryStore();
+      await run(fakeHttp(), store);
+      const down = fakeHttp({
+        [UNIQUE_OVERVIEW_URL]: () => ({ status: 503, body: "" }),
+      });
+      await run(down, store, NOW + 61 * 60_000);
+      const uniques = snapshotOf(files).uniques!;
+      expect(uniques.lines.some((l) => l.name === "Tidebreaker")).toBe(true);
+      // Nothing answered, so the lines are as old as before.
+      expect(uniques.fetchedAt).toBe(new Date(NOW).toISOString());
+    });
   });
 });

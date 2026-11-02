@@ -7,11 +7,16 @@ LEAGUE ?=
 
 league_flag = $(if $(LEAGUE),--league "$(LEAGUE)")
 
-.PHONY: update-prices test test-renderer test-run test-live
+.PHONY: update-prices validate-rolls test test-renderer test-run test-live
 
 ## Fetch prices now and write <apt-data>/market/<league>.json
 update-prices:
 	$(NODE) renderer/scripts/update-prices.ts $(league_flag)
+
+## Check roll profiles (D7, WP-62); default research/uniques/*.json
+## make validate-rolls FILES="research/uniques/svalinn.json"
+validate-rolls:
+	$(NODE) tools/validate-rolls.ts $(FILES)
 
 ## Default suites; no network
 test: test-renderer test-run

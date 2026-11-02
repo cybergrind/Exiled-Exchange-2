@@ -3,24 +3,39 @@
 // injected, so the CLI (Node fs + fetch) and tests share this code.
 // Erasable TypeScript only; see types.ts.
 import { fetchCxWindow } from "./client.ts";
-import type { FetchText } from "./client.ts";
+import type { CxWindowHour, FetchText } from "./client.ts";
+import { historyPoint, mergeHistory, serializePoint } from "./history.ts";
 import { CX_FEED_URL } from "./constants.ts";
 import { aggregatePairs } from "./cx.ts";
 import { isOlderLeague, pickDefaultLeague } from "./leagues.ts";
 import {
   isSnapshotStale,
+  leagueSlug,
   parseSnapshot,
   serializeSnapshot,
   snapshotFileName,
   SNAPSHOT_VERSION,
 } from "./snapshot.ts";
-import type { Snapshot, SnapshotCx, SnapshotRelay } from "./snapshot.ts";
+import type {
+  Snapshot,
+  SnapshotCx,
+  SnapshotRelay,
+  SnapshotUniques,
+} from "./snapshot.ts";
+import {
+  mergeUniqueLines,
+  STASH_TYPES,
+  uniqueOverviewUrl,
+} from "./uniques.ts";
+import type { StashType } from "./uniques.ts";
 import type { CxHour } from "./types.ts";
 
 export const RELAY_URL = "https://api.exiledexchange2.dev/proxy";
 export const LEAGUES_URL =
   "https://www.pathofexile.com/api/trade2/data/leagues";
 const CX_HOURS_DIR = "cx-hours";
+/** poe.ninja's stash overview: at most hourly (guide/poe-source.html, §7). */
+export const UNIQUES_MAX_AGE_MS = 60 * 60_000;
 
 export interface HttpResponse {
   status: number;
@@ -110,7 +125,7 @@ async function leagueNotices(
 async function updateCx(
   opts: UpdateOptions,
   previous: SnapshotCx | null,
-): Promise<{ cx: SnapshotCx | null; ok: boolean }> {
+): Promise<{ cx: SnapshotCx | null; ok: boolean; hours: CxWindowHour[] }> {
   const { store, http, nowMs, league, log } = opts;
 
   const cache = new Map<number, CxHour>();
@@ -154,9 +169,12 @@ async function updateCx(
   }
 
   const ok = fetched.size > 0 || result.errors.length === 0;
-  if (!ok || result.hours.length === 0) return { cx: previous, ok };
+  if (!ok || result.hours.length === 0) {
+    return { cx: previous, ok, hours: result.hours };
+  }
   return {
     ok,
+    hours: result.hours,
     cx: {
       asOfHour: result.hours[result.hours.length - 1].hour,
       hours: result.hours.map((h) => h.hour),
@@ -203,6 +221,61 @@ async function updateRelay(
 }
 
 /**
+ * Merges the window's hours into <slug>.history.ndjson (WP-30). Every hour in
+ * the window, not only the ones fetched now: the hour cache is shared by all
+ * leagues, so a run for another league may have fetched them. The merge keeps
+ * each hour once, so the file changes only when an hour is new.
+ */
+async function updateHistory(
+  opts: UpdateOptions,
+  hours: CxWindowHour[],
+): Promise<void> {
+  if (!hours.length) return;
+  const { store, league, nowMs } = opts;
+  const name = `${leagueSlug(league)}.history.ndjson`;
+  const lines = [...hours]
+    .sort((a, b) => a.hour - b.hour)
+    .map((entry) => historyPoint(entry.hour, aggregatePairs([entry], league)))
+    .filter((point) => Object.keys(point.pairs).length > 0)
+    .map(serializePoint);
+  const existing = (await store.read(name)) ?? "";
+  const merged = mergeHistory(existing, lines.join("\n"), nowMs);
+  if (merged.text !== existing) await store.write(name, merged.text);
+}
+
+/**
+ * WP-50: the unique lines, one request per type, at most hourly. A type that
+ * fails keeps its last lines; when none answers the block is left as it was.
+ */
+export async function fetchUniqueLines(
+  opts: Pick<UpdateOptions, "league" | "nowMs" | "http" | "log">,
+  previous: SnapshotUniques | undefined,
+): Promise<SnapshotUniques | undefined> {
+  const { league, nowMs, http, log } = opts;
+  if (previous && nowMs - Date.parse(previous.fetchedAt) < UNIQUES_MAX_AGE_MS) {
+    return previous;
+  }
+  const bodies: Partial<Record<StashType, unknown>> = {};
+  let answered = 0;
+  for (const type of STASH_TYPES) {
+    try {
+      const res = await http(uniqueOverviewUrl(league, type));
+      if (res.status !== 200) {
+        log(`Uniques ${type}: HTTP ${res.status}`);
+        continue;
+      }
+      bodies[type] = JSON.parse(res.body);
+      answered++;
+    } catch (e) {
+      log(`Uniques ${type}: ${(e as Error).message}`);
+    }
+  }
+  if (!answered) return previous;
+  const lines = mergeUniqueLines(previous?.lines ?? [], bodies);
+  return { fetchedAt: new Date(nowMs).toISOString(), lines };
+}
+
+/**
  * Fetches what changed and writes the snapshot. Throws, leaving the previous
  * file in place, when neither source answered.
  */
@@ -237,7 +310,9 @@ export async function updateSnapshot(
     cx: cx.cx,
     relay: relay.relay,
   };
-  if (previous?.uniques) snapshot.uniques = previous.uniques;
+  const uniques = await fetchUniqueLines(opts, previous?.uniques);
+  if (uniques) snapshot.uniques = uniques;
   await store.write(name, serializeSnapshot(snapshot));
+  await updateHistory(opts, cx.hours);
   return { status: "written", snapshot, notices };
 }

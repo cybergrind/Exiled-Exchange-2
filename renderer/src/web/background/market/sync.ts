@@ -12,7 +12,8 @@ import {
 } from "./snapshot.ts";
 import type { Snapshot } from "./snapshot.ts";
 import { HISTORY_CONTENT_TYPE, SNAPSHOT_CONTENT_TYPE } from "./marketFiles.ts";
-import type { QuoteCurrency } from "./types.ts";
+import { historyPoint, parseHistory, serializePoint } from "./history.ts";
+import type { HistoryPoint } from "./history.ts";
 
 /** Refresh period while the price check is in use. §7 SYNC_MINUTES. */
 export const SYNC_INTERVAL_MS = 60 * 60 * 1000;
@@ -71,6 +72,20 @@ export async function readSnapshotFile(
   }
 }
 
+/** The league's recorded history, oldest first; empty when there is none. */
+export async function readHistoryPoints(
+  fetchFn: FetchLike,
+  league: string,
+): Promise<HistoryPoint[]> {
+  try {
+    const res = await fetchFn(historyUrl(league), { cache: "no-store" });
+    if (res.status !== 200) return [];
+    return parseHistory(await res.text()).points;
+  } catch {
+    return [];
+  }
+}
+
 async function check(
   res: Awaited<ReturnType<FetchLike>>,
   what: string,
@@ -106,35 +121,14 @@ export async function appendHistoryFile(
   await check(res, `Appending ${league} history`);
 }
 
-const QUOTES: QuoteCurrency[] = ["exalted", "chaos", "divine"];
-
 /**
- * One NDJSON line per hour per pair of `league`, from single-hour digests.
- * Provisional format: WP-30 defines the history file and may change it.
+ * One NDJSON line per hour of `league` with all its pairs (history.ts), from
+ * single-hour digests. An hour with no market of the league writes nothing.
  */
 export function historyLines(hours: CxHourEntry[], league: string): string[] {
-  const lines: string[] = [];
-  const sorted = [...hours].sort((a, b) => a.hour - b.hour);
-  for (const entry of sorted) {
-    const table = aggregatePairs([entry], league);
-    for (const id of Object.keys(table).sort()) {
-      for (const quote of QUOTES) {
-        const stat = table[id][quote];
-        if (!stat) continue;
-        lines.push(
-          JSON.stringify({
-            hour: entry.hour,
-            id,
-            quote,
-            typical: stat.typical,
-            low: stat.low,
-            high: stat.high,
-            traded: stat.traded,
-            quoteTraded: stat.quoteTraded,
-          }),
-        );
-      }
-    }
-  }
-  return lines;
+  return [...hours]
+    .sort((a, b) => a.hour - b.hour)
+    .map((entry) => historyPoint(entry.hour, aggregatePairs([entry], league)))
+    .filter((point) => Object.keys(point.pairs).length > 0)
+    .map(serializePoint);
 }

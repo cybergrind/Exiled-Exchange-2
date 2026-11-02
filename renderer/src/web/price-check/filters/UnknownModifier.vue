@@ -16,6 +16,7 @@
       <div class="ml-5 text-xs leading-none">
         <span class="text-gray-600">{{ t(stat.type) }} &mdash; </span>
         <span class="text-orange-400">{{ t("Not recognized modifier") }}</span>
+        <tablet-mod-badge v-if="rating" class="ml-2" :rating="rating" />
       </div>
     </div>
     <div class="text-xs max-w-48 m-1">
@@ -30,9 +31,11 @@ import { ParsedItem } from "@/parser";
 import ItemModifierText from "../../ui/ItemModifierText.vue";
 import { defineComponent, PropType } from "vue";
 import ReloadTradeData from "../fallback/ReloadTradeData.vue";
+import TabletModBadge from "../tablets/TabletModBadge.vue";
+import type { TabletModRating } from "../tablets/tabletRating";
 
 export default defineComponent({
-  components: { ItemModifierText, ReloadTradeData },
+  components: { ItemModifierText, ReloadTradeData, TabletModBadge },
   props: {
     stat: {
       type: Object as PropType<ParsedItem["unknownModifiers"][number]>,
@@ -41,6 +44,11 @@ export default defineComponent({
     itemText: {
       type: String,
       required: true,
+    },
+    /** A valued tablet mod the app cannot parse (tabletRating.ts). */
+    rating: {
+      type: Object as PropType<TabletModRating>,
+      default: undefined,
     },
   },
   setup() {

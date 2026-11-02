@@ -29,6 +29,12 @@
             "
             :price="item.price"
             currency-text
+            :class="{ 'opacity-50': item.lowConfidence }"
+            :title="
+              item.lowConfidence
+                ? 'Fewer than 5 listings: an unreliable price'
+                : undefined
+            "
           ></ItemQuickPrice>
           <div class="ml-1 truncate" style="max-width: 7rem">
             {{ item.info.name }}
@@ -167,8 +173,10 @@ export default {
 interface SelectedItem {
   info: BaseType;
   discr?: string;
+  /** The sort key; left out for a low-confidence price (WP-51). */
   chaos?: number;
   price?: CurrencyValue;
+  lowConfidence?: boolean;
 }
 
 function useSelectedItems() {
@@ -267,6 +275,7 @@ import { shallowRef, computed, nextTick, inject } from "vue";
 import { useI18nNs } from "@/web/i18n";
 import { WidgetManager } from "../overlay/interfaces";
 import { usePoeninja } from "@/web/background/Prices";
+import { useUniqueLines } from "@/web/background/uniquesStore";
 import { Host } from "@/web/background/IPC";
 import { createVirtualItem, ItemRarity } from "@/parser/ParsedItem";
 import { ItemCategory } from "@/parser";
@@ -282,6 +291,7 @@ const props = defineProps<{
 const wm = inject<WidgetManager>("wm")!;
 const { t } = useI18nNs("item_search");
 const { divineValueByQuery, autoCurrency, queuePricesFetch } = usePoeninja();
+const uniqueLines = useUniqueLines();
 
 const showTimeout = shallowRef<{ reset: () => void } | null>(null);
 
@@ -312,7 +322,10 @@ function selectItem(
   queuePricesFetch();
 
   let price: number | undefined;
+  let lowConfidence = false;
   if (opts?.unique) {
+    lowConfidence =
+      uniqueLines.confidenceFor(item.refName, item.unique!.base) === "low";
     price = divineValueByQuery({
       ns: item.namespace,
       name: item.refName,
@@ -326,8 +339,9 @@ function selectItem(
   }
   const isAdded = addItem({
     info: item,
-    chaos: price,
+    chaos: lowConfidence ? undefined : price,
     price: price !== undefined ? autoCurrency(price) : undefined,
+    lowConfidence,
   });
   if (isAdded && opts?.withTimeout) {
     showTimeout.value?.reset();

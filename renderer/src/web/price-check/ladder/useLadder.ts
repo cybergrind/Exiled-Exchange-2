@@ -7,6 +7,7 @@ import { usePoeninja } from "@/web/background/Prices";
 import { useMarket } from "@/web/background/marketStore";
 import { buildLadder, LADDER_CATEGORIES } from "./ladder";
 import type { Ladder, LadderItem } from "./ladder";
+import { TABLET_CATEGORY, tabletKey, tabletLadderItems } from "./tablets";
 
 export interface ItemLadder {
   ladder: Ladder;
@@ -14,19 +15,59 @@ export interface ItemLadder {
   category: string;
 }
 
-/** Null for anything outside the 14 exchange categories. */
+function coreOf(): "chaos" | "exalted" {
+  const { xchgRateCurrency } = usePoeninja();
+  return xchgRateCurrency.value?.id === "chaos" ? "chaos" : "exalted";
+}
+
+/**
+ * Tablets rank among every tablet base by rarity and every unique tablet;
+ * null when poe.ninja has no line for this one.
+ */
+function tabletLadder(query: {
+  ns: string;
+  name: string;
+  variant?: string;
+}): ItemLadder | null {
+  const { overviewLines } = usePoeninja();
+  const bases = overviewLines("PrecursorTablets")?.lines ?? [];
+  const uniques = overviewLines("UniqueTablets")?.lines ?? [];
+  const listed =
+    query.ns === "UNIQUE"
+      ? uniques.some((line) => line.name === query.name)
+      : query.ns === "ITEM" &&
+        bases.some(
+          (line) => line.name === query.name && line.variant === query.variant,
+        );
+  if (!listed) return null;
+  const items = tabletLadderItems(
+    bases,
+    uniques,
+    (ns, name) => ITEM_BY_REF(ns as BaseType["namespace"], name)?.[0]?.icon,
+  );
+  const ladder = buildLadder({
+    items,
+    table: useMarket().table.value,
+    core: coreOf(),
+    checked: tabletKey(query),
+  });
+  return { ladder, category: TABLET_CATEGORY };
+}
+
+/** Null for anything outside the 14 exchange categories and tablets. */
 export function ladderFor(query: {
   ns: string;
   name: string;
+  variant?: string;
 }): ItemLadder | null {
-  const { categoryLines, xchgRateCurrency } = usePoeninja();
+  const { categoryLines } = usePoeninja();
   const market = useMarket();
 
   // An item poe.ninja does not list joins the category of its other tiers,
   // unpriced unless the exchange traded it.
   const listed = categoryLines(query) !== undefined;
   const category = categoryLines(query, { family: true });
-  if (!category) return null;
+  if (!category) return tabletLadder(query);
   const label = LADDER_CATEGORIES[category.type];
   if (!label) return null;
 
@@ -52,7 +93,7 @@ export function ladderFor(query: {
   const ladder = buildLadder({
     items,
     table: market.table.value,
-    core: xchgRateCurrency.value?.id === "chaos" ? "chaos" : "exalted",
+    core: coreOf(),
     checked: query.name,
   });
   return ladder.rows.length ? { ladder, category: label } : null;

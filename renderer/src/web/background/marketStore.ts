@@ -159,6 +159,12 @@ export const useMarket = createGlobalState(() => {
     return undefined;
   }
 
+  /** The GGG id whose pairs pairsFor returns, for the item's history. */
+  function pairIdFor(ns: string, name: string): string | undefined {
+    const current = table.value;
+    return idsByName?.get(`${ns}::${name}`)?.find((id) => current[id]);
+  }
+
   function valueFor(
     ns: string,
     name: string,
@@ -182,6 +188,7 @@ export const useMarket = createGlobalState(() => {
     restore,
     snapshotCx,
     pairsFor,
+    pairIdFor,
     valueFor,
   };
 });
