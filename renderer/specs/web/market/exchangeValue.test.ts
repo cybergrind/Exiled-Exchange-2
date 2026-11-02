@@ -102,6 +102,17 @@ describe("exchangeValue", () => {
     expect(v.value).toBe(2.8);
   });
 
+  it("a thin core pair is kept when the other pair is not clearly busier", () => {
+    // Medved's Crest of the Circle as seen in-game: 44 exalted, 69 chaos.
+    const pairs: ItemPairs = {
+      exalted: stat(1.1, 44, 0.9, 2),
+      chaos: stat(1 / 17, 69, 1 / 18, 1 / 17),
+    };
+    const v = exchangeValue({ pairs, core: "exalted", table: TABLE })!;
+    expect(v.rule).toBe(1);
+    expect(v.value).toBe(1.1);
+  });
+
   it("a thin core pair is kept when no other pair is busier", () => {
     const pairs: ItemPairs = {
       exalted: stat(162, 30),

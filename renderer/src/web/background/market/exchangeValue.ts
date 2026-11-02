@@ -2,7 +2,12 @@
 // guide/poe-source.html, D2: never convert a pair rate through the divine rate
 // for display; that is the defect this replaces.
 
-import { MIN_TRADED, QUOTE_IDS, THIN_TRADED } from "./constants.ts";
+import {
+  BUSIER_FACTOR,
+  MIN_TRADED,
+  QUOTE_IDS,
+  THIN_TRADED,
+} from "./constants.ts";
 import type { ItemPairs, PairTable, QuoteCurrency } from "./types.ts";
 
 export type CoreCurrency = "exalted" | "chaos";
@@ -57,12 +62,16 @@ export function exchangeValue(query: ExchangeQuery): ExchangeValue | null {
     return pair != null && pair.traded >= MIN_TRADED && pair.typical > 0;
   });
 
-  // The core pair wins unless it is thin and another pair traded more.
+  // The core pair wins unless it is thin and another pair clearly traded
+  // more; a near tie keeps the price in the core currency.
   const busiest = [...liquid].sort(
     (a, b) => pairs![b]!.traded - pairs![a]!.traded,
   )[0];
+  const coreTraded = liquid.includes(core) ? pairs![core]!.traded : 0;
   const own =
-    liquid.includes(core) && pairs![core]!.traded >= THIN_TRADED
+    coreTraded > 0 &&
+    (coreTraded >= THIN_TRADED ||
+      pairs![busiest]!.traded < BUSIER_FACTOR * coreTraded)
       ? core
       : busiest;
 

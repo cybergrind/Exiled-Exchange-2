@@ -5,7 +5,10 @@ import path from "path";
 
 // Everything in market/ is also run by plain Node (make update-prices, ./run),
 // without a compiler: erasable syntax only, relative imports with .ts extensions.
-const MARKET_DIR = path.resolve(__dirname, "../../../src/web/background/market");
+const MARKET_DIR = path.resolve(
+  __dirname,
+  "../../../src/web/background/market",
+);
 
 function marketModules() {
   if (!fs.existsSync(MARKET_DIR)) return [];
@@ -23,7 +26,11 @@ describe("market modules under plain Node", () => {
     const url = new URL(`file://${path.join(MARKET_DIR, name)}`).href;
     const out = execFileSync(
       "node",
-      ["--input-type=module", "-e", `await import(${JSON.stringify(url)}); console.log("ok")`],
+      [
+        "--input-type=module",
+        "-e",
+        `await import(${JSON.stringify(url)}); console.log("ok")`,
+      ],
       { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
     );
     expect(out.trim()).toBe("ok");

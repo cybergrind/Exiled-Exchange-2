@@ -2,6 +2,9 @@
 import fs from "fs";
 import path from "path";
 import { vi } from "vitest";
+import * as snapshotRules from "@/web/background/market/snapshot.ts";
+import { handleMarketRequest } from "@/web/background/market/marketFiles.ts";
+import type { MarketDisk } from "@/web/background/market/marketFiles.ts";
 
 const FIXTURES = path.resolve(__dirname, "../../fixtures/market");
 const PUBLIC = path.resolve(__dirname, "../../../public");
@@ -60,3 +63,62 @@ export function fakeProxy(overrides: Record<string, () => unknown> = {}) {
 }
 
 export { response };
+
+/**
+ * Main's /market/ route over an in-memory directory, run through the same
+ * handler main uses. Other URLs go to `fallback` (the setup's public-file
+ * fetch). Install with `global.fetch = route.fetch`.
+ */
+export function marketRoute(
+  fallback: typeof fetch,
+  files: Record<string, string> = {},
+) {
+  const disk: MarketDisk = {
+    async read(file) {
+      return files[file];
+    },
+    async replace(file, text) {
+      files[file] = text;
+    },
+    async append(file, text) {
+      files[file] = (files[file] ?? "") + text;
+    },
+  };
+  const fetchMock = vi.fn(
+    async (url: string | URL | Request, init?: RequestInit) => {
+      const href = String(url);
+      if (!href.startsWith("/market/")) return fallback(url, init);
+      async function* body() {
+        if (typeof init?.body === "string") yield init.body;
+      }
+      const res = await handleMarketRequest(
+        {
+          method: init?.method ?? "GET",
+          url: href,
+          headers: Object.fromEntries(
+            Object.entries(init?.headers ?? {}).map(([k, v]) => [
+              k.toLowerCase(),
+              String(v),
+            ]),
+          ),
+          body: body(),
+        },
+        disk,
+        snapshotRules,
+      );
+      return response(res!.body, res!.status);
+    },
+  );
+  const calls = (method: string) =>
+    fetchMock.mock.calls.filter(
+      ([url, init]) =>
+        String(url).startsWith("/market/") &&
+        (init?.method ?? "GET") === method,
+    );
+  return {
+    files,
+    fetch: fetchMock as unknown as typeof fetch,
+    fn: fetchMock,
+    calls,
+  };
+}

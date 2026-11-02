@@ -120,8 +120,19 @@
           'flex-row-reverse': clickPosition === 'inventory',
         }"
       >
+        <ladder-panel
+          v-if="itemLadder && item?.isOk()"
+          class="pointer-events-auto mt-6 border-4 border-gray-800"
+          style="width: 28rem; max-width: 100%"
+          :ladder="itemLadder.ladder"
+          :category="itemLadder.category"
+        >
+          <template #drop>
+            <related-items :item="item.value" :click-position="clickPosition" />
+          </template>
+        </ladder-panel>
         <related-items
-          v-if="item?.isOk()"
+          v-else-if="item?.isOk()"
           class="pointer-events-auto"
           :item="item.value"
           :click-position="clickPosition"
@@ -156,6 +167,9 @@ import { useLeagues } from "@/web/background/Leagues";
 import { AppConfig } from "@/web/Config";
 import { ItemCategory, ItemRarity, parseClipboard, ParsedItem } from "@/parser";
 import RelatedItems from "./related-items/RelatedItems.vue";
+import LadderPanel from "./ladder/LadderPanel.vue";
+import { ladderFor } from "./ladder/useLadder";
+import { getDetailsId } from "./trends/getDetailsId";
 import RateLimiterState from "./trade/RateLimiterState.vue";
 import UnidentifiedResolver from "./unidentified-resolver/UnidentifiedResolver.vue";
 import CheckPositionCircle from "./CheckPositionCircle.vue";
@@ -222,6 +236,7 @@ export default defineComponent({
     UnidentifiedResolver,
     BackgroundInfo,
     RelatedItems,
+    LadderPanel,
     RateLimiterState,
     CheckPositionCircle,
     ItemQuickPrice,
@@ -373,6 +388,13 @@ export default defineComponent({
       () => wm.active.value && props.config.showCursor,
     );
     const isLeagueSelected = computed(() => Boolean(leagues.selectedId.value));
+    // Where the item sits in its category (guide/poe-source.html, D6).
+    const itemLadder = computed(() => {
+      if (!item.value?.isOk()) return null;
+      const id = getDetailsId(item.value.value);
+      return id ? ladderFor(id) : null;
+    });
+
     const clickPosition = computed(() => {
       if (isBrowserShown.value) {
         return "inventory";
@@ -436,6 +458,7 @@ export default defineComponent({
     return {
       t,
       clickPosition,
+      itemLadder,
       isBrowserShown,
       iframeEl,
       closePriceCheck,

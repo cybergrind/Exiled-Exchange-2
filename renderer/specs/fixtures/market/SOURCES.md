@@ -11,6 +11,7 @@ Recorded responses, trimmed to what the tests need. Never hand-edit values.
 | `relay-namespace-map.json` | `GET https://api.exiledexchange2.dev/proxy/data/namespaceMap.json` | 2026-11-02 | as received |
 | `stash-unique-armours.json` | `GET https://poe.ninja/poe2/api/economy/stash/current/item/overview?league=Forbidden+Rites&type=UniqueArmours` | 2026-11-02 | Temporalis and Svalinn lines |
 | `exchange-empty-type.json` | `GET https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Forbidden+Rites&type=Omens` | 2026-11-02 | as received: a wrong type returns 200 with no lines |
+| `trade2-leagues.json` | `GET https://www.pathofexile.com/api/trade2/data/leagues` | 2026-11-02 | as received |
 
 Golden values over the six hours (see `guide/poe-source.html`, WP-11): Etcher on the exalted pair
 4.908 ex typical, 3.0–14 range, 2,456 traded; chaos 0.1561, 0.05–0.25; divine 0.0189, 0.012–0.0233.

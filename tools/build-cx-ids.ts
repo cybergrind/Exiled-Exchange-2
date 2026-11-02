@@ -26,7 +26,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const SOURCE = "https://repoe-fork.github.io/poe2/base_items.json";
-const USER_AGENT = "Exiled-Exchange-2-fork (cx-ids generator)";
+const USER_AGENT = "Exiled-Exchange-2 (cx-ids generator)";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const ITEMS_FILE = path.join(ROOT, "renderer/public/data/en/items.ndjson");

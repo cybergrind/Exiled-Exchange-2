@@ -3,6 +3,24 @@ import { createGlobalState } from "@vueuse/core";
 import { Host } from "@/web/background/IPC";
 import { useLeagues } from "./Leagues";
 import { useMarket } from "./marketStore";
+import type { MarketLoadResult } from "./marketStore";
+import { RELAY_NAMESPACE_MAP } from "./market/relayNamespaces.ts";
+import { SNAPSHOT_VERSION } from "./market/snapshot.ts";
+import type {
+  Snapshot,
+  SnapshotRelay,
+  SnapshotUniques,
+} from "./market/snapshot.ts";
+import {
+  appendHistoryFile,
+  historyLines,
+  isUsableBootSnapshot,
+  overviewText,
+  readSnapshotFile,
+  SYNC_INTERVAL_MS,
+  writeSnapshotFile,
+} from "./market/sync.ts";
+import type { FetchLike } from "./market/sync.ts";
 import { AppConfig } from "../Config";
 import { PriceCheckWidget } from "../overlay/widgets";
 import {
@@ -63,10 +81,44 @@ type PriceDatabase = Array<{
   url: string;
   // json blob data
   lines: string;
+  // poe.ninja overview type, e.g. "Ritual"
+  type: string;
 }>;
+
+/** One poe.ninja category, for the ladder (guide/poe-source.html, D6). */
+export interface CategoryLines {
+  type: string;
+  lines: Array<{ name: string; primaryValue: number; totalChange?: number }>;
+}
+
+/** The first complete JSON object in `text`; the rest is ignored. */
+function firstJsonObject(text: string): unknown {
+  let depth = 0;
+  let inString = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inString) {
+      if (c === "\\") i++;
+      else if (c === '"') inString = false;
+    } else if (c === '"') inString = true;
+    else if (c === "{" || c === "[") depth++;
+    else if (c === "}" || c === "]") {
+      depth--;
+      if (depth === 0) return JSON.parse(text.slice(0, i + 1));
+    }
+  }
+  throw new Error("No complete JSON object");
+}
 const RETRY_INTERVAL_MS = 4 * 60 * 1000;
-const UPDATE_INTERVAL_MS = 31 * 60 * 1000;
+// Hourly (guide/poe-source.html, D4 and WP-24): the relay's data and the
+// Currency Exchange feed both change once an hour, so a 31-minute refresh
+// fetched the same relay data every other time; each refresh now also
+// rewrites the snapshot. Failed refreshes still retry every 4 minutes.
+const UPDATE_INTERVAL_MS = SYNC_INTERVAL_MS;
 const INTEREST_SPAN_MS = 20 * 60 * 1000;
+
+// main's /market/ route on the local server. Looked up per call, not bound.
+const localFetch: FetchLike = (url, init) => fetch(url, init);
 
 interface DbQuery {
   ns: string;
@@ -158,8 +210,25 @@ export const usePoeninja = createGlobalState(() => {
   let lastUpdateTime = 0;
   let downloadController: AbortController | undefined;
   let lastInterestTime = 0;
+  // The league whose snapshot was last read at start (WP-23).
+  let bootedLeague: string | undefined;
+  // The relay overview behind PRICES_DB, kept for the snapshot (WP-24).
+  let relayState:
+    | { league: string; text: string; fetchedAt: string; etag?: string }
+    | undefined;
+  // Not fetched by the app (WP-50 owns it); kept so a write does not drop it.
+  let savedUniques: { league: string; uniques: SnapshotUniques } | undefined;
 
   let priceCache = new Map<string, CurrencyValue>();
+  // PRICES_DB is not reactive; this counts its replacements so computed
+  // values that read it (the ladder) rerun when prices arrive.
+  const dbVersion = shallowRef(0);
+  let categoryCache = new Map<string, CategoryLines>();
+  function setPricesDb(db: PriceDatabase) {
+    PRICES_DB = db;
+    categoryCache = new Map();
+    dbVersion.value++;
+  }
   // Exchange rates arrive separately from poe.ninja's; either invalidates.
   watch(market.table, () => {
     priceCache = new Map<string, CurrencyValue>();
@@ -168,6 +237,10 @@ export const usePoeninja = createGlobalState(() => {
   async function load(force: boolean = false) {
     const league = leagues.selected.value;
     if (!league || !league.isPopular || league.realm !== "pc-ggg") return;
+    if (bootedLeague !== league.id) {
+      bootedLeague = league.id;
+      await boot(league.id);
+    }
     if (
       !force &&
       (Date.now() - lastUpdateTime < UPDATE_INTERVAL_MS ||
@@ -176,7 +249,11 @@ export const usePoeninja = createGlobalState(() => {
       return;
     if (downloadController) downloadController.abort();
     // GGG Currency Exchange prices: their own cache and failure handling.
-    market.load(league.id).catch((e) => console.warn(e));
+    const cxLoad = market.load(league.id).catch((e) => {
+      console.warn(e);
+      return undefined;
+    });
+    let relayOk = false;
     try {
       isLoading.value = true;
       downloadController = new AbortController();
@@ -195,27 +272,23 @@ export const usePoeninja = createGlobalState(() => {
         ITEM_DROP.value = BUNDLED_ITEM_DROP ?? [];
       }
 
-      availableCoreCurrencies.value = getAvailableCoreCurrencies().map(
-        (currency) => ({
-          ...currency,
-          text: ITEM_BY_REF("ITEM", currency.ref)![0].name,
-        }),
-      );
-      const haveCurrency = availableCoreCurrencies.value.some(
-        (currency) => currency.id === selectedCoreCurrencyId.value,
-      );
-      if (!haveCurrency) {
-        selectedCoreCurrencyId.value = "exalted";
-      }
+      setupCoreCurrencies();
 
-      const ninjaSchema: NinjaSchema = JSON.parse(
-        await Host.proxy(
-          "api.exiledexchange2.dev/proxy/data/namespaceMap.json",
-          {
-            signal: downloadController.signal,
-          },
-        ).then((r) => r.text()),
-      );
+      let ninjaSchema: NinjaSchema;
+      try {
+        ninjaSchema = JSON.parse(
+          await Host.proxy(
+            "api.exiledexchange2.dev/proxy/data/namespaceMap.json",
+            {
+              signal: downloadController.signal,
+            },
+          ).then((r) => r.text()),
+        );
+      } catch (e) {
+        if (downloadController.signal.aborted) throw e;
+        console.warn("Using the recorded namespace map:", e);
+        ninjaSchema = RELAY_NAMESPACE_MAP;
+      }
       const response = await Host.proxy(
         `api.exiledexchange2.dev/proxy/${selectedLeagueToUrl(true)}/overviewData.json`,
         {
@@ -225,38 +298,150 @@ export const usePoeninja = createGlobalState(() => {
           cache: "no-cache",
         },
       );
+      if (!response.ok) throw new Error(`Relay: HTTP ${response.status}`);
       const jsonBlob = await response.text();
 
-      const ninjaXchg = parseXchg(jsonBlob);
-
-      PRICES_DB = splitJsonBlob(jsonBlob, ninjaSchema);
-
-      // TODO: update to search for requested currency instead of divine
-      const divineRates = ninjaXchg.rates;
-      const preferred = selectedCoreCurrency.value;
-
-      if (divineRates && Object.values(divineRates).some((v) => v >= 10)) {
-        if (
-          preferred &&
-          preferred.id !== "div" &&
-          divineRates[preferred.id] >= 5
-        ) {
-          xchgRate.value = divineRates[preferred.id];
-          xchgRateCurrency.value = preferred.id;
-        } else {
-          xchgRate.value = divineRates.exalted;
-          xchgRateCurrency.value = "exalted";
-        }
-      }
-
-      // Clear cache
-      priceCache = new Map<string, CurrencyValue>();
+      applyRelay(jsonBlob, ninjaSchema);
+      relayState = {
+        league: league.id,
+        text: jsonBlob,
+        fetchedAt: new Date().toISOString(),
+        etag: response.headers?.get("etag") ?? undefined,
+      };
 
       lastUpdateTime = Date.now();
+      relayOk = true;
     } catch (e) {
       console.warn(e);
     } finally {
       isLoading.value = false;
+    }
+
+    const cx = await cxLoad;
+    if (relayOk || cx?.fetched.length) await persist(league.id, cx);
+  }
+
+  function setupCoreCurrencies() {
+    availableCoreCurrencies.value = getAvailableCoreCurrencies().map(
+      (currency) => ({
+        ...currency,
+        text: ITEM_BY_REF("ITEM", currency.ref)![0].name,
+      }),
+    );
+    const haveCurrency = availableCoreCurrencies.value.some(
+      (currency) => currency.id === selectedCoreCurrencyId.value,
+    );
+    if (!haveCurrency) {
+      selectedCoreCurrencyId.value = "exalted";
+    }
+  }
+
+  /** Makes a relay overview (its text form) the price database. */
+  function applyRelay(jsonBlob: string, ninjaSchema: NinjaSchema) {
+    const ninjaXchg = parseXchg(jsonBlob);
+
+    setPricesDb(splitJsonBlob(jsonBlob, ninjaSchema));
+
+    // TODO: update to search for requested currency instead of divine
+    const divineRates = ninjaXchg.rates;
+    const preferred = selectedCoreCurrency.value;
+
+    if (divineRates && Object.values(divineRates).some((v) => v >= 10)) {
+      if (
+        preferred &&
+        preferred.id !== "div" &&
+        divineRates[preferred.id] >= 5
+      ) {
+        xchgRate.value = divineRates[preferred.id];
+        xchgRateCurrency.value = preferred.id;
+      } else {
+        xchgRate.value = divineRates.exalted;
+        xchgRateCurrency.value = "exalted";
+      }
+    }
+
+    // Clear cache
+    priceCache = new Map<string, CurrencyValue>();
+  }
+
+  /**
+   * WP-23: the league's snapshot from user data, so the first price check
+   * has prices (with their age) before, or without, the network. Used only
+   * if it is this league's and under 6 hours old; the refresh still runs.
+   */
+  async function boot(leagueId: string) {
+    const snapshot = await readSnapshotFile(localFetch, leagueId);
+    if (!isUsableBootSnapshot(snapshot, leagueId, Date.now())) return;
+    if (leagues.selectedId.value !== leagueId) return;
+
+    if (snapshot.uniques) {
+      savedUniques = { league: leagueId, uniques: snapshot.uniques };
+    }
+    // Queued ahead of the refresh's own load, which replaces it when it can.
+    if (snapshot.cx) market.restore(leagueId, snapshot.cx);
+    if (snapshot.relay && !PRICES_DB.length) {
+      try {
+        const text = overviewText(snapshot.relay.overview);
+        if (!ITEM_DROP.value.length) ITEM_DROP.value = BUNDLED_ITEM_DROP ?? [];
+        setupCoreCurrencies();
+        applyRelay(text, RELAY_NAMESPACE_MAP);
+        relayState = {
+          league: leagueId,
+          text,
+          fetchedAt: snapshot.relay.fetchedAt,
+          etag: snapshot.relay.etag,
+        };
+      } catch (e) {
+        console.warn("Ignoring the saved relay overview:", e);
+      }
+    }
+  }
+
+  /**
+   * WP-24: after a refresh, rewrite the snapshot (D4 schema) and append the
+   * hours fetched just now to the history, through main's route.
+   */
+  async function persist(leagueId: string, cx: MarketLoadResult | undefined) {
+    if (leagues.selectedId.value !== leagueId) return;
+    let relay: SnapshotRelay | null = null;
+    if (relayState?.league === leagueId) {
+      try {
+        relay = {
+          fetchedAt: relayState.fetchedAt,
+          etag: relayState.etag,
+          overview: JSON.parse(relayState.text),
+        };
+      } catch {
+        relay = null;
+      }
+    }
+    const cxBlock = market.snapshotCx(leagueId);
+    if (!relay && !cxBlock) return;
+
+    const snapshot: Snapshot = {
+      schemaVersion: SNAPSHOT_VERSION,
+      league: leagueId,
+      writtenAt: new Date().toISOString(),
+      cx: cxBlock,
+      relay,
+    };
+    if (savedUniques?.league === leagueId) {
+      snapshot.uniques = savedUniques.uniques;
+    }
+    try {
+      await writeSnapshotFile(localFetch, snapshot);
+    } catch (e) {
+      console.warn(e);
+    }
+    if (cx?.league !== leagueId) return;
+    try {
+      await appendHistoryFile(
+        localFetch,
+        leagueId,
+        historyLines(cx.fetched, leagueId),
+      );
+    } catch (e) {
+      console.warn(e);
     }
   }
 
@@ -282,6 +467,53 @@ export const usePoeninja = createGlobalState(() => {
       return ninjaLeague.slice(2) + "hc";
     }
     return ninjaLeague;
+  }
+
+  /**
+   * The exchange category holding the item, with every line in it. With
+   * `family`, an item poe.ninja does not list is placed by another tier of
+   * it: "Essence of the Infinite" by "Greater Essence of the Infinite".
+   */
+  function categoryLines(
+    query: { ns: string; name: string },
+    opts: { family?: boolean } = {},
+  ): CategoryLines | undefined {
+    // Reading dbVersion makes a computed caller rerun when prices arrive.
+    if (dbVersion.value === 0 || !PRICES_DB.length) return undefined;
+    const quoted = JSON.stringify(query.name);
+    const needle = `{"name":${quoted},`;
+    const tierNeedle = ` ${quoted.slice(1)},`;
+    const entry =
+      PRICES_DB.find(
+        (db) => db.cx && db.ns === query.ns && db.lines.includes(needle),
+      ) ??
+      (opts.family
+        ? PRICES_DB.find(
+            (db) =>
+              db.cx && db.ns === query.ns && db.lines.includes(tierNeedle),
+          )
+        : undefined);
+    if (!entry) return undefined;
+    let category = categoryCache.get(entry.type);
+    if (!category) {
+      const overview = firstJsonObject(entry.lines) as {
+        lines: Array<{
+          name: string;
+          primaryValue: number;
+          sparkline?: { totalChange?: number };
+        }>;
+      };
+      category = {
+        type: entry.type,
+        lines: overview.lines.map((line) => ({
+          name: line.name,
+          primaryValue: line.primaryValue,
+          totalChange: line.sparkline?.totalChange,
+        })),
+      };
+      categoryCache.set(entry.type, category);
+    }
+    return category;
   }
 
   function findPriceByQuery(query: DbQuery) {
@@ -488,7 +720,7 @@ export const usePoeninja = createGlobalState(() => {
 
   watch(leagues.selectedId, () => {
     xchgRate.value = undefined;
-    PRICES_DB = [];
+    setPricesDb([]);
     load(true);
   });
 
@@ -496,7 +728,7 @@ export const usePoeninja = createGlobalState(() => {
     if (curr === prev) return;
     xchgRateCurrency.value = curr ?? "exalted";
     xchgRate.value = undefined;
-    PRICES_DB = [];
+    setPricesDb([]);
     load(true);
   });
 
@@ -504,6 +736,7 @@ export const usePoeninja = createGlobalState(() => {
     xchgRate: readonly(xchgRate),
     xchgRateCurrency: readonly(selectedCoreCurrency),
     findPriceByQuery,
+    categoryLines,
     divineValueByQuery,
     autoCurrency,
     queuePricesFetch,
@@ -562,6 +795,7 @@ function splitJsonBlob(jsonBlob: string, schema: NinjaSchema): PriceDatabase {
         cx: isSupported.cx,
         url: isSupported.url,
         lines,
+        type,
       });
     }
 

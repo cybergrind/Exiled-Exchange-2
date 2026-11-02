@@ -19,4 +19,7 @@ export const MIN_TRADED = 10;
  */
 export const THIN_TRADED = 50;
 
+/** A thin core pair yields only to a pair with at least this many times its trades. */
+export const BUSIER_FACTOR = 2;
+
 export const CX_FEED_URL = "web.poecdn.com/api/currency-exchange/poe2";
