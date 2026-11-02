@@ -46,6 +46,8 @@ export interface PriceCheckWidget extends Widget {
   collapseListings: "api" | "app";
   smartInitialSearch: boolean;
   lockedInitialSearch: boolean;
+  /** Search stash offers for Currency Exchange items without pressing Search. */
+  exchangeAutoSearch?: boolean;
   activateStockFilter: boolean;
   showCursor: boolean;
   requestPricePrediction: boolean;

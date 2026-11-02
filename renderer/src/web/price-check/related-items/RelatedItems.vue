@@ -54,7 +54,7 @@ import { getDetailsId } from "../trends/getDetailsId";
 import { ParsedItem } from "@/parser";
 import ItemQuickPrice from "@/web/ui/ItemQuickPrice.vue";
 
-const { findPriceByQuery, autoCurrency, ITEM_DROP } = usePoeninja();
+const { divineValueByQuery, autoCurrency, ITEM_DROP } = usePoeninja();
 
 function findItemByQueryId(queryId: string): BaseType | undefined {
   const [ns, encodedName] = queryId.split("::");
@@ -71,9 +71,9 @@ function findItemByQueryId(queryId: string): BaseType | undefined {
 function findPriceByQueryId(queryId: string) {
   const [ns, encodedName] = queryId.split("::");
   const [name, variant] = encodedName.split(" // ");
-  const priceEntry = findPriceByQuery({ ns, name, variant });
+  const priceEntry = divineValueByQuery({ ns, name, variant });
   if (priceEntry) {
-    return autoCurrency(priceEntry.primaryValue);
+    return autoCurrency(priceEntry);
   }
 }
 

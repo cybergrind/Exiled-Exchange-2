@@ -4,38 +4,40 @@
     <!-- <price-prediction v-if="showPredictedPrice" class="mb-4" :item="item" /> -->
     <!-- <price-trend v-else :item="item" :filters="itemFilters" /> -->
     <price-trend :item="item" :filters="itemFilters" />
-    <filters-block
-      ref="filtersComponent"
-      :filters="itemFilters"
-      :stats="itemStats"
-      :item="item"
-      :presets="presets"
-      @preset="selectPreset"
-      @submit="doSearch = true"
-    />
-    <trade-listing
-      v-if="tradeAPI === 'trade' && doSearch"
-      ref="tradeService"
-      :filters="itemFilters"
-      :stats="itemStats"
-      :item="item"
-    />
-    <trade-bulk
-      v-if="tradeAPI === 'bulk' && doSearch"
-      ref="tradeService"
-      :filters="itemFilters"
-      :item="item"
-    />
-    <div v-if="!doSearch" class="flex justify-between items-center">
-      <div class="flex w-40" @mouseenter="handleSearchMouseenter">
-        <button class="btn" @click="doSearch = true" style="min-width: 5rem">
-          {{ t("Search") }}
-        </button>
+    <template v-if="tradeOffered">
+      <filters-block
+        ref="filtersComponent"
+        :filters="itemFilters"
+        :stats="itemStats"
+        :item="item"
+        :presets="presets"
+        @preset="selectPreset"
+        @submit="doSearch = true"
+      />
+      <trade-listing
+        v-if="tradeAPI === 'trade' && doSearch"
+        ref="tradeService"
+        :filters="itemFilters"
+        :stats="itemStats"
+        :item="item"
+      />
+      <trade-bulk
+        v-if="tradeAPI === 'bulk' && doSearch"
+        ref="tradeService"
+        :filters="itemFilters"
+        :item="item"
+      />
+      <div v-if="!doSearch" class="flex justify-between items-center">
+        <div class="flex w-40" @mouseenter="handleSearchMouseenter">
+          <button class="btn" @click="doSearch = true" style="min-width: 5rem">
+            {{ t("Search") }}
+          </button>
+        </div>
+        <div class="flex flex-row gap-1">
+          <trade-links v-if="tradeAPI === 'trade'" :get-link="makeTradeLink" />
+        </div>
       </div>
-      <div class="flex flex-row gap-1">
-        <trade-links v-if="tradeAPI === 'trade'" :get-link="makeTradeLink" />
-      </div>
-    </div>
+    </template>
     <stack-value :filters="itemFilters" :item="item" />
     <div v-if="showSupportLinks" class="mt-auto border border-dashed p-2">
       <!-- <div class="mb-1">
@@ -71,7 +73,7 @@ import {
   ComponentPublicInstance,
 } from "vue";
 import { useI18n } from "vue-i18n";
-import { ItemRarity, ItemCategory, ParsedItem } from "@/parser";
+import { ItemRarity, ParsedItem } from "@/parser";
 import TradeListing from "./trade/TradeListing.vue";
 import TradeBulk from "./trade/TradeBulk.vue";
 import TradeLinks from "./trade/TradeLinks.vue";
@@ -83,15 +85,16 @@ import PricePrediction from "./price-prediction/PricePrediction.vue";
 import StackValue from "./stack-value/StackValue.vue";
 import FilterName from "./filters/FilterName.vue";
 import Tip from "../help/Tip.vue";
-import {
-  CATEGORY_TO_TRADE_ID,
-  createTradeRequest,
-} from "./trade/pathofexile-trade";
+import { createTradeRequest } from "./trade/pathofexile-trade";
 import { AppConfig, TipsFrequency } from "@/web/Config";
 import { FilterPreset } from "./filters/interfaces";
 import { PriceCheckWidget } from "../overlay/interfaces";
 import { useLeagues } from "@/web/background/Leagues";
 import { randomTip, TIP_FREQUENCY_MAP } from "../help/tips";
+import { offersTradeSearch, shouldAutoSearch } from "./autoSearch";
+import { getDetailsId } from "./trends/getDetailsId";
+import { usePoeninja } from "@/web/background/Prices";
+import { useMarket } from "@/web/background/marketStore";
 
 let _showSupportLinksCounter = 0;
 let _showTipCounter = 15;
@@ -123,6 +126,22 @@ export default defineComponent({
   setup(props, ctx) {
     const widget = computed(() => AppConfig<PriceCheckWidget>("price-check")!);
     const leagues = useLeagues();
+    const { findPriceByQuery } = usePoeninja();
+    const market = useMarket();
+
+    // Reactive on the exchange table, which can arrive after the item.
+    const isExchangeItem = computed(() => {
+      const id = getDetailsId(props.item);
+      return Boolean(
+        id && (findPriceByQuery(id)?.cx || market.pairsFor(id.ns, id.name)),
+      );
+    });
+    const tradeOffered = computed(() =>
+      offersTradeSearch({
+        isExchangeItem: isExchangeItem.value,
+        exchangeAutoSearch: widget.value.exchangeAutoSearch,
+      }),
+    );
 
     const presets = ref<{ active: string; presets: FilterPreset[] }>(null!);
     const itemFilters = computed(
@@ -178,22 +197,13 @@ export default defineComponent({
           defaultAllSelected: widget.value.defaultAllSelected,
         });
 
-        if (
-          (!props.advancedCheck && !widget.value.smartInitialSearch) ||
-          (props.advancedCheck && !widget.value.lockedInitialSearch)
-        ) {
-          doSearch.value = false;
-        } else {
-          doSearch.value = Boolean(
-            item.rarity === ItemRarity.Unique ||
-              item.category === ItemCategory.HeistBlueprint ||
-              item.category === ItemCategory.SanctumRelic ||
-              item.category === ItemCategory.Charm ||
-              !CATEGORY_TO_TRADE_ID.has(item.category!) ||
-              item.isUnidentified ||
-              item.isVeiled,
-          );
-        }
+        doSearch.value = shouldAutoSearch(item, {
+          advancedCheck: props.advancedCheck,
+          smartInitialSearch: widget.value.smartInitialSearch,
+          lockedInitialSearch: widget.value.lockedInitialSearch,
+          exchangeAutoSearch: widget.value.exchangeAutoSearch,
+          isExchangeItem: isExchangeItem.value,
+        });
 
         tradeAPI.value = apiToSatisfySearch(
           props.item,
@@ -333,6 +343,7 @@ export default defineComponent({
 
     return {
       t,
+      tradeOffered,
       itemFilters,
       itemStats,
       doSearch,

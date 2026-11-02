@@ -1,0 +1,565 @@
+{
+ "next_change_id": 1793592000,
+ "markets": [
+  {
+   "league": "Runes of Aldur",
+   "market_id": "Metadata/Items/Currency/CurrencyModValues|Metadata/Items/Currency/CurrencyMagicQuality",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyModValues",
+    "Metadata/Items/Currency/CurrencyMagicQuality"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyModValues": 0,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 0
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 13,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 5021
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 13,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 5021
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 0,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 0
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 0,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 0
+   }
+  },
+  {
+   "league": "Runes of Aldur",
+   "market_id": "Metadata/Items/Currency/CurrencyMagicQuality|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyMagicQuality",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 200,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 172
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 190,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 682
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 190,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 794
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 5
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 2,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 1
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyGemQuality|Metadata/Items/Currency/CurrencyRerollRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyGemQuality",
+    "Metadata/Items/Currency/CurrencyRerollRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 1503,
+    "Metadata/Items/Currency/CurrencyRerollRare": 553
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 6785,
+    "Metadata/Items/Currency/CurrencyRerollRare": 1836
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 7361,
+    "Metadata/Items/Currency/CurrencyRerollRare": 2136
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 1,
+    "Metadata/Items/Currency/CurrencyRerollRare": 1
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 9,
+    "Metadata/Items/Currency/CurrencyRerollRare": 2
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyGemQuality|Metadata/Items/Currency/CurrencyModValues",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyGemQuality",
+    "Metadata/Items/Currency/CurrencyModValues"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 3244,
+    "Metadata/Items/Currency/CurrencyModValues": 222
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 3990,
+    "Metadata/Items/Currency/CurrencyModValues": 384
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 5983,
+    "Metadata/Items/Currency/CurrencyModValues": 406
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 10,
+    "Metadata/Items/Currency/CurrencyModValues": 1
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 26,
+    "Metadata/Items/Currency/CurrencyModValues": 1
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyGemQuality|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyGemQuality",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 721,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 13001
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 486,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 84233
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 704,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 90324
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 29
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyGemQuality": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 15
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/OmenSellVendorRandomise|Metadata/Items/Currency/CurrencyRerollRare",
+   "market_pair": [
+    "Metadata/Items/Currency/OmenSellVendorRandomise",
+    "Metadata/Items/Currency/CurrencyRerollRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 1381,
+    "Metadata/Items/Currency/CurrencyRerollRare": 939
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 2345,
+    "Metadata/Items/Currency/CurrencyRerollRare": 3750
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 3280,
+    "Metadata/Items/Currency/CurrencyRerollRare": 4008
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 1,
+    "Metadata/Items/Currency/CurrencyRerollRare": 1
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 2,
+    "Metadata/Items/Currency/CurrencyRerollRare": 1
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/OmenSellVendorRandomise|Metadata/Items/Currency/CurrencyModValues",
+   "market_pair": [
+    "Metadata/Items/Currency/OmenSellVendorRandomise",
+    "Metadata/Items/Currency/CurrencyModValues"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 822,
+    "Metadata/Items/Currency/CurrencyModValues": 62
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 1585,
+    "Metadata/Items/Currency/CurrencyModValues": 515
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 1898,
+    "Metadata/Items/Currency/CurrencyModValues": 906
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 12,
+    "Metadata/Items/Currency/CurrencyModValues": 1
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 15,
+    "Metadata/Items/Currency/CurrencyModValues": 1
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/OmenSellVendorRandomise|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/OmenSellVendorRandomise",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 282,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 6825
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 235,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 60527
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 395,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 65664
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 35
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/OmenSellVendorRandomise": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 21
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyRerollRare|Metadata/Items/Currency/CurrencyModValues",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyRerollRare",
+    "Metadata/Items/Currency/CurrencyModValues"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 284764,
+    "Metadata/Items/Currency/CurrencyModValues": 29345
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 259741,
+    "Metadata/Items/Currency/CurrencyModValues": 54428
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 307365,
+    "Metadata/Items/Currency/CurrencyModValues": 65425
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 9,
+    "Metadata/Items/Currency/CurrencyModValues": 1
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 10,
+    "Metadata/Items/Currency/CurrencyModValues": 1
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyRerollRare|Metadata/Items/Currency/CurrencyUpgradeToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyRerollRare",
+    "Metadata/Items/Currency/CurrencyUpgradeToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 243,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 2375
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 288,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 14499
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 510,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 18777
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 35
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 9
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyRerollRare|Metadata/Items/Currency/CurrencyMagicQuality",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyRerollRare",
+    "Metadata/Items/Currency/CurrencyMagicQuality"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 229,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 1290
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 198,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 5456
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 206,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 5951
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 15
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 5
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyRerollRare|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyRerollRare",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1016,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 75719
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 3458,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 173135
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 3977,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 192290
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 79
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 2,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 137
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyRerollRare|Metadata/Items/Currency/CurrencyArmourQuality",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyRerollRare",
+    "Metadata/Items/Currency/CurrencyArmourQuality"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 158,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 2306
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 420,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 15239
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 472,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 15902
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 20
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyRerollRare": 1,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 3
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyModValues|Metadata/Items/Currency/CurrencyUpgradeToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyModValues",
+    "Metadata/Items/Currency/CurrencyUpgradeToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyModValues": 44,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 5707
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 354,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 25752
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 368,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 30776
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 188
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 116
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyModValues|Metadata/Items/Currency/CurrencyMagicQuality",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyModValues",
+    "Metadata/Items/Currency/CurrencyMagicQuality"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyModValues": 13,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 699
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 86,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 7607
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 89,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 8021
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 80
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyMagicQuality": 45
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyModValues|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyModValues",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyModValues": 369,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 253128
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 2258,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 364779
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 2377,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 394699
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 718
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 580
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyModValues|Metadata/Items/Currency/CurrencyArmourQuality",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyModValues",
+    "Metadata/Items/Currency/CurrencyArmourQuality"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyModValues": 51,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 6363
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 61,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 69112
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyModValues": 73,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 72512
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 194
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyModValues": 1,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 100
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyUpgradeToRare|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyUpgradeToRare",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 2314,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 9316
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 15181,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 20813
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 16695,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 23319
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 5
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyUpgradeToRare": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 2
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyMagicQuality|Metadata/Items/Currency/CurrencyAddModToRare",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyMagicQuality",
+    "Metadata/Items/Currency/CurrencyAddModToRare"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 624,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 2440
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 1129,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 27909
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 1370,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 28945
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 5
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyMagicQuality": 1,
+    "Metadata/Items/Currency/CurrencyAddModToRare": 3
+   }
+  },
+  {
+   "league": "Forbidden Rites",
+   "market_id": "Metadata/Items/Currency/CurrencyAddModToRare|Metadata/Items/Currency/CurrencyArmourQuality",
+   "market_pair": [
+    "Metadata/Items/Currency/CurrencyAddModToRare",
+    "Metadata/Items/Currency/CurrencyArmourQuality"
+   ],
+   "volume_traded": {
+    "Metadata/Items/Currency/CurrencyAddModToRare": 8022,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 5086
+   },
+   "lowest_stock": {
+    "Metadata/Items/Currency/CurrencyAddModToRare": 1912,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 11034
+   },
+   "highest_stock": {
+    "Metadata/Items/Currency/CurrencyAddModToRare": 2882,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 14475
+   },
+   "lowest_ratio": {
+    "Metadata/Items/Currency/CurrencyAddModToRare": 1,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 1
+   },
+   "highest_ratio": {
+    "Metadata/Items/Currency/CurrencyAddModToRare": 33,
+    "Metadata/Items/Currency/CurrencyArmourQuality": 5
+   }
+  }
+ ]
+}

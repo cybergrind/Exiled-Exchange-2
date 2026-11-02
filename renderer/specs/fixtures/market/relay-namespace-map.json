@@ -1,0 +1,143 @@
+{
+    "schemaVersion": 1,
+    "map": [
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "currency",
+            "type": "Currency"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "fragments",
+            "type": "Fragments"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "abyssal-bones",
+            "type": "Abyss"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "uncut-gems",
+            "type": "UncutGems"
+        },
+        {
+            "ns": "GEM",
+            "cx": true,
+            "url": "lineage-support-gems",
+            "type": "LineageSupportGems"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "essences",
+            "type": "Essences"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "soul-cores",
+            "type": "Ultimatum"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "idols",
+            "type": "Idols"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "runes",
+            "type": "Runes"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "omens",
+            "type": "Ritual"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "expedition",
+            "type": "Expedition"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "distilled-emotions",
+            "type": "Delirium"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "breach-catalyst",
+            "type": "Breach"
+        },
+        {
+            "ns": "ITEM",
+            "cx": true,
+            "url": "verisium",
+            "type": "Verisium"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-weapons",
+            "type": "UniqueWeapons"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-armours",
+            "type": "UniqueArmours"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-accessories",
+            "type": "UniqueAccessories"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-flasks",
+            "type": "UniqueFlasks"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-charms",
+            "type": "UniqueCharms"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-jewels",
+            "type": "UniqueJewels"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-tablets",
+            "type": "UniqueTablets"
+        },
+        {
+            "ns": "UNIQUE",
+            "cx": false,
+            "url": "unique-relics",
+            "type": "UniqueSanctumRelics"
+        },
+        {
+            "ns": "ITEM",
+            "cx": false,
+            "url": "precursor-tablets",
+            "type": "PrecursorTablets"
+        }
+    ]
+}

@@ -56,8 +56,8 @@ export async function requestPoeprices(
   }
 
   if (data.currency === "exalt") {
-    const { findPriceByQuery, autoCurrency } = usePoeninja();
-    const xchgExalted = findPriceByQuery({
+    const { divineValueByQuery, autoCurrency } = usePoeninja();
+    const xchgExalted = divineValueByQuery({
       ns: "ITEM",
       name: "Exalted Orb",
       variant: undefined,
@@ -67,8 +67,8 @@ export async function requestPoeprices(
     }
     const converted = autoCurrency([
       // FIXME: check this if poeprices ever gets poe2 support
-      data.min * xchgExalted.primaryValue,
-      data.max * xchgExalted.primaryValue,
+      data.min * xchgExalted,
+      data.max * xchgExalted,
     ]);
     data.min = converted.min;
     data.max = converted.max;

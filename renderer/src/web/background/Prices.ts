@@ -2,9 +2,14 @@ import { shallowRef, watch, readonly, computed } from "vue";
 import { createGlobalState } from "@vueuse/core";
 import { Host } from "@/web/background/IPC";
 import { useLeagues } from "./Leagues";
+import { useMarket } from "./marketStore";
 import { AppConfig } from "../Config";
 import { PriceCheckWidget } from "../overlay/widgets";
-import { DropEntry, ITEM_BY_REF } from "@/assets/data";
+import {
+  DropEntry,
+  ITEM_BY_REF,
+  ITEM_DROP as BUNDLED_ITEM_DROP,
+} from "@/assets/data";
 
 export type NinjaSchema = NinjaSchemaV1;
 type NinjaSchemaV1 = {
@@ -111,6 +116,7 @@ export const DivCurrency: CoreCurrency = {
 
 export const usePoeninja = createGlobalState(() => {
   const leagues = useLeagues();
+  const market = useMarket();
 
   // TODO: move out of here
   const ITEM_DROP = shallowRef<DropEntry[]>([]);
@@ -154,6 +160,10 @@ export const usePoeninja = createGlobalState(() => {
   let lastInterestTime = 0;
 
   let priceCache = new Map<string, CurrencyValue>();
+  // Exchange rates arrive separately from poe.ninja's; either invalidates.
+  watch(market.table, () => {
+    priceCache = new Map<string, CurrencyValue>();
+  });
 
   async function load(force: boolean = false) {
     const league = leagues.selected.value;
@@ -165,15 +175,25 @@ export const usePoeninja = createGlobalState(() => {
     )
       return;
     if (downloadController) downloadController.abort();
+    // GGG Currency Exchange prices: their own cache and failure handling.
+    market.load(league.id).catch((e) => console.warn(e));
     try {
       isLoading.value = true;
       downloadController = new AbortController();
 
-      ITEM_DROP.value = JSON.parse(
-        await Host.proxy("api.exiledexchange2.dev/proxy/data/item-drop.json", {
-          signal: downloadController.signal,
-        }).then((r) => r.text()),
-      );
+      try {
+        ITEM_DROP.value = JSON.parse(
+          await Host.proxy(
+            "api.exiledexchange2.dev/proxy/data/item-drop.json",
+            { signal: downloadController.signal },
+          ).then((r) => r.text()),
+        );
+      } catch (e) {
+        // The drop list is a side table; prices must not wait on it.
+        if (downloadController.signal.aborted) throw e;
+        console.warn("Using the bundled drop list:", e);
+        ITEM_DROP.value = BUNDLED_ITEM_DROP ?? [];
+      }
 
       availableCoreCurrencies.value = getAvailableCoreCurrencies().map(
         (currency) => ({
@@ -200,6 +220,9 @@ export const usePoeninja = createGlobalState(() => {
         `api.exiledexchange2.dev/proxy/${selectedLeagueToUrl(true)}/overviewData.json`,
         {
           signal: downloadController.signal,
+          // The relay sends max-age=14400. Without this, every refresh inside
+          // one app run reads the browser cache for up to 4 hours.
+          cache: "no-cache",
         },
       );
       const jsonBlob = await response.text();
@@ -345,6 +368,32 @@ export const usePoeninja = createGlobalState(() => {
     return count * (xchgRate.value || 9999);
   }
 
+  /**
+   * An item's value in divines, the unit every sum and comparison here uses.
+   * Exchange items take the Currency Exchange rate (guide/poe-source.html,
+   * D2), expressed in divines with poe.ninja's rate so that autoCurrency
+   * turns it back into exactly that rate; others take poe.ninja's value.
+   */
+  function divineValueByQuery(query: DbQuery): number | undefined {
+    const entry = findPriceByQuery(query);
+    const core = xchgRateCurrency.value === "chaos" ? "chaos" : "exalted";
+    const exchange = market.valueFor(
+      query.ns,
+      query.name,
+      core,
+      entry ?? undefined,
+    );
+    if (
+      exchange?.source === "ggg" &&
+      Number.isFinite(exchange.ordering) &&
+      xchgRate.value &&
+      xchgRateCurrency.value === core
+    ) {
+      return exchange.ordering / xchgRate.value;
+    }
+    return entry?.primaryValue;
+  }
+
   function cachedCurrencyByQuery(query: DbQuery, count: number) {
     // variant should always be undefined for currencies
     const key = `${query.ns}:${query.name}:${query.variant ?? ""}:${count}`;
@@ -352,11 +401,11 @@ export const usePoeninja = createGlobalState(() => {
       return priceCache.get(key)!;
     }
 
-    const price = findPriceByQuery(query);
-    if (!price) {
+    const value = divineValueByQuery(query);
+    if (value === undefined) {
       return;
     }
-    const currency = autoCurrency(price.primaryValue * count);
+    const currency = autoCurrency(value * count);
     priceCache.set(key, currency);
     return currency;
   }
@@ -455,6 +504,7 @@ export const usePoeninja = createGlobalState(() => {
     xchgRate: readonly(xchgRate),
     xchgRateCurrency: readonly(selectedCoreCurrency),
     findPriceByQuery,
+    divineValueByQuery,
     autoCurrency,
     queuePricesFetch,
     cachedCurrencyByQuery,

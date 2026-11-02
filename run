@@ -205,7 +205,15 @@ def build(force: bool) -> None:
         sh(['npm', 'run', 'build'], MAIN)
 
     # The built-in server serves the UI from the directory holding main.js.
-    if rebuilt_renderer or not (MAIN / 'dist/index.html').exists():
+    # Compare the files, not who built them: a renderer built outside ./run
+    # (npm run build) must be served too. Bundle names are content hashes,
+    # so index.html changes whenever the renderer does.
+    served = MAIN / 'dist/index.html'
+    if (
+        rebuilt_renderer
+        or not served.exists()
+        or served.read_bytes() != renderer_output.read_bytes()
+    ):
         shutil.rmtree(MAIN / 'dist/assets', ignore_errors=True)  # file names are content hashes
         shutil.copytree(RENDERER / 'dist', MAIN / 'dist', dirs_exist_ok=True)
 

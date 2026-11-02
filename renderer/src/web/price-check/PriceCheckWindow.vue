@@ -21,6 +21,11 @@
         @close="closePriceCheck"
         @click="openLeagueSelection"
         :title="title"
+        :warning="
+          leagues.isOlder.value
+            ? 'Older league selected: prices are not for the current league. Click to change.'
+            : undefined
+        "
       >
         <ui-popover
           v-if="stableOrbCost && xchgRateCurrency?.id"
@@ -188,6 +193,7 @@ export default defineComponent({
         collapseListings: "api",
         smartInitialSearch: true,
         lockedInitialSearch: true,
+        exchangeAutoSearch: false,
         activateStockFilter: false,
         builtinBrowser: false,
         hotkey: null,
@@ -445,6 +451,7 @@ export default defineComponent({
       overlayKey,
       isLeagueSelected,
       openLeagueSelection,
+      leagues,
     };
   },
 });

@@ -281,7 +281,7 @@ const props = defineProps<{
 
 const wm = inject<WidgetManager>("wm")!;
 const { t } = useI18nNs("item_search");
-const { findPriceByQuery, autoCurrency, queuePricesFetch } = usePoeninja();
+const { divineValueByQuery, autoCurrency, queuePricesFetch } = usePoeninja();
 
 const showTimeout = shallowRef<{ reset: () => void } | null>(null);
 
@@ -311,23 +311,23 @@ function selectItem(
 ) {
   queuePricesFetch();
 
-  let price: ReturnType<typeof findPriceByQuery>;
+  let price: number | undefined;
   if (opts?.unique) {
-    price = findPriceByQuery({
+    price = divineValueByQuery({
       ns: item.namespace,
       name: item.refName,
       variant: item.unique!.base,
     });
   } else {
-    price = findPriceByQuery({
+    price = divineValueByQuery({
       ns: item.namespace,
       name: item.refName,
     });
   }
   const isAdded = addItem({
     info: item,
-    chaos: price?.primaryValue,
-    price: price != null ? autoCurrency(price.primaryValue) : undefined,
+    chaos: price,
+    price: price !== undefined ? autoCurrency(price) : undefined,
   });
   if (isAdded && opts?.withTimeout) {
     showTimeout.value?.reset();

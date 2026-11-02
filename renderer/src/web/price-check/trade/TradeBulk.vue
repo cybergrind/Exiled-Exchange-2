@@ -1,5 +1,8 @@
 <template>
   <div v-if="!error" class="layout-column min-h-0" style="height: auto">
+    <div class="pl-2 mb-1 text-xs text-gray-600">
+      Stash offers on the trade site, not Currency Exchange trades
+    </div>
     <!-- @TODO: fix "Matched" text jumping (min-height: 22px) -->
     <div
       class="mb-2 flex pl-2 justify-between items-baseline"

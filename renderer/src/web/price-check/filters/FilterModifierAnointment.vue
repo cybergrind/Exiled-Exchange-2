@@ -33,7 +33,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { findPriceByQuery, autoCurrency } = usePoeninja();
+    const { divineValueByQuery, autoCurrency } = usePoeninja();
 
     const result = computed(() => {
       if (!props.filter.oils) return null;
@@ -45,12 +45,12 @@ export default defineComponent({
       let totalDiv: number | undefined = 0;
       for (const oil of oils) {
         if (!oil) return null;
-        const price = findPriceByQuery({
+        const price = divineValueByQuery({
           ns: "ITEM",
           name: oil.refName,
         });
         if (price) {
-          totalDiv += price.primaryValue;
+          totalDiv += price;
         } else {
           totalDiv = undefined;
           break;

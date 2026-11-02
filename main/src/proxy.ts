@@ -14,6 +14,8 @@ const PROXY_HOSTS = [
   { host: "fr.pathofexile.com", official: true },
   { host: "poe.ninja", official: false },
   { host: "www.poeprices.info", official: false },
+  // GGG Currency Exchange hourly digests (guide/poe-source.html, D3)
+  { host: "web.poecdn.com", official: false },
   // me :)
   { host: "api.exiledexchange2.dev", official: false },
 ];

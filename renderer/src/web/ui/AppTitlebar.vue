@@ -1,7 +1,14 @@
 <template>
   <div :class="$style.titlebar">
     <slot />
-    <button @click="emit('click')" class="truncate">{{ title }}</button>
+    <button
+      @click="emit('click')"
+      class="truncate"
+      :class="{ 'text-yellow-500': warning }"
+      :title="warning"
+    >
+      {{ title }}
+    </button>
     <button
       @click.stop="emit('close')"
       tabindex="-1"
@@ -16,6 +23,8 @@
 <script setup lang="ts">
 defineProps<{
   title?: string;
+  /** Shown as a tooltip; also turns the title amber. */
+  warning?: string;
 }>();
 
 const emit = defineEmits<{

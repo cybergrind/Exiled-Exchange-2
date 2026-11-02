@@ -25,6 +25,8 @@ import { defineComponent, PropType, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { usePoeninja, displayRounding } from "@/web/background/Prices";
 import { getDetailsId } from "../trends/getDetailsId";
+import { stackPrice } from "../trends/headlinePrice";
+import { useMarket } from "@/web/background/marketStore";
 import { ParsedItem } from "@/parser";
 import { ItemFilters } from "../filters/interfaces";
 
@@ -40,12 +42,25 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { findPriceByQuery, autoCurrency } = usePoeninja();
+    const { findPriceByQuery, autoCurrency, xchgRateCurrency } = usePoeninja();
+    const market = useMarket();
+
+    function exchangeFor(id: NonNullable<ReturnType<typeof getDetailsId>>) {
+      const core = xchgRateCurrency.value?.id === "chaos" ? "chaos" : "exalted";
+      return market.valueFor(
+        id.ns,
+        id.name,
+        core,
+        findPriceByQuery(id) || undefined,
+      );
+    }
 
     function getPriceFor(n: number) {
-      const one = findPriceByQuery(getDetailsId(props.item)!)!;
-
-      const price = autoCurrency(n * one.primaryValue);
+      const id = getDetailsId(props.item)!;
+      const one = findPriceByQuery(id);
+      const price = stackPrice(n, exchangeFor(id), (count) =>
+        autoCurrency(count * (one ? one.primaryValue : 0)),
+      );
 
       return `${displayRounding(price.min)} ${price.currency}`;
     }
@@ -56,7 +71,11 @@ export default defineComponent({
       t,
       show: computed(() => {
         const id = getDetailsId(props.item);
-        return Boolean(props.filters.stackSize && id && findPriceByQuery(id));
+        return Boolean(
+          props.filters.stackSize &&
+            id &&
+            (findPriceByQuery(id) || exchangeFor(id)?.source === "ggg"),
+        );
       }),
       value: computed(() => {
         return {

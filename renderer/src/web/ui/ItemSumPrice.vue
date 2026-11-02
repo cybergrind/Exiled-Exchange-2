@@ -62,17 +62,17 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { findPriceByQuery, autoCurrency, xchgRate } = usePoeninja();
+    const { divineValueByQuery, autoCurrency, xchgRate } = usePoeninja();
 
     const sumPriceMin = computed(() => {
       const primary = props.items.reduce((sum, augment) => {
         if (!augment) return sum;
-        const price = findPriceByQuery({
+        const price = divineValueByQuery({
           ns: "ITEM",
           name: augment.refName,
         });
         if (!price) return sum;
-        return sum + price.primaryValue;
+        return sum + price;
       }, 0);
       return autoCurrency(primary);
     });
@@ -82,12 +82,12 @@ export default defineComponent({
 
       const primary = props.items2.reduce((sum, augment) => {
         if (!augment) return sum;
-        const price = findPriceByQuery({
+        const price = divineValueByQuery({
           ns: "ITEM",
           name: augment.refName,
         });
         if (!price) return sum;
-        return sum + price.primaryValue;
+        return sum + price;
       }, 0);
       return sumPriceMin.value.currency === "div"
         ? {

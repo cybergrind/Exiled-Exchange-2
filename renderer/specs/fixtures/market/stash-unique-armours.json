@@ -1,0 +1,397 @@
+{
+ "core": {
+  "items": [
+   {
+    "id": "divine",
+    "name": "Divine Orb",
+    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lNb2RWYWx1ZXMiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/2986e220b3/CurrencyModValues.png",
+    "category": "Currency",
+    "detailsId": "divine-orb"
+   },
+   {
+    "id": "exalted",
+    "name": "Exalted Orb",
+    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lBZGRNb2RUb1JhcmUiLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/ad7c366789/CurrencyAddModToRare.png",
+    "category": "Currency",
+    "detailsId": "exalted-orb"
+   },
+   {
+    "id": "chaos",
+    "name": "Chaos Orb",
+    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxSYXJlIiwic2NhbGUiOjEsInJlYWxtIjoicG9lMiJ9XQ/c0ca392a78/CurrencyRerollRare.png",
+    "category": "Currency",
+    "detailsId": "chaos-orb"
+   }
+  ],
+  "rates": {
+   "exalted": 688.4,
+   "chaos": 10.04
+  },
+  "primary": "divine",
+  "secondary": "chaos"
+ },
+ "lines": [
+  {
+   "id": 728,
+   "itemId": "Temporalis Runemastered Silk Robe",
+   "detailsId": "temporalis-runemastered-silk-robe",
+   "name": "Temporalis",
+   "baseType": "Runemastered Silk Robe",
+   "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1BpbGdyaW1zSW1hZ2UiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/69db95b9aa/PilgrimsImage.png",
+   "flavourText": "The final element the tale-women\r\nmastered was Time itself.",
+   "levelRequired": 64,
+   "category": "Body Armour",
+   "primaryValue": 7200,
+   "listingCount": 9,
+   "corrupted": false,
+   "sparkLine": {
+    "totalChange": -8.86,
+    "data": [
+     0,
+     -5.96,
+     null,
+     -11.14,
+     -11.14,
+     null,
+     -8.86
+    ]
+   },
+   "explicitModifiers": [
+    {
+     "text": "+(100-150) to maximum [EnergyShield|Energy Shield]",
+     "optional": false,
+     "statIds": [
+      "local_energy_shield"
+     ]
+    },
+    {
+     "text": "+(10-20)% to all [ElementalDamage|Elemental] [Resistances]",
+     "optional": false,
+     "statIds": [
+      "base_resist_all_elements_%"
+     ]
+    },
+    {
+     "text": "(5-30)% of Damage taken [Recoup|Recouped] as Life",
+     "optional": false,
+     "statIds": [
+      "damage_taken_goes_to_life_over_4_seconds_%"
+     ]
+    },
+    {
+     "text": "(5-30)% of Damage taken [Recoup|Recouped] as Mana",
+     "optional": false,
+     "statIds": [
+      "damage_taken_goes_to_mana_%"
+     ]
+    },
+    {
+     "text": "Skills have -(2-1.9) seconds to Cooldown",
+     "optional": false,
+     "statIds": [
+      "unique_cooldown_modifier_ms"
+     ]
+    }
+   ],
+   "propertyModifiers": [
+    {
+     "text": "[EnergyShield|Energy Shield]: (127-248)",
+     "optional": false
+    },
+    {
+     "text": "[Ward|Runic Ward]: (110-170)",
+     "optional": false
+    }
+   ],
+   "requirementModifiers": [
+    {
+     "text": "Level: 64",
+     "optional": false
+    },
+    {
+     "text": "[Intelligence|Int]: 61",
+     "optional": false
+    }
+   ]
+  },
+  {
+   "id": 232,
+   "itemId": "Temporalis Silk Robe",
+   "detailsId": "temporalis-silk-robe",
+   "name": "Temporalis",
+   "baseType": "Silk Robe",
+   "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQXJtb3Vycy9Cb2R5QXJtb3Vycy9VbmlxdWVzL1BpbGdyaW1zSW1hZ2UiLCJ3IjoyLCJoIjozLCJzY2FsZSI6MSwicmVhbG0iOiJwb2UyIn1d/69db95b9aa/PilgrimsImage.png",
+   "flavourText": "The final element the tale-women\r\nmastered was Time itself.",
+   "levelRequired": 64,
+   "category": "Body Armour",
+   "primaryValue": 6934,
+   "listingCount": 15,
+   "corrupted": false,
+   "sparkLine": {
+    "totalChange": -6.93,
+    "data": [
+     0,
+     -4.15,
+     null,
+     -8.46,
+     -4.3,
+     null,
+     -6.93
+    ]
+   },
+   "explicitModifiers": [
+    {
+     "text": "+(100-150) to maximum [EnergyShield|Energy Shield]",
+     "optional": false,
+     "statIds": [
+      "local_energy_shield"
+     ]
+    },
+    {
+     "text": "+(10-20)% to all [ElementalDamage|Elemental] [Resistances]",
+     "optional": false,
+     "statIds": [
+      "base_resist_all_elements_%"
+     ]
+    },
+    {
+     "text": "(5-30)% of Damage taken [Recoup|Recouped] as Life",
+     "optional": false,
+     "statIds": [
+      "damage_taken_goes_to_life_over_4_seconds_%"
+     ]
+    },
+    {
+     "text": "(5-30)% of Damage taken [Recoup|Recouped] as Mana",
+     "optional": false,
+     "statIds": [
+      "damage_taken_goes_to_mana_%"
+     ]
+    },
+    {
+     "text": "Skills have -(2-1.04) seconds to Cooldown",
+     "optional": false,
+     "statIds": [
+      "unique_cooldown_modifier_ms"
+     ]
+    }
+   ],
+   "propertyModifiers": [
+    {
+     "text": "[EnergyShield|Energy Shield]: (164-300)",
+     "optional": false
+    }
+   ],
+   "requirementModifiers": [
+    {
+     "text": "Level: 64",
+     "optional": false
+    },
+    {
+     "text": "[Intelligence|Int]: 37",
+     "optional": false
+    }
+   ]
+  },
+  {
+   "id": 111,
+   "itemId": "Svalinn Crucible Tower Shield",
+   "detailsId": "svalinn-crucible-tower-shield",
+   "name": "Svalinn",
+   "baseType": "Crucible Tower Shield",
+   "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9TaGllbGRzL1VuaXF1ZXMvU3ZhbGlubiIsInciOjIsImgiOjQsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/9725b3d511/Svalinn.png",
+   "flavourText": "The priests found the Great Shield the night it fell to Middengard,\r\nbut it was the smiths who delved into the secrets it held.",
+   "levelRequired": 72,
+   "category": "[Shield]",
+   "primaryValue": 2.0,
+   "listingCount": 859,
+   "corrupted": false,
+   "sparkLine": {
+    "totalChange": 38.68,
+    "data": [
+     0,
+     21.79,
+     null,
+     38.68,
+     38.68,
+     null,
+     38.68
+    ]
+   },
+   "explicitModifiers": [
+    {
+     "text": "+(50-100) to maximum [Ward|Runic Ward]",
+     "optional": false,
+     "statIds": [
+      "local_ward"
+     ]
+    },
+    {
+     "text": "(200-300)% increased [Armour|Armour]",
+     "optional": false,
+     "statIds": [
+      "local_physical_damage_reduction_rating_+%"
+     ]
+    },
+    {
+     "text": "Chance to [Block] [Hit|Damage] is [Lucky]",
+     "optional": false,
+     "statIds": [
+      "base_block_chance_luck"
+     ]
+    },
+    {
+     "text": "You take (2-20)% of damage from [Block|Blocked] [Hit|Hits]",
+     "optional": false,
+     "statIds": [
+      "base_block_%_damage_taken"
+     ]
+    }
+   ],
+   "propertyModifiers": [
+    {
+     "text": "[Block] chance: (26-29)%",
+     "optional": false
+    },
+    {
+     "text": "[Armour]: (435-580)",
+     "optional": false
+    },
+    {
+     "text": "[Ward|Runic Ward]: (50-100)",
+     "optional": false
+    }
+   ],
+   "requirementModifiers": [
+    {
+     "text": "Level: 60",
+     "optional": false
+    },
+    {
+     "text": "[Strength|Str]: 64",
+     "optional": false
+    }
+   ],
+   "grantedSkillModifiers": [
+    {
+     "text": "Level (14-19) Cast on Block",
+     "optional": false
+    }
+   ]
+  },
+  {
+   "id": 685,
+   "itemId": "Svalinn Runemastered Crucible Tower Shield",
+   "detailsId": "svalinn-runemastered-crucible-tower-shield",
+   "name": "Svalinn",
+   "baseType": "Runemastered Crucible Tower Shield",
+   "icon": "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvT2ZmaGFuZC9TaGllbGRzL1VuaXF1ZXMvU3ZhbGlubiIsInciOjIsImgiOjQsInNjYWxlIjoxLCJyZWFsbSI6InBvZTIifV0/9725b3d511/Svalinn.png",
+   "flavourText": "The priests found the Great Shield the night it fell to Middengard,\r\nbut it was the smiths who delved into the secrets it held.",
+   "levelRequired": 78,
+   "category": "[Shield]",
+   "primaryValue": 0.2989,
+   "listingCount": 786,
+   "corrupted": false,
+   "sparkLine": {
+    "totalChange": 0.2,
+    "data": [
+     0,
+     -1.85,
+     null,
+     0.78,
+     -33.31,
+     null,
+     0.2
+    ]
+   },
+   "implicitModifiers": [
+    {
+     "text": "Recover (15-25) [Ward|Runic Ward] when you [Block]",
+     "optional": true,
+     "statIds": [
+      "recover_X_ward_on_block"
+     ]
+    },
+    {
+     "text": "(15-25)% of Damage is taken from Mana before Life",
+     "optional": true,
+     "statIds": [
+      "base_damage_removed_from_mana_before_life_%"
+     ]
+    }
+   ],
+   "explicitModifiers": [
+    {
+     "text": "+(50-100) to maximum [Ward|Runic Ward]",
+     "optional": false,
+     "statIds": [
+      "local_ward"
+     ]
+    },
+    {
+     "text": "(200-300)% increased [Armour|Armour]",
+     "optional": false,
+     "statIds": [
+      "local_physical_damage_reduction_rating_+%"
+     ]
+    },
+    {
+     "text": "Chance to [Block] [Hit|Damage] is [Lucky]",
+     "optional": false,
+     "statIds": [
+      "base_block_chance_luck"
+     ]
+    },
+    {
+     "text": "You take (2-20)% of damage from [Block|Blocked] [Hit|Hits]",
+     "optional": true,
+     "statIds": [
+      "base_block_%_damage_taken"
+     ]
+    }
+   ],
+   "propertyModifiers": [
+    {
+     "text": "[Block] chance: (26-29)%",
+     "optional": false
+    },
+    {
+     "text": "[Evasion|Evasion Rating]: 148",
+     "optional": true
+    },
+    {
+     "text": "[Ward|Runic Ward]: (85-308)",
+     "optional": false
+    },
+    {
+     "text": "[Armour]: (300-643)",
+     "optional": true
+    }
+   ],
+   "requirementModifiers": [
+    {
+     "text": "Level: 65",
+     "optional": false
+    },
+    {
+     "text": "[Strength|Str]: (54-91)",
+     "optional": true
+    },
+    {
+     "text": "[Dexterity|Dex]: 91",
+     "optional": true
+    },
+    {
+     "text": "[Intelligence|Int]: 36",
+     "optional": true
+    }
+   ],
+   "grantedSkillModifiers": [
+    {
+     "text": "Level (14-19) Cast on Block",
+     "optional": false
+    }
+   ]
+  }
+ ]
+}

@@ -137,15 +137,9 @@ function forUniqueItem(item: ParsedItem) {
   return {
     ns: item.info.namespace,
     name: item.info.refName,
-    variant: variant([
-      //   getUniqueVariant(item),
-      item.category === ItemCategory.Flask
-        ? null
-        : item.category === ItemCategory.SanctumRelic
-          ? "Relic"
-          : item.info.unique.base,
-      //   item.gemSockets?.linked ? `${item.gemSockets.linked}L` : null,
-    ]),
+    // poe.ninja keys every unique line by its base type, flasks and relics
+    // included ("Ultimate Life Flask", "Incense Relic").
+    variant: variant([item.info.unique.base]),
   };
 }
 

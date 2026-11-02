@@ -67,7 +67,7 @@ export default defineComponent({
     ItemEditorItem,
   },
   setup(props) {
-    const { findPriceByQuery, autoCurrency } = usePoeninja();
+    const { divineValueByQuery, autoCurrency } = usePoeninja();
 
     const selectedCatalyst = shallowRef<BaseType | undefined>(undefined);
     const selectedAmount = shallowRef<0 | 20 | 30 | 40 | 50 | 60 | 70>(20);
@@ -166,7 +166,7 @@ export default defineComponent({
         if (!selectedCatalyst.value || !props.item) return;
         applyCatalyst(props.item, selectedCatalyst.value, selectedAmount.value);
 
-        const price = findPriceByQuery({
+        const price = divineValueByQuery({
           ns: "ITEM",
           name: selectedCatalyst.value.name,
         });
@@ -176,7 +176,7 @@ export default defineComponent({
           return;
         }
 
-        const sumPrice = price.primaryValue * selectedAmount.value;
+        const sumPrice = price * selectedAmount.value;
         const currencyPrice = autoCurrency(sumPrice);
         totalPrice.value = currencyPrice;
       },

@@ -53,16 +53,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { findPriceByQuery, autoCurrency, comparePrice, subtractPrice } =
+    const { divineValueByQuery, autoCurrency, comparePrice, subtractPrice } =
       usePoeninja();
 
     const extractionOrb = computed(() => {
-      const price = findPriceByQuery({
+      const price = divineValueByQuery({
         ns: "ITEM",
         name: "Orb of Extraction",
       });
 
-      return autoCurrency(price?.primaryValue || 99999);
+      return autoCurrency(price || 99999);
     });
 
     const augmentPrice = computed(() => {
@@ -71,12 +71,12 @@ export default defineComponent({
       const price = props.item.augmentSockets.augments.reduce(
         (sum, augment) => {
           if (!augment) return sum;
-          const price = findPriceByQuery({
+          const price = divineValueByQuery({
             ns: "ITEM",
             name: augment.refName,
           });
           if (!price) return sum;
-          return sum + price.primaryValue;
+          return sum + price;
         },
         0,
       );
