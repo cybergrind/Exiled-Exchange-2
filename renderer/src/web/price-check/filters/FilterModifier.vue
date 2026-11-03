@@ -3,6 +3,7 @@
     :class="[
       $style['filter'],
       tabletRating && $style[`tier-${tabletRating.tier}`],
+      uniqueRoll.importance && $style[`importance-${uniqueRoll.importance}`],
     ]"
   >
     <div v-if="showSourceInfo" :class="$style['mods']">
@@ -124,6 +125,13 @@
               :rating="tabletRating"
               :roll="tabletRoll"
             />
+            <unique-roll-badge
+              v-if="uniqueRoll.importance || uniqueRoll.grade"
+              :importance="uniqueRoll.importance"
+              :why="uniqueRoll.why"
+              :grade="uniqueRoll.grade"
+              :goodness="roll?.goodness"
+            />
             <filter-modifier-tiers :filter="filter" :item="item" />
             <filter-modifier-item-has-empty
               :filter="filter"
@@ -176,6 +184,10 @@ import FilterModifierItemIsElemental from "./FilterModifierItemIsElemental.vue";
 import { CLIENT_STRINGS as _$ } from "@/assets/data";
 import TabletModBadge from "../tablets/TabletModBadge.vue";
 import { rollPosition, tabletModRating } from "../tablets/tabletRating";
+import UniqueRollBadge from "./UniqueRollBadge.vue";
+import { uniqueRollBadge } from "./rollProfile";
+import type { UniqueRollBadgeData } from "./rollProfile";
+import { useUniqueRolls } from "@/web/background/uniqueRollsStore";
 
 export default defineComponent({
   components: {
@@ -188,6 +200,7 @@ export default defineComponent({
     UiPopover,
     FilterModifierItemIsElemental,
     TabletModBadge,
+    UniqueRollBadge,
   },
   emits: ["submit"],
   props: {
@@ -218,6 +231,21 @@ export default defineComponent({
         ? rollPosition(tabletRating.value, props.filter.roll?.value)
         : undefined,
     );
+    // A unique's researched key mods (WP-65) and this copy's roll grade.
+    const uniqueRolls = useUniqueRolls();
+    uniqueRolls.load().catch(() => undefined);
+    const uniqueRoll = computed((): UniqueRollBadgeData => {
+      if (props.item.rarity !== ItemRarity.Unique) return {};
+      const roll = props.filter.roll;
+      return uniqueRollBadge(
+        uniqueRolls.file.value,
+        props.item.info.refName,
+        props.filter.statRef,
+        roll?.bounds && roll.bounds.min !== roll.bounds.max
+          ? { goodness: roll.goodness, value: roll.value }
+          : undefined,
+      );
+    });
     const showTag = computed(
       () =>
         props.filter.tag !== FilterTag.Property &&
@@ -361,6 +389,7 @@ export default defineComponent({
       tag: computed(() => props.filter.tag),
       tabletRating,
       tabletRoll,
+      uniqueRoll,
       // TODO: change
       changeStep: computed(() => (props.filter.roll!.dp ? 0.01 : 1)),
       showInputs: computed(
@@ -446,6 +475,13 @@ export default defineComponent({
 }
 .tier-niche {
   box-shadow: inset 3px 0 0 theme("colors.gray.500");
+}
+/* Researched unique mods (WP-65), same edge. */
+.importance-key {
+  box-shadow: inset 3px 0 0 theme("colors.yellow.500");
+}
+.importance-good {
+  box-shadow: inset 3px 0 0 theme("colors.green.600");
 }
 
 .rollInput {

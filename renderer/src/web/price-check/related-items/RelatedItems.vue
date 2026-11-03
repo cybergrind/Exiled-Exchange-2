@@ -9,6 +9,8 @@
         :key="item.name"
         :class="{ 'bg-gray-700': item.highlight }"
         class="rounded px-1"
+        :title="item.title"
+        data-related-item
       >
         <item-quick-price
           currency-text
@@ -28,7 +30,12 @@
       v-if="'items' in result && result.items.length"
       class="flex-1 p-2 w-1/2"
     >
-      <div v-for="item in result.items" :key="item.name">
+      <div
+        v-for="item in result.items"
+        :key="item.name"
+        :title="item.title"
+        data-related-item
+      >
         <item-quick-price
           currency-text
           fraction
@@ -53,8 +60,17 @@ import { usePoeninja, CurrencyValue } from "@/web/background/Prices";
 import { getDetailsId } from "../trends/getDetailsId";
 import { ParsedItem } from "@/parser";
 import ItemQuickPrice from "@/web/ui/ItemQuickPrice.vue";
+import { useMarket } from "@/web/background/marketStore";
+import { relatedPrice } from "./relatedPrice";
+import type { RelatedPrice } from "./relatedPrice";
 
-const { divineValueByQuery, autoCurrency, ITEM_DROP } = usePoeninja();
+const {
+  divineValueByQuery,
+  findPriceByQuery,
+  autoCurrency,
+  xchgRateCurrency,
+  ITEM_DROP,
+} = usePoeninja();
 
 function findItemByQueryId(queryId: string): BaseType | undefined {
   const [ns, encodedName] = queryId.split("::");
@@ -68,16 +84,23 @@ function findItemByQueryId(queryId: string): BaseType | undefined {
   if (found && found.length) return found[0];
 }
 
-function findPriceByQueryId(queryId: string) {
+type Market = ReturnType<typeof useMarket>;
+
+/** The exchange rate first, then poe.ninja, with where it came from. */
+function findPriceByQueryId(queryId: string, market: Market): RelatedPrice {
   const [ns, encodedName] = queryId.split("::");
   const [name, variant] = encodedName.split(" // ");
   const priceEntry = divineValueByQuery({ ns, name, variant });
-  if (priceEntry) {
-    return autoCurrency(priceEntry);
-  }
+  const entry = findPriceByQuery({ ns, name, variant });
+  const core = xchgRateCurrency.value?.id === "chaos" ? "chaos" : "exalted";
+  return relatedPrice(
+    market.valueFor(ns, name, core, entry || undefined),
+    priceEntry ? autoCurrency(priceEntry) : undefined,
+    market.hours.value.length,
+  );
 }
 
-function getItemPrices(queryId: string) {
+function getItemPrices(queryId: string, market: Market) {
   const dropEntry = ITEM_DROP.value.find((entry) =>
     entry.query.includes(queryId),
   );
@@ -88,9 +111,15 @@ function getItemPrices(queryId: string) {
       name: string;
       icon: string;
       price?: CurrencyValue;
+      title: string;
       highlight: boolean;
     }>,
-    items: [] as Array<{ name: string; icon: string; price?: CurrencyValue }>,
+    items: [] as Array<{
+      name: string;
+      icon: string;
+      price?: CurrencyValue;
+      title: string;
+    }>,
   };
   for (const itemId of dropEntry.query) {
     const dbItem = findItemByQueryId(itemId);
@@ -99,7 +128,7 @@ function getItemPrices(queryId: string) {
     out.related.push({
       icon: dbItem.icon,
       name: dbItem.name,
-      price: findPriceByQueryId(itemId),
+      ...findPriceByQueryId(itemId, market),
       highlight: itemId === queryId,
     });
   }
@@ -110,7 +139,7 @@ function getItemPrices(queryId: string) {
     out.items.push({
       icon: dbItem.icon,
       name: dbItem.name,
-      price: findPriceByQueryId(itemId),
+      ...findPriceByQueryId(itemId, market),
     });
   }
 
@@ -130,6 +159,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const market = useMarket();
     const result = computed(() => {
       if (!props.item) return;
 
@@ -138,6 +168,7 @@ export default defineComponent({
 
       return getItemPrices(
         `${queryId.ns}::${queryId.name}${queryId.variant ? ` // ${queryId.variant}` : ""}`,
+        market,
       );
     });
 

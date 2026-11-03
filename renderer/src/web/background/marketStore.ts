@@ -183,6 +183,7 @@ export const useMarket = createGlobalState(() => {
     table,
     league,
     asOfHour,
+    hours,
     errors,
     load,
     restore,

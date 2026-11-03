@@ -41,7 +41,9 @@
         </div>
         <item-quick-price
           class="flex-1 text-base justify-center"
-          :class="{ 'opacity-50': priceData.confidence?.dim }"
+          :class="{
+            'opacity-50': priceData.confidence?.dim || priceData.variant,
+          }"
           :price="priceData.price"
           :fraction="filters.stackSize != null"
           :item-img="item.info.icon"
@@ -134,6 +136,25 @@
       {{ priceData.confidence.text }}
     </div>
     <div
+      v-if="priceData.variant"
+      data-variant-note
+      class="-mt-2 mb-3 text-center"
+    >
+      <div class="text-base font-semibold text-yellow-500">
+        {{ priceData.variant.headline }}
+      </div>
+      <div data-variant-detail class="text-sm text-gray-400">
+        {{ priceData.variant.detail }}
+      </div>
+    </div>
+    <div
+      v-if="rollSummary"
+      data-roll-summary
+      class="-mt-2 mb-3 text-center text-sm text-gray-400"
+    >
+      {{ rollSummary }}
+    </div>
+    <div
       v-if="priceData.tablet"
       data-tablet-summary
       :data-level="priceData.tablet.level"
@@ -211,6 +232,10 @@ import type { ConfidenceNote } from "./confidenceNote";
 import { tabletSummary } from "./tabletNote";
 import type { TabletSummary } from "./tabletNote";
 import type { TabletVerdictLevel } from "../tablets/tabletRating";
+import { variantNote } from "./variantNote";
+import type { VariantNote } from "./variantNote";
+import { variantModInput } from "./variantMods";
+import { useUniqueRolls } from "@/web/background/uniqueRollsStore";
 
 // Matches the tier badges on the mods (TabletModBadge.vue).
 const TABLET_LEVEL_CLASS: Record<TabletVerdictLevel, string> = {
@@ -260,6 +285,14 @@ export default defineComponent({
     const market = useMarket();
     const uniqueLines = useUniqueLines();
     const history = useMarketHistory();
+    const uniqueRolls = useUniqueRolls();
+    uniqueRolls.load().catch(() => undefined);
+    // The researched profile's one sentence (WP-65); the mods carry the badges.
+    const rollSummary = computed(() =>
+      props.item.info.unique
+        ? uniqueRolls.file.value?.uniques[props.item.info.refName]?.summary
+        : undefined,
+    );
     const showHistory = shallowRef(false);
 
     const volumeSetting = computed(
@@ -315,6 +348,7 @@ export default defineComponent({
         };
         confidence?: ConfidenceNote;
         tablet?: TabletSummary;
+        variant?: VariantNote;
       } = {
         price: headline.price,
         change: entry?.sparkline.data
@@ -335,6 +369,18 @@ export default defineComponent({
       if (detailsId.ns === "UNIQUE" && detailsId.variant) {
         const line = uniqueLines.lineFor(detailsId.name, detailsId.variant);
         if (line) data.confidence = confidenceNote(line.listingCount);
+      }
+
+      const unique = props.item.info.unique;
+      if (detailsId.ns === "UNIQUE" && unique) {
+        data.variant = variantNote(
+          {
+            name: props.item.info.refName,
+            base: unique.base,
+            fixedStats: unique.fixedStats,
+          },
+          props.item.statsByType.map(variantModInput),
+        );
       }
 
       if (
@@ -460,6 +506,7 @@ export default defineComponent({
       slowdown,
       volumeSetting,
       TABLET_LEVEL_CLASS,
+      rollSummary,
     };
   },
 });

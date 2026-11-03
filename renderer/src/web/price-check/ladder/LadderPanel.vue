@@ -32,7 +32,7 @@
       <div
         ref="list"
         class="relative"
-        :class="{ 'max-h-80 overflow-y-auto': expanded }"
+        :class="{ 'max-h-96 overflow-y-auto': expanded }"
       >
         <template v-for="entry in entries" :key="entry.key">
           <div
@@ -48,7 +48,7 @@
             v-else-if="entry.row"
             data-row
             :data-checked="entry.row.checked || undefined"
-            class="flex items-center gap-x-1.5 rounded px-1 py-0.5 min-h-7"
+            class="flex items-center gap-x-2 rounded px-1 py-0.5 min-h-9"
             :class="
               entry.row.checked ? 'bg-gray-700 text-gray-200' : 'text-gray-400'
             "
@@ -56,8 +56,12 @@
             <span class="w-5 shrink-0 text-right text-xs text-gray-600">{{
               entry.row.rank
             }}</span>
-            <span class="w-5 h-5 shrink-0 flex items-center justify-center">
-              <ui-item-img v-if="entry.row.icon" :icon="entry.row.icon" />
+            <span class="w-8 h-8 shrink-0 flex items-center justify-center">
+              <ui-item-img
+                v-if="entry.row.icon"
+                :icon="entry.row.icon"
+                class="object-contain"
+              />
             </span>
             <span
               data-name
@@ -83,7 +87,7 @@
             <span
               data-value
               :data-thin="entry.row.thin || undefined"
-              class="w-16 shrink-0 flex items-center justify-end gap-x-0.5"
+              class="w-20 shrink-0 flex items-center justify-end gap-x-1"
               :class="{
                 'font-semibold': entry.row.checked,
                 'text-yellow-500': entry.row.thin,
@@ -105,7 +109,7 @@
                 >{{ formatRate(entry.row.value.value)
                 }}<img
                   :src="CURRENCY_ICONS[entry.row.value.currency]"
-                  class="w-4 h-4"
+                  class="w-5 h-5 object-contain"
                   alt=""
               /></template>
               <template v-else>?</template>

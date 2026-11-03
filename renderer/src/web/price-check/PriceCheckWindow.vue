@@ -123,7 +123,7 @@
         <ladder-panel
           v-if="itemLadder && item?.isOk()"
           class="pointer-events-auto mt-6 border-4 border-gray-800"
-          style="width: 28rem; max-width: 100%"
+          style="width: 34rem; max-width: 100%"
           :ladder="itemLadder.ladder"
           :category="itemLadder.category"
         >

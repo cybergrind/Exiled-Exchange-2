@@ -1,6 +1,1589 @@
 {
   "schemaVersion": 1,
   "league": "Forbidden Rites",
-  "verifiedOn": "2026-11-02",
-  "uniques": {}
+  "verifiedOn": "2026-11-03",
+  "uniques": {
+    "Bones of Ullr": {
+      "tier": "C",
+      "summary": "Minion builds want high Reservation Efficiency (29-30%) and Movement Speed (14-15%), ideally Runemastered and corrupted with extra movement speed.",
+      "rolls": [
+        {
+          "statRef": "#% increased Reservation Efficiency of Skills which create Undead Minions",
+          "importance": "key",
+          "thresholds": {
+            "good": 29,
+            "great": 30
+          },
+          "why": "Both minion guides name Reservation Efficiency as the roll to look for; Maxroll asks for 29-30%, used as the breakpoints.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Movement Speed",
+          "importance": "good",
+          "thresholds": {
+            "good": 14,
+            "great": 15
+          },
+          "why": "Maxroll's late-game boots want 14-15% movement speed (plus runeforging and corruption for more); only one guide names it.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Energy Shield",
+          "importance": "filler",
+          "why": "No guide read asks for a high ES roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "why": "No guide read asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Mana",
+          "importance": "filler",
+          "why": "No guide read asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/disciple-of-varashta-minion-build-guide",
+          "title": "Disciple of Varashta Minion Build Guide",
+          "date": "2026-11-02"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.poe-vault.com/poe2/witch/infernalist/spectre-build-guide",
+          "title": "Spectre Infernalist Endgame Guide",
+          "date": "2026-06-24"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Bones_of_Ullr",
+          "title": "Bones of Ullr - poe2db",
+          "note": "Ranges current since 0.3.0; Runemastered Lattice Sandals adds Runic Ward and a fixed 5% movement speed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Darkness Enthroned": {
+      "tier": "C",
+      "summary": "Buyers want the Body Armour variant (socketed items count as body armour, e.g. Fox Idol and Rune of the Blossom) with a high Socketed Augment effect roll of 90%+; other variants are near worthless.",
+      "rolls": [
+        {
+          "statRef": "#% increased effect of Socketed Augment Items",
+          "importance": "key",
+          "thresholds": {
+            "good": 90,
+            "great": 95
+          },
+          "why": "Odealo: aim for at least 90% (good = 90); great is the 90%-of-range default. Maxroll Grim Pillars warns total Socketed Item Effect above 99% stops Rune of the Blossom giving Spirit.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "Has # Charm Slot",
+          "importance": "filler",
+          "why": "Guides list the 1-3 Charm Slots line but none asks for a particular roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/arc-spell-totem-gemling-legionnaire-poe-2-build",
+          "title": "Arc Spell Totem Gemling Legionnaire - POE2 Build Guide",
+          "date": "2026-06-30"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/grim-pillars-spell-totem-oracle-build-guide",
+          "title": "Grim Pillars Spell Totem Oracle Build Guide - Path of Exile 2",
+          "date": "2026-09-07"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Path of Exile 2",
+          "date": "2026-09-19"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Darkness_Enthroned",
+          "title": "Darkness Enthroned - PoE2DB",
+          "note": "(50-100)% Socketed Augment effect, 1-3 Charm Slots, 2 Augment Sockets; five 'as though it was' variants (Body Armour, Helmet, Gloves, Boots, Shield).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Effigy of Cruelty": {
+      "tier": "C",
+      "summary": "A cheap weapon-swap focus bought only for its Critical Weakness on spell crits; a 3-stack roll is the nicer copy, the other stats barely matter.",
+      "rolls": [
+        {
+          "statRef": "Critical Hits with Spells apply # Stack of Critical Weakness",
+          "importance": "key",
+          "thresholds": {
+            "good": 2,
+            "great": 3
+          },
+          "why": "Every guide wears it in weapon set II only to apply Critical Weakness for boss burst. No guide gives a breakpoint; the 1-3 range has three values, so 2 is good and 3 great (70%/90% default rounds both to 3). Fast-hitting Entangle reaches 20 stacks anyway.",
+          "evidence": [
+            "G1",
+            "G2",
+            "G3",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Spell Damage",
+          "importance": "filler",
+          "why": "Builds swap to it for the debuff, not for its stats; no guide asks for a Spell Damage roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Energy Shield",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% to Chaos Resistance",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/entangle-oracle-build-guide",
+          "title": "Entangle Oracle Build Guide - Maxroll",
+          "date": "2026-09-02"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+          "title": "Barya of Kelari Disciple of Varashta PoE2 Build - Odealo",
+          "date": "2026-08-29"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/arc-spell-totem-gemling-legionnaire-poe-2-build",
+          "title": "Arc Spell Totem Gemling Legionnaire PoE 2 Build - Odealo (patch 0.5.0)",
+          "date": "2026-06-30"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Effigy_of_Cruelty",
+          "title": "Effigy of Cruelty - poe2db",
+          "note": "Fixed mods, no random pool; Critical Weakness 1-3 since 0.3.0, Spell Damage 40-50% since 0.4.0.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Enfolding Dawn": {
+      "tier": "C",
+      "summary": "Cheap +100 Spirit leveling armour for minion builds; buyers want the fixed Spirit (and often a runeforged copy), and neither variable roll is a price driver.",
+      "rolls": [
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "why": "Guides that use it (DoV Minion, Minion Army SW, both 0.5.5) name the item and runeforging but give no resistance target.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Armour and Energy Shield",
+          "importance": "filler",
+          "why": "No guide read treats the 50-100% defence roll as mattering; the item is bought for the fixed +100 Spirit.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/disciple-of-varashta-minion-build-guide",
+          "title": "Disciple of Varashta Minion Build Guide (Maxroll, 0.5.5)",
+          "date": "2026-11-02"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+          "title": "Minion Army Spirit Walker Build Guide (Maxroll, 0.5.5)",
+          "date": "2026-10-31"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Enfolding_Dawn",
+          "title": "Enfolding Dawn - poe2db",
+          "note": "Mod lines and ranges; Runemastered Pilgrim Vestments recipe.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Evergrasping Ring": {
+      "tier": "C",
+      "summary": "Minion and ally builds (usually on Chaos Inoculation) want a high Allies extra Chaos Damage roll; the Enemies chaos drawback can be ignored on CI.",
+      "rolls": [
+        {
+          "statRef": "Allies in your Presence Gain #% of Damage as Extra Chaos Damage",
+          "importance": "key",
+          "thresholds": {
+            "good": 22,
+            "great": 24
+          },
+          "why": "The reason to wear it: minions/allies deal extra Chaos damage (two Maxroll minion guides and Odealo Barya). No guide breakpoint; thresholds are the 70%/90% default of 15-25.",
+          "evidence": [
+            "G1",
+            "G2",
+            "G3",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Enemies in your Presence Gain #% of Damage as Extra Chaos Damage",
+          "importance": "filler",
+          "why": "A drawback (lower is better); Maxroll says its value can be ignored on Chaos Inoculation, Odealo says the ring suits high Chaos Res or CI.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Mana",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/disciple-of-varashta-minion-build-guide",
+          "title": "Disciple of Varashta Minion Build Guide - Maxroll",
+          "date": "2026-11-02"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+          "title": "Minion Army Spirit Walker Build Guide - Maxroll",
+          "date": "2026-10-31"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+          "title": "Barya of Kelari Disciple of Varashta PoE2 Build - Odealo",
+          "date": "2026-08-29"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Evergrasping_Ring",
+          "title": "Evergrasping Ring - poe2db",
+          "note": "Four fixed mods, no random pool.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Forgotten Warden": {
+      "tier": "B",
+      "summary": "Bought for the Spirit Vessel companion; among rolls, buyers want high Deflection per missing ES and a high share of deflected damage moved to the companion, and Runemastered copies sell for far more.",
+      "rolls": [
+        {
+          "statRef": "# to Deflection Rating per 50 missing Energy Shield",
+          "importance": "good",
+          "thresholds": {
+            "good": 91,
+            "great": 97
+          },
+          "why": "Odealo names extra Deflection as one of its defensive mods and Maxroll asks for a better-rolled copy for survivability (no mod named), so only one guide is specific. 70%/90% default of 70-100.",
+          "evidence": [
+            "G2",
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% of Damage from Deflected Hits is taken from Damageable Companion's Life before you",
+          "importance": "good",
+          "thresholds": {
+            "good": 14,
+            "great": 15
+          },
+          "why": "Odealo names shifting damage to the companion as one of its defensive mods; Maxroll only says better rolls help survivability. 70%/90% default of 10-15.",
+          "evidence": [
+            "G2",
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% increased Evasion and Energy Shield",
+          "importance": "filler",
+          "why": "Only Maxroll's general 'better rolled for survivability' could cover it; no guide names this line.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Companions have #% increased maximum Life",
+          "importance": "filler",
+          "why": "Listed by Odealo but not singled out by any guide.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "No guide names the Dexterity roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/whirling-assault-martial-artist-build-guide",
+          "title": "Whirling Assault Martial Artist Build Guide (Maxroll, 0.5.5)",
+          "date": "2026-09-04"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/tame-unique-beast-spirit-walker-poe-2-build",
+          "title": "Tame Unique Beast Spirit Walker PoE 2 Build (Odealo, 0.5.0)",
+          "date": "2026-06-04"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Forgotten_Warden",
+          "title": "Forgotten Warden - poe2db",
+          "note": "Mod lines and ranges, 0.5.2 fix to the deflected-damage line, Runemastered Primal Markings recipe.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Headhunter": {
+      "tier": "A",
+      "summary": "Bought for the Rare-kill modifier-stealing effect; Life, Strength and Dexterity rolls barely move its value.",
+      "rolls": [
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "thresholds": {
+            "good": 54,
+            "great": 58
+          },
+          "why": "Guide: 'nobody buys Headhunter for the life roll'; no breakpoints given, thresholds are the 70%/90% default of 40-60.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "# to Strength",
+          "importance": "filler",
+          "thresholds": {
+            "good": 34,
+            "great": 38
+          },
+          "why": "Attribute filler; guides say no rollable affix is worth a premium. Thresholds are the 70%/90% default of 20-40.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "thresholds": {
+            "good": 34,
+            "great": 38
+          },
+          "why": "Attribute filler; guides say no rollable affix is worth a premium. Thresholds are the 70%/90% default of 20-40.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-headhunter-guide",
+          "title": "PoE2 Headhunter Guide: What It Does, How to Get It & Whether It Beats Mageblood (0.5.4)",
+          "date": "2026-08-30"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-headhunter-price-guide",
+          "title": "PoE2 Headhunter Price: How Much Is a Headhunter Worth in 0.5.4",
+          "date": "2026-08-03"
+        }
+      }
+    },
+    "Heart of the Well": {
+      "tier": "B",
+      "summary": "Four random desecrated mods from a 73-mod pool; buyers pay for Gain % of Damage as Extra Fire/Cold/Lightning (ideally two) plus Critical Hit Chance, Critical Damage and Movement Speed suffixes, and a corrupted fifth mod is the chase.",
+      "rolls": [
+        {
+          "statRef": "Gain #% of Damage as Extra Cold Damage",
+          "importance": "key",
+          "thresholds": {
+            "good": 13,
+            "great": 14
+          },
+          "why": "Extra element is the top priority in two 0.5.5 Maxroll guides (Falling Thunder names Cold), Odealo and Timesaver. No breakpoint given; 70%/90% default of 9-15.",
+          "evidence": [
+            "G1",
+            "G2",
+            "G3",
+            "G6"
+          ]
+        },
+        {
+          "statRef": "Gain #% of Damage as Extra Fire Damage",
+          "importance": "key",
+          "thresholds": {
+            "good": 13,
+            "great": 14
+          },
+          "why": "Maxroll: extra damage of any element first, ideally twice; Odealo recommends Extra Fire; Timesaver ranks it top tier. 70%/90% default of 9-15.",
+          "evidence": [
+            "G1",
+            "G3",
+            "G4",
+            "G6"
+          ]
+        },
+        {
+          "statRef": "Gain #% of Damage as Extra Lightning Damage",
+          "importance": "key",
+          "thresholds": {
+            "good": 13,
+            "great": 14
+          },
+          "why": "Maxroll: extra damage of any element first; Odealo Arc Totem and Timesaver name it. 70%/90% default of 9-15.",
+          "evidence": [
+            "G1",
+            "G3",
+            "G6"
+          ]
+        },
+        {
+          "statRef": "Gain #% of Damage as Extra Chaos Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 11,
+            "great": 12
+          },
+          "why": "Only a 0.5.0 Odealo chaos build asks for it; Timesaver calls it situational. 70%/90% default of the current 7-13 range.",
+          "evidence": [
+            "G5"
+          ]
+        },
+        {
+          "statRef": "#% increased Critical Hit Chance",
+          "importance": "key",
+          "thresholds": {
+            "good": 7,
+            "great": 8
+          },
+          "why": "Maxroll names Crit Chance among the most useful suffixes; Timesaver puts crit mods in the top tier. 70%/90% default of 4-8.",
+          "evidence": [
+            "G1",
+            "G6"
+          ]
+        },
+        {
+          "statRef": "#% increased Critical Damage Bonus",
+          "importance": "key",
+          "thresholds": {
+            "good": 10,
+            "great": 11
+          },
+          "why": "Maxroll names Critical Damage among the most useful suffixes; Timesaver: double crit with extra element is the valuable copy. 70%/90% default of 6-12.",
+          "evidence": [
+            "G1",
+            "G6"
+          ]
+        },
+        {
+          "statRef": "#% increased Movement Speed",
+          "importance": "key",
+          "thresholds": {
+            "good": 2,
+            "great": 2
+          },
+          "why": "Maxroll lists Movement Speed among the best suffixes; Timesaver rates it good. Range is only 1-2, so 2 is the roll to want (70%/90% default rounds to 2).",
+          "evidence": [
+            "G1",
+            "G6"
+          ]
+        },
+        {
+          "statRef": "#% increased Cooldown Recovery Rate",
+          "importance": "good",
+          "thresholds": {
+            "good": 16,
+            "great": 17
+          },
+          "why": "Recommended by one 0.5.0 Odealo grenade guide. Thresholds are the 70%/90% default of the 10-18 prefix; the 2-3 suffix shares this ref and will grade low.",
+          "evidence": [
+            "G4"
+          ]
+        },
+        {
+          "statRef": "#% increased Energy Shield from Equipped Body Armour",
+          "importance": "good",
+          "thresholds": {
+            "good": 54,
+            "great": 58
+          },
+          "why": "Recommended for ES builds in two 0.5.0 Odealo guides (same host). 70%/90% default of 40-60.",
+          "evidence": [
+            "G3",
+            "G5"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/hollow-form-whirling-assault-martial-artist-build-guide",
+          "title": "Hollow Form Whirling Assault Martial Artist Build Guide - Path of Exile 2",
+          "date": "2026-09-03"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/falling-thunder-martial-artist-build-guide",
+          "title": "Falling Thunder Martial Artist Build Guide - Path of Exile 2",
+          "date": "2026-09-03"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/arc-spell-totem-gemling-legionnaire-poe-2-build",
+          "title": "Arc Spell Totem Gemling Legionnaire - POE2 Build Guide",
+          "date": "2026-06-30"
+        },
+        "G4": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/explosive-grenade-gemling-legionnaire-poe-2-build",
+          "title": "Explosive Grenade Gemling Legionnaire POE 2 Build",
+          "date": "2026-06-12"
+        },
+        "G5": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/essence-drain-lich-poe-2-build",
+          "title": "[0.5] Essence Drain Lich - POE2 Build Guide",
+          "date": "2026-07-06"
+        },
+        "G6": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-heart-of-the-well-guide",
+          "title": "PoE2 Heart of the Well Diamond (0.5): How to Get It, Best Mods & Why 4-Mod Rolls Are Nearly Worthless",
+          "date": "2026-08-17"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Heart_of_the_Well",
+          "title": "Heart of the Well - PoE2DB",
+          "note": "4 hidden desecrated mods (2 prefix, 2 suffix) from a 73-mod pool; current ranges.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Hyrri's Ire": {
+      "tier": "B",
+      "summary": "Evasion body armour bought for its Extra Cold damage, with Dexterity as a bonus; a high Extra Cold roll is what makes a copy better.",
+      "rolls": [
+        {
+          "statRef": "Gain #% of Damage as Extra Cold Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "Both guides credit the armour with big damage, and Extra Cold is its only variable damage line. No guide gives a breakpoint, so this uses the 70%/90% default of the 10-20 range. Downgraded from key on review: the guides praise the armour's damage but neither names this line.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "good",
+          "thresholds": {
+            "good": 37,
+            "great": 39
+          },
+          "why": "Odealo calls out the Dexterity alongside the offensive mods. No breakpoint is given, so this uses the 70%/90% default of the 30-40 range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Evasion Rating",
+          "importance": "filler",
+          "why": "Maxroll mentions 'defence' only in general terms; no guide asks for a high Evasion roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Elemental Ailment Threshold",
+          "importance": "filler",
+          "why": "No guide read mentions it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/ice-shot-deadeye-poe-2-build",
+          "title": "Ice Shot Deadeye PoE 2 Build - Odealo",
+          "date": "2026-06-11"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/spirit-walker-twisters",
+          "title": "Twisters Spirit Walker Build Guide - Maxroll",
+          "date": "2026-09-02"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Hyrris_Ire",
+          "title": "Hyrri's Ire - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Ingenuity": {
+      "tier": "C",
+      "summary": "Belt that strengthens both rings; buyers pay for high rolls on both ring lines, near 30% + 30%.",
+      "rolls": [
+        {
+          "statRef": "#% increased bonuses gained from left Equipped Ring",
+          "importance": "key",
+          "thresholds": {
+            "good": 28,
+            "great": 30
+          },
+          "why": "This is the belt's purpose. Timesaver says only near-perfect copies (55%+ across both rings, so about 28 each) sell at a premium, and 30 + 30 is perfect.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased bonuses gained from right Equipped Ring",
+          "importance": "key",
+          "thresholds": {
+            "good": 28,
+            "great": 30
+          },
+          "why": "Same as the left ring line: 55%+ combined is the premium point and 30 is the cap.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Has # Charm Slot",
+          "importance": "filler",
+          "why": "This 1-3 implicit is listed in the guides, but none read says buyers pay more for more slots.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Charm Charges gained",
+          "importance": "filler",
+          "why": "Rolls -20% to +20% (shown as increased or reduced); no guide asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% reduced Charm Charges used",
+          "importance": "filler",
+          "why": "Rolls -10% to +10%; no guide asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-ingenuity-belt-guide",
+          "title": "PoE2 Ingenuity Belt Guide: What It Does Now (0.5.4 Rework)",
+          "date": "2026-08-10"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+          "title": "Barya of Kelari Disciple of Varashta PoE2 Build - Odealo",
+          "date": "2026-08-29"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Ingenuity",
+          "title": "Ingenuity - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Lavianga's Spirits": {
+      "tier": "B",
+      "summary": "Bought for its always-active mana recovery (and for passives like Stimulants that need an active flask); the 70-80% reduced Amount Recovered roll barely matters to buyers.",
+      "rolls": [
+        {
+          "statRef": "#% increased Amount Recovered",
+          "importance": "filler",
+          "why": "The only variable mod (70-80% reduced, 70 is best). Guides use the flask for constant mana recovery and give no roll advice.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Path of Exile 2",
+          "date": "2026-09-19"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+          "title": "Barya of Kelari Disciple of Varashta POE2 Build Guide",
+          "date": "2026-08-29"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Laviangas_Spirits",
+          "title": "Lavianga's Spirits - PoE2DB",
+          "note": "Gargantuan Mana Flask; cannot be used but applies its effect constantly; (70-80)% reduced Amount Recovered.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Lochtonial Caress": {
+      "tier": "C",
+      "summary": "Bought for Martial Artist's Way of the Stonefist; the only roll that matters (Power Charge chance, 8%+) is hidden until equipped, so the visible rolls do not set the price.",
+      "rolls": [
+        {
+          "statRef": "#% increased Skill Speed",
+          "importance": "filler",
+          "why": "Both Hollow Form guides say only the hidden Stone-Fist Power Charge roll matters; the visible rolls are replaced while transformed.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "# to Armour",
+          "importance": "filler",
+          "why": "Guides say only the hidden Power Charge roll matters.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "why": "Guides say only the hidden Power Charge roll matters.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased maximum Mana",
+          "importance": "filler",
+          "why": "Shown as '(10-15)% reduced maximum Mana'; guides say only the hidden Power Charge roll matters.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/hollow-form-whirling-assault-martial-artist-build-guide",
+          "title": "Hollow Form Whirling Assault Martial Artist Build Guide",
+          "date": "2026-09-03"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/hollow-form-martial-artist-poe-2-build",
+          "title": "[0.5] Hollow Form Whirling Assault Martial Artist - POE2 Build Guide",
+          "date": "2026-06-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Lochtonial_Caress",
+          "title": "Lochtonial Caress - poe2db",
+          "note": "Regular mods and the Fists of Stone (Stonefist) form with (5-10)% chance to grant a Power Charge to Allies in your Presence on Hit; that line has no stats.ndjson ref.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Maligaro's Virtuosity": {
+      "tier": "B",
+      "summary": "Crit builds buy it for the fixed 250% Critical Damage Bonus (e.g. with Pinpoint Critical); guides give no roll targets, and corruptions or an extra socket add value.",
+      "rolls": [
+        {
+          "statRef": "#% increased Critical Hit Chance",
+          "importance": "filler",
+          "why": "Guides say to focus on crit chance with these gloves but give no target for this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Evasion Rating",
+          "importance": "filler",
+          "why": "No guide read asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "No guide read asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/arc-spell-totem-gemling-legionnaire-poe-2-build",
+          "title": "Arc Spell Totem Gemling Legionnaire - POE2 Build Guide",
+          "date": "2026-06-30"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Maligaros_Virtuosity",
+          "title": "Maligaro's Virtuosity - poe2db",
+          "note": "Critical Damage Bonus 250% since 0.3.0; crit chance cannot be rerolled since 0.4.0.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Morior Invictus": {
+      "tier": "A",
+      "summary": "Rolls 3 of 10 per-socket mods; Spirit and Life copies sell best, then resistances and global defences, and a corrupted 5-socket copy multiplies every per-socket line.",
+      "rolls": [
+        {
+          "statRef": "+# to Spirit per Socket filled",
+          "importance": "key",
+          "thresholds": {
+            "good": 13,
+            "great": 14
+          },
+          "why": "Price guide names Spirit as what most builds pay for and +14 as the top; a 0.5.5 Gemling build wears a 14 roll. good/great follow the 70%/90% default of the 10-14 range.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to maximum Life per Socket filled",
+          "importance": "good",
+          "thresholds": {
+            "good": 56,
+            "great": 59
+          },
+          "why": "Price guide names max Life with Spirit as the rolls buyers pay for, with +60 as the top. Thresholds are the 70%/90% default of 45-60; only one guide.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% to all Elemental Resistances per Socket filled",
+          "importance": "good",
+          "thresholds": {
+            "good": 9,
+            "great": 10
+          },
+          "why": "Resistances are listed among the good bonus mods, and a 0.5.5 build runs ele res per socket. 70%/90% default of the 8-10 range; the build's copy has only 8.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Global Armour, Evasion and Energy Shield per Socket filled",
+          "importance": "good",
+          "thresholds": {
+            "good": 11,
+            "great": 12
+          },
+          "why": "A 0.5.5 Gemling build pairs this with Spirit and ele res, at 12 (max). 70%/90% default of the 9-12 range; only one guide.",
+          "evidence": [
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% to Chaos Resistance per Socket filled",
+          "importance": "filler",
+          "why": "No guide read names chaos res specifically; the price guide only says 'resistances' in general.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Stun Threshold per Socket filled",
+          "importance": "filler",
+          "why": "Price guide says a copy that rolled into Stun Threshold is worth far less than a Life or Spirit copy.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "# to all Attributes per Socket filled",
+          "importance": "filler",
+          "why": "No current guide found that asks for it; may matter to attribute stackers.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Mana per Socket filled",
+          "importance": "filler",
+          "why": "No current guide found that asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# Life Regeneration per second per Socket filled",
+          "importance": "filler",
+          "why": "No current guide found that asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "Hits against you have #% reduced Critical Damage Bonus per Socket filled",
+          "importance": "filler",
+          "why": "No current guide found that asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Armour, Evasion and Energy Shield",
+          "importance": "filler",
+          "why": "The always-present 300-400% defence line; no guide treats its roll as a price driver.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-morior-invictus-price-guide",
+          "title": "PoE2 Morior Invictus Price (0.5): How Much It Costs, Live Divine Value & Whether It's Worth Buying",
+          "date": "2026-08-30"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.poebuilds.cc/poe2/build/SwiIaOWXYg4",
+          "title": "Profane Ritual Gemling Legionnaire Build – PoE 2 0.5.5 – LLYD",
+          "date": "2026-10-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Morior_Invictus",
+          "title": "Morior Invictus - poe2db",
+          "note": "Mod pool (3 of 10 per-socket mods), current ranges since 0.4.0, 4 augment sockets, 5th via corruption.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Olroth's Resolve": {
+      "tier": "A",
+      "summary": "Runic Ward flask (0.5 rework) bought by Ward builds; no guide ranks its rolls, Ward regeneration is the one that adds Ward.",
+      "rolls": [
+        {
+          "statRef": "Regenerate #% of maximum Runic Ward per second during Effect",
+          "importance": "good",
+          "thresholds": {
+            "good": 4.3,
+            "great": 4.8
+          },
+          "why": "Guides place the 0.5 flask in Runic Ward setups, and Ward regen is its only scaling roll; no guide breakpoints, so thresholds are the 70%/90% default of 2.5-5. Downgraded from key on review: the guides tie the flask to Runic Ward builds but neither names this roll.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Charges per use",
+          "importance": "filler",
+          "thresholds": {
+            "good": 115,
+            "great": 105
+          },
+          "why": "Downside roll: guide notes extra charges used is a real sustain cost, so lower is better; no breakpoints, 70%/90% default toward 100. Downgraded to filler on review: 20-25 charges per use give 3 uses per flask across the whole range.",
+          "evidence": [
+            "G2"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/flameblast-oil-grenade-gemling-build-guide",
+          "title": "Flameblast Oil Grenade Gemling Build Guide - Path of Exile 2",
+          "date": "2026-09-09"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://expcarry.com/poe-2-olroth-access-mechanics-rewards-guide",
+          "title": "PoE 2 Olroth Guide: Access, Mechanics and Rewards",
+          "date": "2026-08-12"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Olroths_Resolve",
+          "title": "Olroth's Resolve - PoE2DB",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Rathpith Globe": {
+      "tier": "A",
+      "summary": "Life-stacking spell focus: value comes from which Cultivated/Foulborn mods and corruption it has, not from its Life or Energy Shield rolls.",
+      "rolls": [
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "thresholds": {
+            "good": 88,
+            "great": 96
+          },
+          "why": "Maximum Life drives all of the Globe's damage, crit and ailment scaling, so its own Life roll adds a little; guides give no breakpoint, thresholds are 70%/90% of the range. Downgraded to filler on review: the guides say the build scales with maximum Life, not that this roll moves the Globe's price.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Energy Shield",
+          "importance": "filler",
+          "thresholds": {
+            "good": 88,
+            "great": 96
+          },
+          "why": "No guide ranks this roll for the Globe; life-stacking builds scale Life, not ES. Thresholds are 70%/90% of the range.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Life Cost Efficiency",
+          "importance": "filler",
+          "thresholds": {
+            "good": 13,
+            "great": 14
+          },
+          "why": "Cultivated-only roll that eases the Globe's life cost, which a guide calls the build's main drawback; no guide ranks the roll itself. Thresholds are 70%/90% of the range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/ball-lightning-acolyte-of-chayula-poe-2-build",
+          "title": "[0.5.5] Ball Lightning Acolyte of Chayula - POE2 Build Guide",
+          "date": "2026-09-14"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.poe-vault.com/poe2/witch/blood-mage/blood-mage-frostbolt-build",
+          "title": "Frostbolt Comet Blood Mage Endgame Build",
+          "date": "2026-06-04",
+          "note": "Patch 0.5.1 guide; the Globe's 0.5.x mod wording is unchanged."
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Rathpith_Globe",
+          "title": "PoE2DB, Rathpith Globe",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Rite of Passage": {
+      "tier": "A",
+      "summary": "Each copy has one Spirit: Cat is the most wanted, Stag is next, and Owl and Wolf are cheaper picks; a longer possession (up to 20 s) is a small bonus.",
+      "rolls": [
+        {
+          "statRef": "Possessed by Spirit Of The Cat for # seconds on use",
+          "importance": "key",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "Two Maxroll 0.5.5 guides and urgametips name Cat the best and most expensive Spirit (crit, skill speed, movement speed). No guide gives a duration breakpoint, so this uses the 70%/90% default of the 10-20 range.",
+          "evidence": [
+            "G1",
+            "G2",
+            "G3",
+            "G4"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Stag for # seconds on use",
+          "importance": "good",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "Urgametips ranks Stag with Cat as the best for most builds; Maxroll lists it only as a cheaper substitute. Duration uses the 70%/90% default.",
+          "evidence": [
+            "G3",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Owl for # seconds on use",
+          "importance": "good",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "Called the strongest plain-damage alternative (especially for Energy Shield) and a cheaper substitute for Cat. Kept at good because no guide calls it a top pick. Duration uses the 70%/90% default.",
+          "evidence": [
+            "G3",
+            "G2",
+            "G4"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Wolf for # seconds on use",
+          "importance": "good",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "Maxroll lists it as a cheaper substitute for Cat. Duration uses the 70%/90% default.",
+          "evidence": [
+            "G2"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Bear for # seconds on use",
+          "importance": "filler",
+          "why": "Only suggested as a survival pick for specific builds (Bear/Ox: 20% less damage taken); no meta guide asks for it.",
+          "evidence": [
+            "G4"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Ox for # seconds on use",
+          "importance": "filler",
+          "why": "Only suggested as a survival pick for specific builds; no meta guide asks for it.",
+          "evidence": [
+            "G4"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Primate for # seconds on use",
+          "importance": "filler",
+          "why": "Its generic 80% damage only suits matching (cold) builds; no meta guide asks for it.",
+          "evidence": [
+            "G4"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Serpent for # seconds on use",
+          "importance": "filler",
+          "why": "Damage is converted to poison, so it only suits poison builds; no meta guide asks for it.",
+          "evidence": [
+            "G4"
+          ]
+        },
+        {
+          "statRef": "Possessed by Spirit Of The Boar for # seconds on use",
+          "importance": "filler",
+          "why": "Urgametips says it asks more of the build than Stag; no guide asks for it.",
+          "evidence": [
+            "G3"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Maxroll",
+          "date": "2026-09-19"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/hollow-form-whirling-assault-martial-artist-build-guide",
+          "title": "Hollow Form Whirling Assault Martial Artist Build Guide - Maxroll",
+          "date": "2026-09-03"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://urgametips.com/poe-2-rite-of-passage-buffs/",
+          "title": "PoE 2 Rite of Passage Buffs List and Best Spirits",
+          "date": "2026-08-20"
+        },
+        "G4": {
+          "kind": "guide",
+          "url": "https://poe2craft.com/guides/rite-of-passage-charms",
+          "title": "Rite of Passage Charm - every Azmeri spirit explained (PoE2) - PoE2Craft",
+          "date": "2026-11-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Rite_of_Passage",
+          "title": "Rite of Passage - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Sacred Flame": {
+      "tier": "A",
+      "summary": "Twister builds buy it for the large self Damage as Extra Fire and the lowest-resistance aura; a high Extra Fire roll is what to look for.",
+      "rolls": [
+        {
+          "statRef": "Gain #% of Damage as Extra Fire Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 54,
+            "great": 58
+          },
+          "why": "A 0.5.5 Twister guide names the large Damage Gained as Extra Fire as the item's value. No guide gives a breakpoint, so good/great are the 70%/90% default of 40-60.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Allies in your Presence Gain #% of Damage as Extra Fire Damage",
+          "importance": "filler",
+          "why": "No guide read mentions the ally line; the Twister builds that use the sceptre are self-damage builds.",
+          "evidence": []
+        },
+        {
+          "statRef": "Allies in your Presence Regenerate #% of their Maximum Life per second",
+          "importance": "filler",
+          "why": "No guide read mentions it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/spirit-walker-twisters",
+          "title": "Twisters Spirit Walker Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-09-02"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Sacred_Flame",
+          "title": "Sacred Flame - poe2db",
+          "note": "Fixed mod list, ranges 40-60 / 20-30 / 2-3; level requirement 55 since 0.5.4.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Soul Mantle": {
+      "tier": "C",
+      "summary": "Cheap level-36 body armour minion builds wear early for its fixed +75 Spirit and defences; the roll barely matters, but check it is a post-0.5.0 copy with Spirit.",
+      "rolls": [
+        {
+          "statRef": "#% increased Armour and Energy Shield",
+          "importance": "filler",
+          "why": "Two Maxroll minion guides call it a defensive option at level 36 but give no roll advice; the only ranged line.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Totem Life",
+          "importance": "filler",
+          "why": "Only on pre-0.5.0 copies as (20-30)% reduced Totem Life, which also lack the +75 Spirit buyers want.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/disciple-of-varashta-minion-build-guide",
+          "title": "Disciple of Varashta Minion Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-11-02"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+          "title": "Minion Army Spirit Walker Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-10-31"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Soul_Mantle",
+          "title": "Soul Mantle - poe2db",
+          "note": "0.5.0 replaced (20-30)% reduced Totem Life with +75 to Spirit; existing items not affected.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Adorned": {
+      "tier": "A",
+      "summary": "Its value comes almost entirely from the corrupted-Magic-jewel effect roll: 100% or more doubles each corrupted Magic jewel, and 130-150% is the bracket buyers chase.",
+      "rolls": [
+        {
+          "statRef": "#% increased Effect of Jewel Socket Passive Skills\ncontaining Corrupted Magic Jewels",
+          "importance": "key",
+          "thresholds": {
+            "good": 100,
+            "great": 130
+          },
+          "why": "This is the item's only roll, and it multiplies every corrupted Magic jewel in the tree. Guides call 100% the first desirable breakpoint (each jewel doubles) and 130%+ the chase bracket.",
+          "evidence": [
+            "G1",
+            "G2",
+            "G3"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-the-adorned-price-guide",
+          "title": "PoE2 The Adorned Price (0.5.4): How Much It's Worth in Divines & Why the Roll Changes Everything",
+          "date": "2026-07-27"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-the-adorned-diamond-guide",
+          "title": "PoE2 The Adorned Guide: How to Get the Diamond That Doubles Your Magic Jewels (& What It's Worth in Divines)",
+          "date": "2026-09-13"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://www.mmoexp.com/News/poe-2-crafting-guide-2026-how-to-turn-2-000-divines-into-a-mirror-tier-item.html",
+          "title": "POE 2 Crafting Guide 2026 - How to Turn 2,000 Divines into a Mirror-Tier Item",
+          "date": "2026-07-20"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Adorned",
+          "title": "The Adorned - PoE2DB",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Taming": {
+      "tier": "A",
+      "summary": "Twister builds buy it for the fixed Wind Skills ground-surface lines (all three grounds at once); the resistance and ailment-damage rolls are minor.",
+      "rolls": [
+        {
+          "statRef": "#% increased Damage for each type of Elemental Ailment on Enemy",
+          "importance": "filler",
+          "why": "Guides praise the ring for its fixed Wind Skills lines and say nothing about this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "why": "No guide mentions the resistance rolls (implicit 7-10 and explicit 10-20 share this ref).",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Twister Gemling Legionnaire Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-09-19"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/spirit-walker-twisters",
+          "title": "Twisters Spirit Walker Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-09-02"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Taming",
+          "title": "The Taming - poe2db",
+          "note": "Mod list and ranges; Wind Skills lines are fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Trenchtimbre": {
+      "tier": "B",
+      "summary": "Minion weapon: buyers want the +2 to Level of all Minion Skills roll, ideally on a Runeforged copy with sockets; the damage and attack speed rolls barely matter.",
+      "rolls": [
+        {
+          "statRef": "# to Level of all Minion Skills",
+          "importance": "good",
+          "thresholds": {
+            "good": 2,
+            "great": 2
+          },
+          "why": "Both Maxroll minion guides (0.5.5) ask for a +2 Minion skill copy, the top of the 1-2 range; both are on one host, so not key.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "No guide names the attack speed roll; minion builds use it for the minion levels.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Physical Damage",
+          "importance": "filler",
+          "why": "No guide names the added damage roll; minion builds do not attack with it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+          "title": "Minion Army Spirit Walker Build Guide (Maxroll, 0.5.5)",
+          "date": "2026-10-31"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/disciple-of-varashta-minion-build-guide",
+          "title": "Disciple of Varashta Minion Build Guide (Maxroll, 0.5.5)",
+          "date": "2026-11-02"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Trenchtimbre",
+          "title": "Trenchtimbre - poe2db",
+          "note": "Mod lines and ranges, 0.2.0 change to +(1-2) minion levels, Runeforged Spiked Club recipe.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Tyranny's Grip": {
+      "tier": "C",
+      "summary": "Minion Spirit Walkers buy the Runemastered version with as much Physical Damage as they can afford; plain copies are near-worthless crafting bases.",
+      "rolls": [
+        {
+          "statRef": "#% increased Physical Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 185,
+            "great": 195
+          },
+          "why": "Maxroll: get a Runemastered copy 'with as much Physical Damage as you can afford' (weapon damage feeds the minions). No breakpoint given; thresholds are the 70%/90% default of 150-200. Only one guide host says it.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "The (10-15)% reduced Attack Speed line; no guide comments on it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Strength",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+          "title": "Minion Army Spirit Walker Build Guide - Maxroll",
+          "date": "2026-10-31"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Tyrannys_Grip",
+          "title": "Tyranny's Grip - poe2db",
+          "note": "Fixed mods; Runeforged and Runemastered Ironhead Spear versions raise base damage.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Undying Hate": {
+      "tier": "A",
+      "summary": "The god name decides the keystone; Tecrod (Sacrifice of Blood) is the variant in demand, and the seed number barely matters for most builds.",
+      "rolls": [
+        {
+          "statRef": "Glorifying the defilement of # souls in tribute to Tecrod",
+          "importance": "key",
+          "why": "Tecrod converts keystones to Sacrifice of Blood, which the Entangle Oracle guide wants; a price guide calls it the crowd favourite and worth more. No seed thresholds: the seed barely matters.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Glorifying the defilement of # souls in tribute to Amanamu",
+          "importance": "filler",
+          "why": "Sacrifice of Flesh; no guide read asks for this variant.",
+          "evidence": []
+        },
+        {
+          "statRef": "Glorifying the defilement of # souls in tribute to Kulemak",
+          "importance": "filler",
+          "why": "Sacrifice of Loyalty; no guide read asks for this variant.",
+          "evidence": []
+        },
+        {
+          "statRef": "Glorifying the defilement of # souls in tribute to Kurgal",
+          "importance": "filler",
+          "why": "Sacrifice of Mind; no guide read asks for this variant.",
+          "evidence": []
+        },
+        {
+          "statRef": "Glorifying the defilement of # souls in tribute to Ulaman",
+          "importance": "filler",
+          "why": "Sacrifice of Sight; no guide read asks for this variant.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/entangle-oracle-build-guide",
+          "title": "Entangle Oracle Build Guide - Path of Exile 2",
+          "date": "2026-09-02"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-undying-hate-timeless-jewel-guide",
+          "title": "PoE2 Undying Hate Timeless Jewel: All 5 Abyssal Keystones, Where to Get It & Is It Worth It",
+          "date": "2026-09-20"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Undying_Hate",
+          "title": "Undying Hate - poe2db",
+          "note": "Five god variants map to five Sacrifice keystones; seed 79-30977; Historic; up to 4 desecrations.",
+          "date": "2026-11-03"
+        }
+      }
+    }
+  }
 }
