@@ -155,6 +155,33 @@
       {{ rollSummary }}
     </div>
     <div
+      v-if="usedBy.length"
+      data-used-by
+      class="-mt-2 mb-3 text-center text-sm text-gray-500"
+    >
+      Used by
+      <template v-for="(build, i) in shownBuilds" :key="build.url">
+        <span v-if="i">, </span>
+        <button
+          type="button"
+          class="hover:text-gray-300 hover:underline"
+          :class="build.core ? 'text-gray-300' : 'text-gray-400'"
+          :title="build.title"
+          @click="openGuide(build.url)"
+        >
+          {{ build.name }}<span class="text-gray-500"> ({{ build.role }})</span>
+        </button>
+      </template>
+      <button
+        v-if="usedBy.length > shownBuilds.length"
+        type="button"
+        class="pl-1 text-gray-500 hover:text-gray-300"
+        @click="showAllBuilds = true"
+      >
+        +{{ usedBy.length - shownBuilds.length }} more
+      </button>
+    </div>
+    <div
       v-if="priceData.tablet"
       data-tablet-summary
       :data-level="priceData.tablet.level"
@@ -236,6 +263,7 @@ import { variantNote } from "./variantNote";
 import type { VariantNote } from "./variantNote";
 import { variantModInput } from "./variantMods";
 import { useUniqueRolls } from "@/web/background/uniqueRollsStore";
+import { buildUsage } from "./buildUsage";
 
 // Matches the tier badges on the mods (TabletModBadge.vue).
 const TABLET_LEVEL_CLASS: Record<TabletVerdictLevel, string> = {
@@ -287,6 +315,16 @@ export default defineComponent({
     const history = useMarketHistory();
     const uniqueRolls = useUniqueRolls();
     uniqueRolls.load().catch(() => undefined);
+    // Surveyed builds using this unique, required first (buildUsage.ts).
+    const showAllBuilds = shallowRef(false);
+    const usedBy = computed(() =>
+      props.item.info.unique
+        ? buildUsage(uniqueRolls.builds.value, props.item.info.refName)
+        : [],
+    );
+    const shownBuilds = computed(() =>
+      showAllBuilds.value ? usedBy.value : usedBy.value.slice(0, 3),
+    );
     // The researched profile's one sentence (WP-65); the mods carry the badges.
     const rollSummary = computed(() =>
       props.item.info.unique
@@ -304,6 +342,7 @@ export default defineComponent({
       (item) => {
         slowdown.reset(item);
         showHistory.value = false;
+        showAllBuilds.value = false;
       },
       { immediate: true },
     );
@@ -507,6 +546,12 @@ export default defineComponent({
       volumeSetting,
       TABLET_LEVEL_CLASS,
       rollSummary,
+      usedBy,
+      shownBuilds,
+      showAllBuilds,
+      openGuide(url: string) {
+        window.open(url);
+      },
     };
   },
 });

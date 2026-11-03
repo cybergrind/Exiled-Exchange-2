@@ -20,7 +20,10 @@ import type { ValidationError } from "../renderer/src/web/background/market/roll
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const STATS_FILE = path.join(ROOT, "renderer/public/data/en/stats.ndjson");
-const ITEMS_FILE = path.join(ROOT, "renderer/public/data/en/items.ndjson");
+// items-patch.ndjson serves uniques the generated file lacks (renamed ones).
+const ITEMS_FILES = ["items.ndjson", "items-patch.ndjson"].map((name) =>
+  path.join(ROOT, "renderer/public/data/en", name),
+);
 const DEFAULT_DIR = path.join(ROOT, "research/uniques");
 
 function defaultFiles(): string[] {
@@ -43,7 +46,9 @@ function main(argv: string[]): number {
   }
   const files = argv.length ? argv : defaultFiles();
   const statBetter = statLookupFromNdjson(fs.readFileSync(STATS_FILE, "utf8"));
-  const uniques = uniqueNamesFromNdjson(fs.readFileSync(ITEMS_FILE, "utf8"));
+  const uniques = uniqueNamesFromNdjson(
+    ITEMS_FILES.map((file) => fs.readFileSync(file, "utf8")).join("\n"),
+  );
   const opts = { statBetter, hasUnique: (name: string) => uniques.has(name) };
 
   let failed = 0;

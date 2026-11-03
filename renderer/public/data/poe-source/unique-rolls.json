@@ -3,6 +3,287 @@
   "league": "Forbidden Rites",
   "verifiedOn": "2026-11-03",
   "uniques": {
+    "Against the Darkness": {
+      "tier": "A",
+      "summary": "Rolls 2 of 25 radius mods; buyers want Gain % of Damage as Extra Cold, Fire or Lightning on notables (matching their skill's element), with the +Spirit on notables mod also sought, and value depends on how many notables sit in its radius.",
+      "rolls": [
+        {
+          "statRef": "Notable Passive Skills in Radius also grant Gain #% of Damage as Extra Cold Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 3,
+            "great": 4
+          },
+          "why": "Odealo Ice Shot guide: look for Extra Damage as Cold or another element. No breakpoint given; 70%/90% default of 2-4, rounded.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Notable Passive Skills in Radius also grant Gain #% of Damage as Extra Fire Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 3,
+            "great": 4
+          },
+          "why": "Covered by Odealo's 'Extra Damage as Cold or other Element'. 70%/90% default of 2-4, rounded.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Notable Passive Skills in Radius also grant Gain #% of Damage as Extra Lightning Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 3,
+            "great": 4
+          },
+          "why": "Covered by Odealo's 'Extra Damage as Cold or other Element'. 70%/90% default of 2-4, rounded.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Notable Passive Skills in Radius also grant Gain #% of Damage as Extra Chaos Damage",
+          "importance": "filler",
+          "thresholds": {
+            "good": 3,
+            "great": 4
+          },
+          "why": "Chaos is not an element, so Odealo's advice does not cover it; no guide read asks for it. 70%/90% default of 2-4.",
+          "evidence": []
+        },
+        {
+          "statRef": "Notable Passive Skills in Radius also grant # to Spirit",
+          "importance": "filler",
+          "thresholds": {
+            "good": 11,
+            "great": 12
+          },
+          "why": "Likely sought (a Mobalytics Spark guide requires it), but that site returned 403 and no readable guide confirmed it. 70%/90% default of 8-12.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/ice-shot-deadeye-poe-2-build",
+          "title": "Ice Shot Deadeye POE 2 Build",
+          "date": "2026-06-11"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://overgear.com/guides/poe-2/ice-shot-deadeye-guide/",
+          "title": "Path of Exile 2 Ice Shot Deadeye Guide",
+          "date": "2026-09-01"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Against_the_Darkness",
+          "title": "Against the Darkness - PoE2DB",
+          "note": "2 random mods from a 25-mod radius pool; Small (1000) radius; 0.2.0 changes to attributes and life/mana lines.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Alpha's Howl": {
+      "tier": "A",
+      "summary": "Bought for the fixed +100 Spirit and doubled Presence radius (aura, curse and minion builds); Evasion and Cold Resistance rolls barely matter, while a Runemastered base sells for much more.",
+      "rolls": [
+        {
+          "statRef": "#% to Cold Resistance",
+          "importance": "filler",
+          "why": "Guides that wear it cite only Spirit and Presence radius; none names the cold resistance roll.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Evasion Rating",
+          "importance": "filler",
+          "why": "Local defence line; guides that wear it never mention its evasion roll.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/blasphemy-cursebot-lich-endgame-build-guide",
+          "title": "Blasphemy Cursebot Lich Endgame Build Guide for Path of Exile 2 Return of the Ancients 0.5.4",
+          "date": "2026-09-04"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.pathofexile.com/forum/view-thread/3972956",
+          "title": "Slow-Maxing Aura | Atziri's Contempt Auspex Chronomancer",
+          "date": "2026-06-22"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Alphas_Howl",
+          "title": "Alpha's Howl - poe2db",
+          "note": "Current mod lines; Runemastered Armoured Cap version changes only the base (Evasion 178, Runic Ward 113).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Berek's Grip": {
+      "tier": "B",
+      "summary": "Twister builds buy it as a budget stand-in for The Taming, for the fixed Wind Skills Shocked Ground line; the resistance, attribute and conditional rolls barely matter.",
+      "rolls": [
+        {
+          "statRef": "#% to Cold and Lightning Resistances",
+          "importance": "filler",
+          "why": "No guide mentions the resistance rolls (the implicit 12-16 and the explicit 10-20 share this ref).",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity and Intelligence",
+          "importance": "filler",
+          "why": "No guide mentions the attribute roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Hits against you have #% increased Critical Hit Chance while you are Chilled",
+          "importance": "filler",
+          "why": "Defensive line for being Chilled; no guide mentions it. Ref is the 'increased' stat; the item's 'reduced' text matches it as a negated matcher.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-09-19"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Bereks_Grip",
+          "title": "Berek's Grip - poe2db",
+          "note": "Mod list and ranges; the Wind Skills line is fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Berek's Pass": {
+      "tier": "B",
+      "summary": "Twister builds buy it as a budget stand-in for The Taming, for the fixed Wind Skills Chilled Ground line; the resistance, attribute and conditional rolls barely matter.",
+      "rolls": [
+        {
+          "statRef": "#% to Fire and Cold Resistances",
+          "importance": "filler",
+          "why": "No guide mentions the resistance rolls (the implicit 12-16 and the explicit 10-20 share this ref).",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Strength and Intelligence",
+          "importance": "filler",
+          "why": "No guide mentions the attribute roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Regenerate #% of maximum Life per second while Ignited",
+          "importance": "filler",
+          "why": "Conditional life regen while Ignited; no guide mentions it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-09-19"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Bereks_Pass",
+          "title": "Berek's Pass - poe2db",
+          "note": "Mod list and ranges; the Wind Skills line is fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Berek's Respite": {
+      "tier": "B",
+      "summary": "Twister builds buy it as a budget stand-in for The Taming, for the fixed Wind Skills Ignited Ground line; the resistance, attribute and conditional rolls barely matter.",
+      "rolls": [
+        {
+          "statRef": "#% to Fire and Lightning Resistances",
+          "importance": "filler",
+          "why": "No guide mentions the resistance rolls (the implicit 12-16 and the explicit 10-20 share this ref).",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Strength and Dexterity",
+          "importance": "filler",
+          "why": "No guide mentions the attribute roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Critical Damage Bonus while Shocked",
+          "importance": "filler",
+          "why": "Conditional crit damage while Shocked; no guide mentions it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Maxroll (The Forbidden Rites 0.5.5)",
+          "date": "2026-09-19"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Bereks_Respite",
+          "title": "Berek's Respite - poe2db",
+          "note": "Mod list and ranges; the Wind Skills line is fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Blood of the Warrior": {
+      "tier": "C",
+      "summary": "Cheap Rage flask that Minion Army Spirit Walker uses for its on-use Rage; no guide asks for particular rolls.",
+      "rolls": [
+        {
+          "statRef": "#% of Damage taken during effect Recouped as Life",
+          "importance": "filler",
+          "why": "The build guide uses the flask only for its Rage effect and gives no roll advice.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Gain # Rage when Hit by an Enemy during effect",
+          "importance": "filler",
+          "why": "The guide gets Rage from using the flask (Blood of Rage), not from this roll, and gives no roll advice.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% increased Duration",
+          "importance": "filler",
+          "why": "No guide read asks for a particular duration roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+          "title": "Minion Army Spirit Walker Build Guide (Maxroll)",
+          "date": "2026-10-31"
+        }
+      }
+    },
     "Bones of Ullr": {
       "tier": "C",
       "summary": "Minion builds want high Reservation Efficiency (29-30%) and Movement Speed (14-15%), ideally Runemastered and corrupted with extra movement speed.",
@@ -75,6 +356,162 @@
         }
       }
     },
+    "Cadiro's Gambit": {
+      "tier": "A",
+      "summary": "Bought for the fixed random-arrow effect that crit bow builds (Ice Shot Deadeye) use for mapping; the only rolling line, 7-10% attack speed, barely moves the price.",
+      "rolls": [
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "thresholds": {
+            "good": 9,
+            "great": 10
+          },
+          "why": "No guide asks for a high roll; Odealo's Ice Shot guide says its main skill barely benefits from attack speed. Thresholds are the 70%/90% default of 7-10.",
+          "evidence": [
+            "G1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/ice-shot-deadeye-poe-2-build",
+          "title": "Ice Shot Deadeye POE2 Build Guide - Odealo",
+          "date": "2026-06-11"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://kami-labs.fr/en/path-of-exile-2/build-rodeuse-ice-shot-deadeye-saison-5/",
+          "title": "S-TIER | BUILD RÔDEUSE ICE SHOT DEADEYE (@Fubgun) | SAISON 5",
+          "date": "2026-08-29"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Cadiros_Gambit",
+          "title": "Cadiro's Gambit - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Constricting Command": {
+      "tier": "C",
+      "summary": "Bought for its 'fewer enemies to be Surrounded' line by Surrounded builds such as Grenade Gemling; 4 fewer is the top roll, and Runemastered copies sell for far more than regular ones.",
+      "rolls": [
+        {
+          "statRef": "Require # additional enemies to be Surrounded",
+          "importance": "good",
+          "thresholds": {
+            "good": 4,
+            "great": 4
+          },
+          "why": "A Grenade Gemling guide uses the helmet to keep Surrounded bonuses up in small packs and boss fights. No guide breakpoint: the 70%/90% default of the 2-4 range rounds to 4 fewer.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "why": "No guide read asks for a particular Life roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to all Attributes",
+          "importance": "filler",
+          "why": "No guide read asks for a particular Attributes roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# Life Regeneration per second",
+          "importance": "filler",
+          "why": "No guide read asks for a particular regeneration roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/explosive-grenade-gemling-legionnaire-poe-2-build",
+          "title": "Explosive Grenade Gemling Legionnaire POE 2 Build (Odealo)",
+          "date": "2026-06-12"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Constricting_Command",
+          "title": "Constricting Command - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Controlled Metamorphosis": {
+      "tier": "A",
+      "summary": "Buyers want a ring size that reaches the passives they need without pathing (larger rings reach farther) and the mildest elemental resistance penalty (-5% is best).",
+      "rolls": [
+        {
+          "statRef": "Only affects Passives in # Ring",
+          "importance": "good",
+          "why": "A guide says larger rings are worth more and Massive sells highest. The best ring still depends on which notables a build wants, and the stat has no better direction, so no thresholds. Only one guide, from 2025 (pre-0.4).",
+          "evidence": [
+            "G1",
+            "M1",
+            "M2"
+          ]
+        },
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "why": "The same guide says a smaller penalty is better and -5% is perfect. It gives no breakpoints, so good/great are the 70%/90% default of the -20 to -5 range. Only one guide, from 2025 (pre-0.4). Set to filler on review: it is a drawback (-20 to -5), and the only guide predates 0.4.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://xboxplay.games/path-of-exile-2/how-to-get-controlled-metamorphosis-diamond-in-path-of-exile-2-61390",
+          "title": "How to Get Controlled Metamorphosis Diamond in Path of Exile 2",
+          "date": "2025-02-04"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Controlled_Metamorphosis",
+          "title": "Controlled Metamorphosis - poe2db",
+          "note": "(-20--5)% all ele res plus a variable ring radius. 0.4.0 removed the chaos resistance penalty (old copies keep it) and fixed out-of-range radius rolls.",
+          "date": "2026-11-03"
+        },
+        "M2": {
+          "kind": "mechanic",
+          "url": "https://raw.githubusercontent.com/PathOfBuildingCommunity/PathOfBuilding-PoE2/dev/src/Data/Uniques/jewel.lua",
+          "title": "Path of Building PoE2 unique jewel data",
+          "note": "Eight ring variants from Very Small to Massive, all valid in the Current version.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Cruel Hegemony": {
+      "tier": "C",
+      "summary": "Fixed tablet with no rolls: it adds one random modifier to a map boss, and companion tamers use it to fish for an 'Extra Crits' boss to tame, so every copy is the same.",
+      "rolls": [],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/tame-unique-beast-spirit-walker-poe-2-build",
+          "title": "Tame Unique Beast Spirit Walker PoE 2 Build",
+          "date": "2026-06-04"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Cruel_Hegemony",
+          "title": "Cruel Hegemony - poe2db",
+          "note": "Overseer Tablet; fixed lines only (Empowers the Map Boss of a Map, Map Bosses have 1 additional Modifiers).",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Darkness Enthroned": {
       "tier": "C",
       "summary": "Buyers want the Body Armour variant (socketed items count as body armour, e.g. Fox Idol and Rune of the Blossom) with a high Socketed Augment effect roll of 90%+; other variants are near worthless.",
@@ -123,6 +560,110 @@
           "url": "https://poe2db.tw/us/Darkness_Enthroned",
           "title": "Darkness Enthroned - PoE2DB",
           "note": "(50-100)% Socketed Augment effect, 1-3 Charm Slots, 2 Augment Sockets; five 'as though it was' variants (Body Armour, Helmet, Gloves, Boots, Shield).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Death Articulated": {
+      "tier": "A",
+      "summary": "A scarce boss drop bought for its fixed Rage lines (5 Rage per second, no inherent Rage loss); no current guide ranks its Attack Speed, Chaos Resistance or defence rolls.",
+      "rolls": [
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "No current 0.5.5 guide found that uses this item or names its attack speed roll; may matter more to attack builds.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% to Chaos Resistance",
+          "importance": "filler",
+          "why": "No current guide found that asks for a high chaos resistance roll on this item.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Armour and Evasion",
+          "importance": "filler",
+          "why": "Local defence line; no guide treats its roll as a price driver.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Death_Articulated",
+          "title": "Death Articulated - poe2db",
+          "note": "Current mod lines and ranges; no variants or Runemastered version.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Duality": {
+      "tier": "B",
+      "summary": "Martial Artist quarterstaff and Runeforge input: buyers want high increased Physical Damage and Critical Damage Bonus, and Hollow Form builds runeforge it into the base-damage Runemastered variant.",
+      "rolls": [
+        {
+          "statRef": "#% increased Physical Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 270,
+            "great": 290
+          },
+          "why": "A Duality guide calls physical damage one of the most important stats and sets 290-300% as near-perfect; good is the 70% default of 200-300. One guide (0.5) only.",
+          "evidence": [
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% to Critical Damage Bonus",
+          "importance": "good",
+          "thresholds": {
+            "good": 27,
+            "great": 28
+          },
+          "why": "Same guide puts 28-30% crit damage next to phys as the near-perfect roll; good is the 70% default of 20-30. One guide only.",
+          "evidence": [
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "The Duality guide calls attack speed nice but less important than phys and crit damage.",
+          "evidence": [
+            "G2"
+          ]
+        },
+        {
+          "statRef": "Gain # Guard for 0.5 seconds per Combo expended when using Skills",
+          "importance": "filler",
+          "why": "No guide read names the Guard roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Runic Ward",
+          "importance": "filler",
+          "why": "Probably the base implicit; no guide read mentions it for Duality.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/hollow-form-whirling-assault-martial-artist-build-guide",
+          "title": "Hollow Form Whirling Assault Martial Artist Build Guide - Maxroll",
+          "date": "2026-09-03"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.aoeah.com/news/4617--how-to-get-duality-quarterstaff-in-poe-2-05",
+          "title": "How to Get Duality Quarterstaff in PoE 2 0.5",
+          "date": "2026-06-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Duality",
+          "title": "Duality - poe2db",
+          "note": "Mod ranges unchanged since 0.5.0; three Runemastered variants differing in base damage, crit chance or attack speed.",
           "date": "2026-11-03"
         }
       }
@@ -228,6 +769,52 @@
           "url": "https://poe2db.tw/us/Enfolding_Dawn",
           "title": "Enfolding Dawn - poe2db",
           "note": "Mod lines and ranges; Runemastered Pilgrim Vestments recipe.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Eshtera's Path": {
+      "tier": "A",
+      "summary": "Bought for its Sapphire jewel socket and the Fire and Cold resistance it gives per equipped item with a Lightning resistance mod; check that per-item roll (5-10%) first.",
+      "rolls": [
+        {
+          "statRef": "#% to Fire and Cold Resistances per Equipped Item with a Lightning Resistance Modifier",
+          "importance": "good",
+          "thresholds": {
+            "good": 9,
+            "great": 10
+          },
+          "why": "A 0.5 resistance-stacking guide uses the Sekhema rings for the two resistances they give per equipped item. It gives no breakpoint, so good/great are the 70%/90% default of the 5-10 range; only one guide.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to all Attributes",
+          "importance": "filler",
+          "why": "No current guide found that asks for a high attribute roll on this ring.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Rarity of Items found",
+          "importance": "filler",
+          "why": "No current guide found that asks for a high rarity roll on this ring.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.pathofexile.com/forum/view-thread/3962365",
+          "title": "[0.5] Skin of the Loyal Resistance Stacking: A flexible and cheap defensive shell",
+          "date": "2026-06-13"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Eshteras_Path",
+          "title": "Eshtera's Path - poe2db",
+          "note": "Current mod lines; 0.5.0 replaced the old Cold Resistance area-penalty line with the per-item Fire and Cold resistance line, and existing items were not updated.",
           "date": "2026-11-03"
         }
       }
@@ -370,6 +957,61 @@
           "url": "https://poe2db.tw/us/Forgotten_Warden",
           "title": "Forgotten Warden - poe2db",
           "note": "Mod lines and ranges, 0.5.2 fix to the deflected-damage line, Runemastered Primal Markings recipe.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Grand Spectrum": {
+      "tier": "A",
+      "summary": "No rolls to grade: each base has one fixed line (Ruby 2% max Life, Emerald 2% Spirit, Sapphire +6% all ele res, per socketed Grand Spectrum), so the price depends on the base, and buyers stack up to three.",
+      "rolls": [],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Grand_Spectrum",
+          "title": "Grand Spectrum - poe2db",
+          "note": "Three bases, each with one fixed per-socketed-Grand-Spectrum line and no ranges. 0.4.0 raised the Sapphire line from 4% to 6%.",
+          "date": "2026-11-03"
+        },
+        "M2": {
+          "kind": "mechanic",
+          "url": "https://raw.githubusercontent.com/PathOfBuildingCommunity/PathOfBuilding-PoE2/dev/src/Data/Uniques/jewel.lua",
+          "title": "Path of Building PoE2 unique jewel data",
+          "note": "Ruby, Emerald and Sapphire Grand Spectrum, Limited to 3, fixed values; Sapphire has Pre 0.4.0 (+4%) and Current (+6%) variants.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Guiding Palm of the Eye": {
+      "tier": "B",
+      "summary": "Bought as a DPS sceptre for the fixed 25% of Damage as Extra Cold and Purity of Ice; its two rolls (ally added cold damage, Intelligence) barely change what it is worth.",
+      "rolls": [
+        {
+          "statRef": "Allies in your Presence deal # to # added Attack Cold Damage",
+          "importance": "filler",
+          "why": "No guide read names this roll; the build that uses it (Twister Gemling) wants the self extra-cold line, which is fixed.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide (Maxroll, 0.5.5)",
+          "note": "Says only 'Guiding Palm of the Eye is a nice DPS Sceptre option' and that Her Declaration is free if linked to its Purity of Ice; no roll advice.",
+          "date": "2026-09-19"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Guiding_Palm_of_the_Eye",
+          "title": "Guiding Palm of the Eye - PoE2DB",
+          "note": "Ranges current since 0.2.1; 25% extra cold, regen share, light radius and shrine are fixed.",
           "date": "2026-11-03"
         }
       }
@@ -741,6 +1383,26 @@
         }
       }
     },
+    "Kalandra's Touch": {
+      "tier": "A",
+      "summary": "Copies every modifier of the ring in the other slot and has no rolls of its own, so buyers pay for the mirror effect, not for a roll.",
+      "rolls": [],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+          "title": "Barya of Kelari Disciple of Varashta POE2 Build Guide",
+          "date": "2026-08-29"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Kalandras_Touch",
+          "title": "Kalandra's Touch - PoE2DB",
+          "note": "Only mod: Reflects opposite Ring (unscalable).",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Lavianga's Spirits": {
       "tier": "B",
       "summary": "Bought for its always-active mana recovery (and for passives like Stimulants that need an active flask); the 70-80% reduced Amount Recovered roll barely matters to buyers.",
@@ -833,6 +1495,202 @@
           "url": "https://poe2db.tw/us/Lochtonial_Caress",
           "title": "Lochtonial Caress - poe2db",
           "note": "Regular mods and the Fists of Stone (Stonefist) form with (5-10)% chance to grant a Power Charge to Allies in your Presence on Hit; that line has no stats.ndjson ref.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Loreweave": {
+      "tier": "B",
+      "summary": "Value comes from its 3 random unique-ring mods (Polcirkeln shatter, Snakepit spell chain or fork, Onslaught, Spirit efficiency, extra chaos) plus high Quality of all Skills (7% with widened ranges) and 80% maximum resistances.",
+      "rolls": [
+        {
+          "statRef": "#% to Quality of all Skills",
+          "importance": "good",
+          "thresholds": {
+            "good": 5,
+            "great": 7
+          },
+          "why": "Gamerblurb calls the skill quality roll worth attention; mmoexp says 7% is needed for top value. 5 is the top of the listed 2-5 range, 7 the guide breakpoint (reached via widened ranges). Downgraded from key on review: both sources are 0.5.0-era pages (one a currency seller), no current build guide names it.",
+          "evidence": [
+            "G2",
+            "G3",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Your Maximum Resistances are #%",
+          "importance": "good",
+          "thresholds": {
+            "good": 79,
+            "great": 80
+          },
+          "why": "Gamerblurb: max resistances is the most important fixed roll and 80% is the one to want. good is the 70%/90% default of 75-80.",
+          "evidence": [
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Rarity of Items found",
+          "importance": "good",
+          "thresholds": {
+            "good": 12,
+            "great": 14
+          },
+          "why": "Gamerblurb says the rarity roll can free other gear slots. 70%/90% default of 6-15.",
+          "evidence": [
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Enemies Chilled by your Hits can be Shattered as though Frozen",
+          "importance": "good",
+          "thresholds": {
+            "good": 1,
+            "great": 1
+          },
+          "why": "Polcirkeln pool mod; Maxroll's 0.5.5 Twister Gemling guide says it 'supercharges your map clear'. Fixed text, no roll. Thresholds mark presence only.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "You have Consecrated Ground around you while stationary",
+          "importance": "good",
+          "thresholds": {
+            "good": 1,
+            "great": 1
+          },
+          "why": "Gifts from Above pool mod; Maxroll names it as an endgame option for life regen. Fixed text. Thresholds mark presence only.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Projectiles from Spells Chain +# times",
+          "importance": "good",
+          "thresholds": {
+            "good": 1,
+            "great": 1
+          },
+          "why": "Snakepit pool mod; mmoexp calls spell projectile chain the most valuable Loreweave modifier. Fixed +1. Thresholds mark presence only.",
+          "evidence": [
+            "G3"
+          ]
+        },
+        {
+          "statRef": "Projectiles from Spells Fork",
+          "importance": "good",
+          "thresholds": {
+            "good": 1,
+            "great": 1
+          },
+          "why": "Snakepit pool mod; mmoexp lists fork among the valuable mods. Fixed text. Thresholds mark presence only.",
+          "evidence": [
+            "G3"
+          ]
+        },
+        {
+          "statRef": "You gain Onslaught for # seconds on Kill",
+          "importance": "good",
+          "thresholds": {
+            "good": 4,
+            "great": 4
+          },
+          "why": "Death Rush pool mod; mmoexp: Onslaught gives a lot of speed and damage. Fixed 4 seconds. Thresholds mark presence only.",
+          "evidence": [
+            "G3"
+          ]
+        },
+        {
+          "statRef": "Lightning Skills Chain # times",
+          "importance": "good",
+          "thresholds": {
+            "good": 1,
+            "great": 1
+          },
+          "why": "Levinstone pool mod; mmoexp: valuable for lightning builds. Fixed +1. Thresholds mark presence only.",
+          "evidence": [
+            "G3"
+          ]
+        },
+        {
+          "statRef": "#% increased Spirit Reservation Efficiency of Skills",
+          "importance": "good",
+          "thresholds": {
+            "good": 9,
+            "great": 10
+          },
+          "why": "Grip of Kulemak pool mod; mmoexp: strong for aura stacking. Thresholds are the 70%/90% default of the normal 6-10 range; widened copies can roll 0-20.",
+          "evidence": [
+            "G3"
+          ]
+        },
+        {
+          "statRef": "Gain #% of Damage as Extra Chaos Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 14,
+            "great": 15
+          },
+          "why": "Ming's Heart pool mod; mmoexp names extra chaos damage as useful. Thresholds are the 70%/90% default of the normal 10-15 range; widened copies can roll 0-25.",
+          "evidence": [
+            "G3"
+          ]
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "thresholds": {
+            "good": 9,
+            "great": 10
+          },
+          "why": "Fixed-slot 7-10% line; no guide mentions it. 70%/90% default.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Physical Damage to Attacks",
+          "importance": "filler",
+          "why": "Small added damage; no guide mentions it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Accuracy Rating",
+          "importance": "filler",
+          "why": "No guide mentions it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Mana",
+          "importance": "filler",
+          "why": "No guide mentions it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Maxroll",
+          "date": "2026-09-19"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://gamerblurb.com/articles/poe-2-loreweave-how-to-get-it-and-which-ring-mods-matter",
+          "title": "PoE 2 Loreweave: How To Get It and Which Ring Mods Matter",
+          "date": "2026-06-20"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://www.mmoexp.com/News/poe-2-0-5-loreweave-crafting-guide-how-to-make-1-000-divines-profit-with-endgame-crafts.html",
+          "title": "PoE 2 0.5 Loreweave Crafting Guide: How to Make 1,000 Divines Profit with Endgame Crafts",
+          "date": "2026-07-13"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Loreweave",
+          "title": "Loreweave - poe2db",
           "date": "2026-11-03"
         }
       }
@@ -1119,6 +1977,66 @@
         }
       }
     },
+    "Redemption": {
+      "tier": "B",
+      "summary": "Grenade builds want the 'Explosive Rhythm every 2 times' roll first, then high increased Physical Damage.",
+      "rolls": [
+        {
+          "statRef": "Gain 1 Explosive Rhythm every # time you use a Grenade Skill\nRemove all Explosive Rhythm on reaching 10 to gain Explosive Fervour for 10 Seconds",
+          "importance": "key",
+          "thresholds": {
+            "good": 2,
+            "great": 2
+          },
+          "why": "Explosive Rhythm is the reason Grenade builds use this crossbow; one guide says to get the 'every 2 times' roll. Lower is better (2 beats 3), but the stat data marks it higher-is-better, so a 3 may be graded wrongly.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Physical Damage",
+          "importance": "good",
+          "thresholds": {
+            "good": 370,
+            "great": 390
+          },
+          "why": "A Grenade Gemling guide says to aim for the top of the physical damage roll. No breakpoint is given, so this uses the 70%/90% default of the 300-400 range.",
+          "evidence": [
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Cooldown Recovery Rate",
+          "importance": "filler",
+          "why": "This is the 20-40% reduced cooldown drawback, where a lower number is better. One guide calls it a drawback but gives no roll advice.",
+          "evidence": [
+            "G1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/explosive-grenade-gemling-legionnaire-poe-2-build",
+          "title": "Explosive Grenade Gemling Legionnaire POE 2 Build (Odealo)",
+          "date": "2026-06-12"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.poe-vault.com/poe2/mercenary/gemling-legionnaire/grenadier-build-guide",
+          "title": "Grenadier Gemling Legionnaire Endgame Build (Poe-Vault)",
+          "date": "2026-07-15"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Redemption",
+          "title": "Redemption - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Rite of Passage": {
       "tier": "A",
       "summary": "Each copy has one Spirit: Cat is the most wanted, Stag is next, and Owl and Wolf are cheaper picks; a longer possession (up to 20 s) is a small bonus.",
@@ -1251,6 +2169,65 @@
         }
       }
     },
+    "Runeseeker's Call": {
+      "tier": "A",
+      "summary": "Value is in its tripled rune sockets (a corrupted 6-socket copy is best) and the runes in them; on a Runemastered copy, the spell-projectile or mana-regen outcome is the one to want.",
+      "rolls": [
+        {
+          "statRef": "#% chance for Spell Skills to fire 2 additional Projectiles",
+          "importance": "good",
+          "thresholds": {
+            "good": 44,
+            "great": 48
+          },
+          "why": "Runemastered outcome only; one 0.5 guide calls it the best runeforge result. Thresholds are the 70%/90% default of 30-50.",
+          "evidence": [
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Mana Regeneration Rate",
+          "importance": "good",
+          "thresholds": {
+            "good": 44,
+            "great": 48
+          },
+          "why": "Runemastered outcome only; Mana Flare guide calls the mana-regen Runemastered base strongly desirable. Thresholds are the 70%/90% default of 30-50.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.poe-vault.com/poe2/druid/shaman/mana-flare-build-guide",
+          "title": "Mana Flare Shaman Endgame Build - poe-vault",
+          "date": "2026-06-15"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://note.com/poe2_sat/n/n0d6822b1e642?hl=en",
+          "title": "[POE2] How to obtain \"Call of the Runeseeker\" [0.5]",
+          "date": "2026-06-14"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/frostbolt-cast-on-crit-comet-oracle",
+          "title": "Frostbolt Cast On Crit Comet Oracle Build Guide - Maxroll (0.5.5)",
+          "date": "2026-09-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Runeseekers_Call",
+          "title": "Runeseeker's Call - PoE2DB",
+          "note": "Regular item has only fixed lines (5 hidden rune sockets, 200% increased effect of socketed runes); Unique Runeforging gives one of three added mods.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Sacred Flame": {
       "tier": "A",
       "summary": "Twister builds buy it for the large self Damage as Extra Fire and the lowest-resistance aura; a high Extra Fire roll is what to look for.",
@@ -1293,6 +2270,181 @@
           "url": "https://poe2db.tw/us/Sacred_Flame",
           "title": "Sacred Flame - poe2db",
           "note": "Fixed mod list, ranges 40-60 / 20-30 / 2-3; level requirement 55 since 0.5.4.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Safrin's Resolve": {
+      "tier": "A",
+      "summary": "Bought for its Ruby jewel socket and for the Cold and Lightning resistance it gives per equipped item with a Fire resistance mod; check that per-item roll (5-10%) first.",
+      "rolls": [
+        {
+          "statRef": "#% to Cold and Lightning Resistances per Equipped Item with a Fire Resistance Modifier",
+          "importance": "good",
+          "thresholds": {
+            "good": 9,
+            "great": 10
+          },
+          "why": "A 0.5 resistance-stacking guide uses the Sekhema rings (it names Safrin's) for the two resistances they give per equipped item. It gives no breakpoint, so good/great are the 70%/90% default of the 5-10 range. Only one guide.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to all Attributes",
+          "importance": "filler",
+          "why": "No current guide found that asks for a high attribute roll on this ring.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Rarity of Items found",
+          "importance": "filler",
+          "why": "No current guide found that asks for a high rarity roll on this ring.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.pathofexile.com/forum/view-thread/3962365",
+          "title": "[0.5] Skin of the Loyal Resistance Stacking: A flexible and cheap defensive shell",
+          "date": "2026-06-13"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Safrins_Resolve",
+          "title": "Safrin's Resolve - poe2db",
+          "note": "Formerly Sekhema's Resolve. 0.5.0 replaced 'Fire Resistance is unaffected by Area Penalties' with the per-item Cold and Lightning resistance line, and existing items were not updated.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Shavronne's Satchel": {
+      "tier": "C",
+      "summary": "Bought for the fixed 'Life Recovery from Flasks also applies to Energy Shield' line (ES recovery with an instant Ultimate Life Flask); no guide asks for a particular roll.",
+      "rolls": [
+        {
+          "statRef": "Has # Charm Slot",
+          "importance": "filler",
+          "why": "Charm slot count (1-3) varies by copy; no guide read asks for it on this belt.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Flask Life Recovery rate",
+          "importance": "filler",
+          "why": "The 20-30% reduced recovery rate penalty; the guide pairs the belt with an instant-recovery flask and never mentions it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "No guide read names the Intelligence roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Flask Charges gained",
+          "importance": "filler",
+          "why": "No guide read names the flask charges roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/falling-thunder-martial-artist-build-guide",
+          "title": "Falling Thunder Martial Artist Build Guide - Maxroll",
+          "date": "2026-09-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Shavronnes_Satchel",
+          "title": "Shavronne's Satchel - poe2db",
+          "note": "Fine Belt; ranges unchanged since 0.1.0 per poe2db.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Skin of the Loyal": {
+      "tier": "A",
+      "summary": "Its only roll is all elemental resistances (5-40%), which also scales the Armour, Energy Shield and Evasion it gains from uncapped resistance; the Runeforged Garment adds Runic Ward and sells far higher.",
+      "rolls": [
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "thresholds": {
+            "good": 30,
+            "great": 37
+          },
+          "why": "The only ranged line, and it feeds the uncapped-res defence lines, but no current guide was found that rates it. Thresholds are the 70%/90% default of the 5-40 range.",
+          "evidence": [
+            "M1",
+            "M2"
+          ]
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Skin_of_the_Loyal",
+          "title": "Skin of the Loyal - PoE2DB",
+          "note": "+(5-40)% all ele res plus four fixed 'increased by Uncapped Resistance' lines (since 0.4.0). Runeforged Garment: Verisium x25000 + Olroth's Crest, Runic Ward 100.",
+          "date": "2026-11-03"
+        },
+        "M2": {
+          "kind": "mechanic",
+          "url": "https://poe2ref.com/uniques/skin-of-the-loyal",
+          "title": "Skin of the Loyal - poe2ref",
+          "note": "Confirms +(5-40)% to all Elemental Resistances.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Snakepit": {
+      "tier": "B",
+      "summary": "Bought for its fixed ring-slot effects (spell projectiles fork in the left slot, chain +1 in the right) and as a Loreweave crafting input; spell damage and cast speed rolls matter little.",
+      "rolls": [
+        {
+          "statRef": "#% increased Spell Damage",
+          "importance": "filler",
+          "thresholds": {
+            "good": 27,
+            "great": 29
+          },
+          "why": "Odealo's 0.5.0 Essence Drain guide says the ring also 'further increases our damage' but asks for no roll; Maxroll's Oracle guide wants it only for the fork effect. 70%/90% default of 20-30.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "thresholds": {
+            "good": 14,
+            "great": 15
+          },
+          "why": "The explicit 10-15% line (the 7-10% Pearl Ring implicit shares this ref and is not graded). No guide mentions it. 70%/90% default of 10-15.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/essence-drain-lich-poe-2-build",
+          "title": "Essence Drain Lich - POE2 Build Guide - Odealo",
+          "date": "2026-07-06"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/frostbolt-cast-on-crit-comet-oracle",
+          "title": "Frostbolt Cast On Crit Comet Oracle Build Guide - Maxroll",
+          "date": "2026-09-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Snakepit",
+          "title": "Snakepit - poe2db",
           "date": "2026-11-03"
         }
       }
@@ -1341,6 +2493,237 @@
         }
       }
     },
+    "Svalinn": {
+      "tier": "A",
+      "summary": "Block shield with Lucky block: buyers want the lowest damage taken from Blocked Hits (0% is the target) and, for Ward builds, a high Runic Ward roll.",
+      "rolls": [
+        {
+          "statRef": "You take #% of damage from Blocked Hits",
+          "importance": "good",
+          "thresholds": {
+            "good": 6,
+            "great": 0
+          },
+          "why": "Lower is better. A 0.5.5 Ward guide says to get the least bypassed damage from Blocked Hits; a second guide asks for 0%. great = 0 per that guide, good = 70% default of the 0-20 range. The second guide is a currency-seller page that also cites a block mod not on the current item. Downgraded from key on review: the second source is a currency-seller page that cites a mod the item no longer has.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to maximum Runic Ward",
+          "importance": "good",
+          "thresholds": {
+            "good": 85,
+            "great": 95
+          },
+          "why": "A 0.5.5 Ward-stacker guide picks Svalinn for its Ward and ranks maximum Ward first; it does not name a roll. 70%/90% default of 50-100. Copies made before 0.5.0 have no Ward line.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Armour",
+          "importance": "filler",
+          "why": "No guide read asks for a high Armour roll; Ward builds runeforge it, and one Runemastered result has no Armour at all.",
+          "evidence": []
+        },
+        {
+          "statRef": "Recover # Runic Ward when you Block",
+          "importance": "filler",
+          "why": "Implicit (15-25) on one of the four Runemastered results only; no readable guide rates the roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% of Damage is taken from Mana before Life",
+          "importance": "filler",
+          "why": "Implicit (15-25)% on one of the four Runemastered results only; no guide found that rates it.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/ward-stacker-infernalist-poe-2-build",
+          "title": "[0.5.5] Ward-stacker Infernalist - POE2 Build Guide",
+          "date": "2026-10-14"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.mmoexp.com/News/path-of-exile-2-corrupting-cry-warbringer-build-guide.html",
+          "title": "Path of Exile 2: Corrupting Cry Warbringer Build Guide",
+          "date": "2026-06-22"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Svalinn",
+          "title": "Svalinn - PoE2DB",
+          "note": "Ranges since 0.4.0 (Blocked Hits 0-20, Armour 200-300); Runic Ward 50-100 added in 0.5.0, existing items unaffected. Four Runemastered results, two with ranged implicits.",
+          "date": "2026-11-03"
+        },
+        "M2": {
+          "kind": "mechanic",
+          "url": "https://poe2ref.com/uniques/svalinn",
+          "title": "Svalinn - poe2ref",
+          "note": "Confirms the four explicit lines and ranges.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Sylvan's Effigy": {
+      "tier": "B",
+      "summary": "Companion builds buy it to run any number of different Companions; Spirit is the limit on how many, so a high Spirit roll is the one to look for.",
+      "rolls": [
+        {
+          "statRef": "#% increased Spirit",
+          "importance": "good",
+          "thresholds": {
+            "good": 68,
+            "great": 73
+          },
+          "why": "Guides say the companion count is 'limited only by your Spirit' and that reservation matters more with this sceptre. They name Spirit, not this roll directly. 70%/90% default of the 50-75 range.",
+          "evidence": [
+            "G1",
+            "G2"
+          ]
+        },
+        {
+          "statRef": "Companions deal #% increased damage to your Marked targets",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to all Attributes",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Allies in your Presence Regenerate # Life per second",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/tame-unique-beast-spirit-walker-poe-2-build",
+          "title": "Tame Unique Beast Spirit Walker PoE 2 Build (Odealo, patch 0.5.0)",
+          "date": "2026-06-04"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/companion-spirit-walker-build-guide",
+          "title": "Companion Spirit Walker Build Guide (Maxroll, 0.5.5)",
+          "date": "2026-09-17"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Sylvans_Effigy",
+          "title": "Sylvan's Effigy - PoE2DB",
+          "note": "Ranges and release (0.5.0, no later changes listed).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Tabula Rasa": {
+      "tier": "A",
+      "summary": "Has no rolled modifiers, only six hidden jewel sockets, so buyers pay for the sockets (and much more for the Runeforged Garment with Runic Ward), not for a roll.",
+      "rolls": [],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Tabula_Rasa",
+          "title": "Tabula Rasa - PoE2DB",
+          "note": "Only line: Has 6 Jewel Sockets (Hidden). Runeforged Garment recipe: Verisium x50000 + Olroth's Crest of the Sun, Runic Ward 100.",
+          "date": "2026-11-03"
+        },
+        "M2": {
+          "kind": "mechanic",
+          "url": "https://poe2ref.com/uniques/tabula-rasa",
+          "title": "Tabula Rasa - poe2ref",
+          "note": "Same: 6 hidden jewel sockets, no ranged mods; Runeforged Garment at the Runeforge.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Temporalis": {
+      "tier": "A",
+      "summary": "Bought for the flat skill cooldown line (best -2 seconds, more if corrupted); ES, resistance and recoup rolls barely move the price.",
+      "rolls": [
+        {
+          "statRef": "Skills have # seconds to Cooldown",
+          "importance": "key",
+          "thresholds": {
+            "good": -1.7,
+            "great": -2
+          },
+          "why": "The whole item is bought for this line; a perfect -2.00s commands a premium, and a 0.5.5 guide rates it by its up-to-2s (2.4 corrupted) Blink cooldown cut. great = the -2 perfect roll, good = 70% default of the -1 to -2 range.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% of Damage taken Recouped as Life",
+          "importance": "filler",
+          "why": "No current guide I could read rates this roll (the Mobalytics Temporalis guide that reportedly does returned 403).",
+          "evidence": []
+        },
+        {
+          "statRef": "#% of Damage taken Recouped as Mana",
+          "importance": "filler",
+          "why": "No current guide found that rates this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Energy Shield",
+          "importance": "filler",
+          "why": "Price guide calls the other lines good but not what buyers pay for.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "why": "Price guide: nobody pays thousands of divines for the resistances.",
+          "evidence": [
+            "G1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-temporalis-guide",
+          "title": "PoE2 Temporalis Guide: What It Does, How to Actually Get It & Whether It's Worth Buying (0.5.4)",
+          "date": "2026-08-30"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/frostbolt-cast-on-crit-comet-oracle",
+          "title": "Frostbolt Cast On Crit Comet Oracle Build Guide - Maxroll (0.5.5)",
+          "date": "2026-09-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Temporalis",
+          "title": "Temporalis - PoE2DB",
+          "note": "Mods and ranges; cooldown line -(2-1)s since 0.2.0 (was -(4-2)s); Runemastered Silk Robe changes only the base.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "The Adorned": {
       "tier": "A",
       "summary": "Its value comes almost entirely from the corrupted-Magic-jewel effect roll: 100% or more doubles each corrupted Magic jewel, and 130-150% is the bracket buyers chase.",
@@ -1383,6 +2766,93 @@
           "kind": "mechanic",
           "url": "https://poe2db.tw/us/The_Adorned",
           "title": "The Adorned - PoE2DB",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Fall of the Axe": {
+      "tier": "B",
+      "summary": "Nothing on it rolls (it is used when you are Slowed and grants Onslaught), so every copy is the same and only quality or corruption sets one apart.",
+      "rolls": [],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Fall_of_the_Axe",
+          "title": "The Fall of the Axe Silver Charm - PoE2DB",
+          "note": "Both unique mods are fixed (stat value 1-1): used when affected by a Slow, grants Onslaught during effect. Base line: speed unaffected by Slows.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Last Flame": {
+      "tier": "A",
+      "summary": "Single-use Sanctum relic with only fixed lines: buyers pay for the guaranteed Temporalis drop from Zarokh in a level 80+ Trial, not for any roll.",
+      "rolls": [],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Last_Flame",
+          "title": "The Last Flame - PoE2DB",
+          "note": "Incense Relic; all five lines fixed (Zarokh drops Temporalis, no absorption, max Honour 1, Trials 80+, destroyed on use).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Ordained": {
+      "tier": "A",
+      "summary": "Endgame physical/lightning Grand Spear prized for its large local Critical Hit Chance; buyers want a high crit roll, then high physical damage and lightning rolls.",
+      "rolls": [
+        {
+          "statRef": "#% to Critical Hit Chance",
+          "importance": "good",
+          "thresholds": {
+            "good": 7.1,
+            "great": 7.7
+          },
+          "why": "Maxroll 0.5.5 Twister guide: hard to replace 'because it has so much Critical Strike chance'. No breakpoint; 70%/90% default of +5-8%.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% increased Physical Damage",
+          "importance": "filler",
+          "thresholds": {
+            "good": 220,
+            "great": 240
+          },
+          "why": "Main weapon DPS roll, but no guide read singles it out. 70%/90% default of 150-250.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Lightning Damage",
+          "importance": "filler",
+          "thresholds": {
+            "good": 135.5,
+            "great": 145.5
+          },
+          "why": "No guide read singles it out. Value is the average of 1 and the 200-300 max, so 135.5/145.5 are the 70%/90% default (max 270/290).",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+          "title": "Gemling Legionnaire Twister Build Guide - Path of Exile 2",
+          "date": "2026-09-19"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.aoeah.com/news/4630--poe-2-05-unique-spears-list-drop-location-runeforged-mods--best-spears",
+          "title": "PoE 2 0.5 Unique Spears List, Drop Location, Runeforged Mods & Best Spears",
+          "date": "2026-06-10"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Ordained",
+          "title": "The Ordained - PoE2DB",
+          "note": "Current mod ranges; added 0.5.0, no changes since.",
           "date": "2026-11-03"
         }
       }

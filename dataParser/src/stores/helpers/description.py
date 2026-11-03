@@ -179,6 +179,9 @@ class Description:
         # The app reads a signed number ("+35") as one value, so a literal
         # "+" before a placeholder would never match.
         text = text.replace("+#", "#")
+        # A clipboard line never starts with a space, so one after a line
+        # break ("Skill\n Remove all", Explosive Rhythm) would never match.
+        text = re.sub(r"(\\n|\n)[ \t]+", r"\1", text)
         flags = parts[2].strip() if len(parts) > 2 and parts[2].strip() else None
         value_placeholders = tuple(pre_quote.split())
         return value_placeholders, text, flags

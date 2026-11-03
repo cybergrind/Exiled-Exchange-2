@@ -17,8 +17,11 @@ const DATA = path.resolve(__dirname, "../../public/data");
 const STATS = statLookupFromNdjson(
   fs.readFileSync(path.join(DATA, "en/stats.ndjson"), "utf8"),
 );
+// items-patch.ndjson serves uniques the generated file lacks (renamed ones).
 const UNIQUES = uniqueNamesFromNdjson(
-  fs.readFileSync(path.join(DATA, "en/items.ndjson"), "utf8"),
+  ["items.ndjson", "items-patch.ndjson"]
+    .map((name) => fs.readFileSync(path.join(DATA, "en", name), "utf8"))
+    .join("\n"),
 );
 const OPTS = { statBetter: STATS, hasUnique: (n: string) => UNIQUES.has(n) };
 const SHIPPED = path.join(DATA, "poe-source/unique-rolls.json");

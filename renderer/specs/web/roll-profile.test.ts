@@ -84,6 +84,19 @@ describe("rollGrade", () => {
     expect(rollGrade({ goodness: 0.1, value: 25, thresholds })).toBe(undefined);
   });
 
+  it("grades a roll that is negative on the item", () => {
+    // Temporalis: "Skills have -2 seconds to Cooldown", more negative is better.
+    const thresholds = { good: -1.7, great: -2 };
+    expect(rollGrade({ goodness: 0.95, value: -1.95, thresholds })).toBe(
+      "good",
+    );
+    expect(rollGrade({ goodness: 0.8, value: -1.8, thresholds })).toBe("good");
+    expect(rollGrade({ goodness: 0.3, value: -1.3, thresholds })).toBe(
+      undefined,
+    );
+    expect(rollGrade({ goodness: 1, value: -2, thresholds })).toBe("perfect");
+  });
+
   it("still calls the very top perfect with breakpoints", () => {
     expect(
       rollGrade({

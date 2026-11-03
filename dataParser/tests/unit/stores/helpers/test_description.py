@@ -500,3 +500,17 @@ def test_parse_line_drops_plus_before_a_mid_text_placeholder():
         text
         == "Expeditions have #% Surpassing chance to contain an additional Verisium Remnant"
     )
+
+
+def test_parse_line_drops_spaces_after_a_line_break():
+    # Clipboard lines never start with a space (Redemption's Explosive Rhythm).
+    desc = Description("en", "dummy.csd")
+
+    _, text, _ = desc.parse_line(
+        '# "Gain 1 Explosive Rhythm every {0} times you use a Grenade Skill\\n Remove all Explosive Rhythm on reaching 10"'
+    )
+
+    assert (
+        text
+        == "Gain 1 Explosive Rhythm every # times you use a Grenade Skill\\nRemove all Explosive Rhythm on reaching 10"
+    )

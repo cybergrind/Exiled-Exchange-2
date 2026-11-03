@@ -41,6 +41,9 @@ export function rollGrade(roll: {
   const t = roll.thresholds;
   if (!t) return roll.goodness >= TOP_ROLL ? "top" : undefined;
   const higherIsBetter = t.great >= t.good;
+  // `value` is the number shown on the item: the filter already turns a
+  // "fewer"/"reduced" roll round (filterAdjustmentForNegate), and a real
+  // negative such as Temporalis's "-2 seconds to Cooldown" stays negative.
   const reaches = (mark: number) =>
     higherIsBetter ? roll.value >= mark : roll.value <= mark;
   if (reaches(t.great)) return "top";

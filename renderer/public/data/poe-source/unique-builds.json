@@ -1,0 +1,714 @@
+{
+  "league": "Forbidden Rites",
+  "verifiedOn": "2026-11-03",
+  "builds": [
+    {
+      "id": 1,
+      "name": "Disciple of Varashta Minion",
+      "rank": "Maxroll S #1",
+      "url": "https://maxroll.gg/poe2/build-guides/disciple-of-varashta-minion-build-guide",
+      "date": "2026-11-02"
+    },
+    {
+      "id": 2,
+      "name": "Twister Gemling Legionnaire",
+      "rank": "Maxroll S #2; GamesFuze #1; Odealo #7 (Twister, any ascendancy)",
+      "url": "https://maxroll.gg/poe2/build-guides/gemling-legionnaire-twister-build-guide",
+      "date": "2026-09-19"
+    },
+    {
+      "id": 3,
+      "name": "Grim Pillars Spell Totem Oracle",
+      "rank": "Maxroll S #3",
+      "url": "https://maxroll.gg/poe2/build-guides/grim-pillars-spell-totem-oracle-build-guide",
+      "date": "2026-09-07"
+    },
+    {
+      "id": 4,
+      "name": "Hollow Form Whirling Assault Martial Artist",
+      "rank": "Maxroll S #4; GamesFuze #4; Odealo #5",
+      "url": "https://maxroll.gg/poe2/build-guides/hollow-form-whirling-assault-martial-artist-build-guide",
+      "date": "2026-09-03"
+    },
+    {
+      "id": 5,
+      "name": "Whirling Assault Martial Artist",
+      "rank": "Maxroll A #1",
+      "url": "https://maxroll.gg/poe2/build-guides/whirling-assault-martial-artist-build-guide",
+      "date": "2026-09-04"
+    },
+    {
+      "id": 6,
+      "name": "Minion Army Spirit Walker",
+      "rank": "Maxroll A #2",
+      "url": "https://maxroll.gg/poe2/build-guides/minion-army-spirit-walker-build-guide",
+      "date": "2026-10-31"
+    },
+    {
+      "id": 7,
+      "name": "Falling Thunder Martial Artist",
+      "rank": "Maxroll A #3",
+      "url": "https://maxroll.gg/poe2/build-guides/falling-thunder-martial-artist-build-guide",
+      "date": "2026-09-03"
+    },
+    {
+      "id": 8,
+      "name": "Entangle Oracle",
+      "rank": "Maxroll A #4",
+      "url": "https://maxroll.gg/poe2/build-guides/entangle-oracle-build-guide",
+      "date": "2026-09-02"
+    },
+    {
+      "id": 9,
+      "name": "Twisters Spirit Walker",
+      "rank": "Maxroll A #6; Odealo #7 (Twister)",
+      "url": "https://maxroll.gg/poe2/build-guides/spirit-walker-twisters",
+      "date": "2026-09-02"
+    },
+    {
+      "id": 10,
+      "name": "Ice Shot Deadeye",
+      "rank": "Maxroll A #7; GamesFuze #5; Odealo #2",
+      "url": "https://overgear.com/guides/poe-2/ice-shot-deadeye-guide/",
+      "date": "2026-09-01"
+    },
+    {
+      "id": 11,
+      "name": "Flameblast Oil Grenade Gemling Legionnaire",
+      "rank": "GamesFuze #3; Odealo #8 (Maxroll guide exists, not in its tier list)",
+      "url": "https://kami-labs.fr/en/path-of-exile-2/builds-path-of-exile-2/build-mercenaire-flameblast-oil-grenade-gemling-saison-5/",
+      "date": "2026-09-04"
+    },
+    {
+      "id": 12,
+      "name": "Essence Drain (Contagion) Lich",
+      "rank": "Maxroll B #13; Odealo #1",
+      "url": "https://odealo.com/articles/essence-drain-lich-poe-2-build",
+      "date": "2026-07-06"
+    },
+    {
+      "id": 13,
+      "name": "Barya of Kelari (Djinn) Disciple of Varashta",
+      "rank": "Odealo #3",
+      "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+      "date": "2026-08-29"
+    },
+    {
+      "id": 14,
+      "name": "Tame Unique Beast / Companion Spirit Walker",
+      "rank": "Maxroll A #12 (Companion SW); Odealo #9",
+      "url": "https://odealo.com/articles/tame-unique-beast-spirit-walker-poe-2-build",
+      "date": "2026-06-04"
+    },
+    {
+      "id": 15,
+      "name": "Explosive Grenade Gemling Legionnaire",
+      "rank": "Odealo #6; GamesFuze #2 (Grenades Gemling)",
+      "url": "https://odealo.com/articles/explosive-grenade-gemling-legionnaire-poe-2-build",
+      "date": "2026-06-12"
+    },
+    {
+      "id": 16,
+      "name": "Arc Spell Totem Gemling Legionnaire",
+      "rank": "Odealo #4",
+      "url": "https://odealo.com/articles/arc-spell-totem-gemling-legionnaire-poe-2-build",
+      "date": "2026-06-30"
+    }
+  ],
+  "uniques": {
+    "Against the Darkness": [
+      {
+        "build": 10,
+        "core": false,
+        "label": "endgame"
+      }
+    ],
+    "Atziri's Disdain": [
+      {
+        "build": 12,
+        "core": true
+      }
+    ],
+    "Berek's Grip": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "budget alt to The Taming"
+      }
+    ],
+    "Berek's Pass": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "budget alt to The Taming"
+      }
+    ],
+    "Berek's Respite": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "budget alt to The Taming"
+      }
+    ],
+    "Blood of the Warrior": [
+      {
+        "build": 6,
+        "core": true
+      }
+    ],
+    "Bones of Ullr": [
+      {
+        "build": 1,
+        "core": true
+      }
+    ],
+    "Cadiro's Gambit": [
+      {
+        "build": 10,
+        "core": false,
+        "label": "optional swap-in"
+      }
+    ],
+    "Constricting Command": [
+      {
+        "build": 15,
+        "core": true
+      }
+    ],
+    "Cruel Hegemony": [
+      {
+        "build": 14,
+        "core": false,
+        "label": "endgame"
+      }
+    ],
+    "Darkness Enthroned": [
+      {
+        "build": 2,
+        "core": true
+      },
+      {
+        "build": 3,
+        "core": false,
+        "label": "optional"
+      },
+      {
+        "build": 16,
+        "core": true
+      }
+    ],
+    "Duality": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "endgame"
+      }
+    ],
+    "Effigy of Cruelty": [
+      {
+        "build": 8,
+        "core": true
+      },
+      {
+        "build": 13,
+        "core": true
+      },
+      {
+        "build": 16,
+        "core": true
+      }
+    ],
+    "Enfolding Dawn": [
+      {
+        "build": 1,
+        "core": true
+      },
+      {
+        "build": 6,
+        "core": false,
+        "label": "leveling"
+      }
+    ],
+    "Evergrasping Ring": [
+      {
+        "build": 1,
+        "core": true
+      },
+      {
+        "build": 6,
+        "core": true
+      },
+      {
+        "build": 13,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Forgotten Warden": [
+      {
+        "build": 5,
+        "core": true
+      },
+      {
+        "build": 14,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "From Nothing": [
+      {
+        "build": 6,
+        "core": true
+      },
+      {
+        "build": 13,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Guiding Palm of the Eye": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Headhunter": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 4,
+        "core": false,
+        "label": "endgame alt"
+      },
+      {
+        "build": 10,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Heart of the Well": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 7,
+        "core": true
+      },
+      {
+        "build": 10,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 12,
+        "core": false,
+        "label": "optional"
+      },
+      {
+        "build": 15,
+        "core": false,
+        "label": "unclear"
+      },
+      {
+        "build": 16,
+        "core": true
+      }
+    ],
+    "Horns of Bynden": [
+      {
+        "build": 5,
+        "core": false,
+        "label": "early"
+      }
+    ],
+    "Hyrri's Ire": [
+      {
+        "build": 9,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 10,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Idol of Uldurn": [
+      {
+        "build": 8,
+        "core": false,
+        "label": "leveling"
+      }
+    ],
+    "Ingenuity": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "endgame alt"
+      },
+      {
+        "build": 13,
+        "core": false,
+        "label": "alternative"
+      }
+    ],
+    "Kalandra's Touch": [
+      {
+        "build": 13,
+        "core": false,
+        "label": "budget"
+      }
+    ],
+    "Lavianga's Spirits": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "late"
+      },
+      {
+        "build": 2,
+        "core": true
+      },
+      {
+        "build": 9,
+        "core": false,
+        "label": "optional"
+      },
+      {
+        "build": 13,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Lochtonial Caress": [
+      {
+        "build": 4,
+        "core": true
+      }
+    ],
+    "Loreweave": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "endgame"
+      }
+    ],
+    "Luminous Pace": [
+      {
+        "build": 5,
+        "core": false,
+        "label": "early"
+      }
+    ],
+    "Mageblood": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 2,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 4,
+        "core": false,
+        "label": "chase"
+      },
+      {
+        "build": 6,
+        "core": false,
+        "label": "min-max"
+      }
+    ],
+    "Maligaro's Virtuosity": [
+      {
+        "build": 16,
+        "core": true
+      }
+    ],
+    "Megalomaniac": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 6,
+        "core": false,
+        "label": "min-max"
+      },
+      {
+        "build": 13,
+        "core": false,
+        "label": "endgame luxury"
+      }
+    ],
+    "Morior Invictus": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "endgame"
+      }
+    ],
+    "Nascent Hope": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Nazir's Judgement": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "leveling"
+      }
+    ],
+    "Palm of the Dreamer": [
+      {
+        "build": 12,
+        "core": false,
+        "label": "upgrade"
+      }
+    ],
+    "Perfidy": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Prism Guardian": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Prism of Belief": [
+      {
+        "build": 6,
+        "core": false,
+        "label": "luxury"
+      },
+      {
+        "build": 7,
+        "core": false,
+        "label": "optional"
+      },
+      {
+        "build": 12,
+        "core": false,
+        "label": "recommended"
+      },
+      {
+        "build": 16,
+        "core": false,
+        "label": "aspirational"
+      }
+    ],
+    "Redemption": [
+      {
+        "build": 15,
+        "core": true
+      }
+    ],
+    "Rite of Passage": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "min/max"
+      },
+      {
+        "build": 4,
+        "core": false,
+        "label": "luxury"
+      }
+    ],
+    "Sacred Flame": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "optional"
+      },
+      {
+        "build": 9,
+        "core": false,
+        "label": "untiered"
+      }
+    ],
+    "Shavronne's Satchel": [
+      {
+        "build": 7,
+        "core": true
+      }
+    ],
+    "Silks of Veneration": [
+      {
+        "build": 13,
+        "core": false,
+        "label": "budget"
+      }
+    ],
+    "Skysliver": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Snakepit": [
+      {
+        "build": 12,
+        "core": true
+      }
+    ],
+    "Soul Mantle": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "alternative"
+      },
+      {
+        "build": 6,
+        "core": false,
+        "label": "leveling alt"
+      }
+    ],
+    "Split Personality": [
+      {
+        "build": 16,
+        "core": true
+      }
+    ],
+    "Surefooted Sigil": [
+      {
+        "build": 11,
+        "core": false,
+        "label": "optional QoL"
+      }
+    ],
+    "Sylvan's Effigy": [
+      {
+        "build": 14,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "The Black Insignia": [
+      {
+        "build": 9,
+        "core": false,
+        "label": "budget"
+      }
+    ],
+    "The Fall of the Axe": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "The Ordained": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "endgame"
+      }
+    ],
+    "The Taming": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "endgame"
+      },
+      {
+        "build": 9,
+        "core": false,
+        "label": "endgame/luxury"
+      }
+    ],
+    "Thrillsteel": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "leveling"
+      }
+    ],
+    "Trenchtimbre": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "leveling twink"
+      },
+      {
+        "build": 6,
+        "core": true
+      }
+    ],
+    "Tyranny's Grip": [
+      {
+        "build": 6,
+        "core": true
+      },
+      {
+        "build": 14,
+        "core": true
+      }
+    ],
+    "Undying Hate": [
+      {
+        "build": 8,
+        "core": true
+      }
+    ],
+    "Valako's Roar": [
+      {
+        "build": 9,
+        "core": false,
+        "label": "budget"
+      }
+    ],
+    "Voices": [
+      {
+        "build": 4,
+        "core": false,
+        "label": "chase"
+      },
+      {
+        "build": 13,
+        "core": false,
+        "label": "endgame luxury"
+      }
+    ],
+    "Wake of Destruction": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "optional"
+      }
+    ],
+    "Waveshaper": [
+      {
+        "build": 1,
+        "core": false,
+        "label": "alternative"
+      }
+    ],
+    "Yoke of Suffering": [
+      {
+        "build": 2,
+        "core": false,
+        "label": "leveling"
+      }
+    ]
+  }
+}

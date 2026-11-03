@@ -24,8 +24,11 @@ function main(argv: string[]): number {
   const statBetter = statLookupFromNdjson(
     fs.readFileSync(path.join(DATA, "en/stats.ndjson"), "utf8"),
   );
+  // items-patch.ndjson serves uniques the generated file lacks (renamed ones).
   const uniques = uniqueNamesFromNdjson(
-    fs.readFileSync(path.join(DATA, "en/items.ndjson"), "utf8"),
+    ["items.ndjson", "items-patch.ndjson"]
+      .map((name) => fs.readFileSync(path.join(DATA, "en", name), "utf8"))
+      .join("\n"),
   );
   const opts = { statBetter, hasUnique: (name: string) => uniques.has(name) };
 
@@ -41,7 +44,8 @@ function main(argv: string[]): number {
     const file = path.join(RESEARCH, name);
     const data = JSON.parse(fs.readFileSync(file, "utf8")) as RollProfileFile;
     const errors = validateRollProfile(data, opts);
-    for (const err of errors) console.error(`${name}: ${err.path}: ${err.message}`);
+    for (const err of errors)
+      console.error(`${name}: ${err.path}: ${err.message}`);
     if (errors.length) {
       failed++;
       continue;
@@ -56,7 +60,9 @@ function main(argv: string[]): number {
     if (data.verifiedOn > verifiedOn) verifiedOn = data.verifiedOn;
   }
   if (failed) {
-    console.error(`merge-rolls: ${failed} file(s) with errors, nothing written`);
+    console.error(
+      `merge-rolls: ${failed} file(s) with errors, nothing written`,
+    );
     return 1;
   }
 
