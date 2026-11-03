@@ -3,6 +3,37 @@
   "league": "Forbidden Rites",
   "verifiedOn": "2026-11-03",
   "uniques": {
+    "Ab Aeterno": {
+      "tier": "C",
+      "summary": "Dodge-roll boots bought for 'Dodge Roll avoids all Hits'; no guide rates the rolls, so check the copy has the 0.5.0 lines (no speed drawback), and note the Runemastered base (Runic Ward) is the version that sells high.",
+      "rolls": [
+        {
+          "statRef": "#% increased Movement Speed",
+          "importance": "filler",
+          "why": "Widest roll on the item (15-30%), but no guide read names a Movement Speed target for these boots.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Armour, Evasion and Energy Shield",
+          "importance": "filler",
+          "why": "Local defences line (200-250% since 0.5.0; older copies need a Divine Orb); no guide read rates it.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Ab_Aeterno",
+          "title": "Ab Aeterno - poe2db",
+          "note": "Current mods and ranges, 0.4.0/0.5.0 history (drawback removed, legacy copies keep other old lines), Runemastered Grand Cuisses recipe (45/41/12 + 106 Runic Ward, mods unchanged).",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Against the Darkness": {
       "tier": "A",
       "summary": "Rolls 2 of 25 radius mods; buyers want Gain % of Damage as Extra Cold, Fire or Lightning on notables (matching their skill's element), with the +Spirit on notables mod also sought, and value depends on how many notables sit in its radius.",
@@ -127,6 +158,117 @@
           "url": "https://poe2db.tw/us/Alphas_Howl",
           "title": "Alpha's Howl - poe2db",
           "note": "Current mod lines; Runemastered Armoured Cap version changes only the base (Evasion 178, Runic Ward 113).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Atziri's Rule": {
+      "tier": "A",
+      "summary": "Bought for the granted Mirror of Refraction skill in projectile-loop spell builds; no guide found that ranks its rolls, so treat them as secondary.",
+      "rolls": [
+        {
+          "statRef": "# to Level of all Corrupted Spell Skill Gems",
+          "importance": "filler",
+          "why": "Range +3 to +5; no guide read says which roll matters.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "why": "Range 10-20%; no guide read says which roll matters.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased maximum Life",
+          "importance": "filler",
+          "why": "Range 10-20%; no guide read says which roll matters.",
+          "evidence": []
+        },
+        {
+          "statRef": "Spells which cost Life Gain #% of Damage as Extra Physical Damage",
+          "importance": "filler",
+          "why": "Range 80-120%; only matters to builds whose spells cost Life, and no guide read rates it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "Range 20-30; no guide read says which roll matters.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Atziris_Rule",
+          "title": "Atziri's Rule - PoE2DB",
+          "note": "Five ranged explicit lines plus Grants Skill: Mirror of Refraction; cultivated (Vaal Cultivation Orb) mutated-mod pool listed separately.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Atziri's Step": {
+      "tier": "C",
+      "summary": "Deflection boots for evasion builds; buyers mainly want a copy whose Vaal cultivation removed the reduced-deflection drawback, while the Runemastered base (Runic Ward) sells far above the regular one.",
+      "rolls": [
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "why": "No guide read names the Life roll (70-100) as a reason to buy.",
+          "evidence": []
+        },
+        {
+          "statRef": "Gain Deflection Rating equal to #% of Evasion Rating",
+          "importance": "filler",
+          "why": "A 0.4 deflection guide praises the conversion (~50%) but gives no roll target; range 40-60.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Evasion Rating",
+          "importance": "filler",
+          "why": "Local evasion line (80-120%); no guide read rates its roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Prevent #% of Damage from Deflected Hits",
+          "importance": "filler",
+          "why": "Drawback line, (-12 to -6)%, matched by '#% to amount of Damage Prevented by Deflection'. The 0.4 guide says removing it (via Vaal cultivation) is the main thing you care about, so buyers want it gone rather than a better roll.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% increased Deflection Rating while moving",
+          "importance": "filler",
+          "why": "Optional Vaal-cultivated line (15-25%) per poe2db; no guide read rates it.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Evasion Rating",
+          "importance": "filler",
+          "why": "Optional Vaal-cultivated line (+50-150) per poe2db; no guide read rates it.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.pathofexile.com/forum/view-thread/3901905",
+          "title": "[0.4] Aspects End Game - 98% Max Deflection Amazon - All content",
+          "date": "2026-01-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Atziris_Step",
+          "title": "Atziri's Step - poe2db",
+          "note": "Current mods and ranges, Cultivated Uniques entry (Vaal Cultivation Orb) with three extra lines, Runemastered Cinched Boots recipe (178 Evasion, 74 Runic Ward, mods unchanged).",
           "date": "2026-11-03"
         }
       }
@@ -394,6 +536,96 @@
         }
       }
     },
+    "Choir of the Storm": {
+      "tier": "A",
+      "summary": "Crit lightning builds buy it for the fixed 'Critical Hits Ignore Enemy Monster Lightning Resistance' and triggered Lightning Bolt; the Lightning Resistance and Dexterity rolls are secondary.",
+      "rolls": [
+        {
+          "statRef": "#% to Lightning Resistance",
+          "importance": "filler",
+          "why": "Range 50-100% since 0.4.0; a high roll frees resistance elsewhere, but no guide read names it as what buyers pay for.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "Range 10-15 (shown in the implicit block on poe2db); no guide read mentions it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.aoeah.com/news/4795--poe-2-055-best-endgame-build--top-6-best-builds-for-endgame",
+          "title": "PoE 2 0.5.5 Best Endgame Build - Top 6 Best Builds for Endgame (AOEAH)",
+          "date": "2026-09-04"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Choir_of_the_Storm",
+          "title": "Choir of the Storm - PoE2DB",
+          "note": "Lines and ranges; version history (0.4.0 Lightning Resistance 20-30% -> 50-100%, 0.5.4 level requirement 55).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Cloak of Defiance": {
+      "tier": "C",
+      "summary": "Budget mana-before-life chest for mana stackers; buyers want high Energy Shield and Mana rolls, then high Mana Regeneration.",
+      "rolls": [
+        {
+          "statRef": "#% increased Energy Shield",
+          "importance": "good",
+          "thresholds": {
+            "good": 85,
+            "great": 95
+          },
+          "why": "poe-vault's Archmage guide lists 'High ES/Mana' as the first roll priority for this chest (one guide, written 0.4-era; ranges unchanged since 0.4.0). 70%/90% default of 50-100.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "# to maximum Mana",
+          "importance": "good",
+          "thresholds": {
+            "good": 135,
+            "great": 145
+          },
+          "why": "poe-vault's Archmage guide lists 'High ES/Mana' as the first roll priority (one guide, 0.4-era). 70%/90% default of 100-150.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% increased Mana Regeneration Rate",
+          "importance": "good",
+          "thresholds": {
+            "good": 85,
+            "great": 95
+          },
+          "why": "poe-vault's Archmage guide lists 'High Mana Regeneration' as the second roll priority (one guide, 0.4-era). 70%/90% default of 50-100.",
+          "evidence": [
+            "G1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.poe-vault.com/poe2/guides/ignite-archmage-build-guide",
+          "title": "Ignite Archmage Infernalist Endgame Build",
+          "date": "2025-12-31"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Cloak_of_Defiance",
+          "title": "Cloak of Defiance - poe2db",
+          "note": "50% mana before life fixed; ES, Mana and Mana Regen rolled, ranges current since 0.4.0.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Constricting Command": {
       "tier": "C",
       "summary": "Bought for its 'fewer enemies to be Surrounded' line by Surrounded builds such as Grenade Gemling; 4 fewer is the top roll, and Runemastered copies sell for far more than regular ones.",
@@ -593,6 +825,105 @@
           "url": "https://poe2db.tw/us/Death_Articulated",
           "title": "Death Articulated - poe2db",
           "note": "Current mod lines and ranges; no variants or Runemastered version.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Decree of Acuity": {
+      "tier": "C",
+      "summary": "Regular copies are near worthless and no current guide uses it; only the Runemastered version sells, and no guide says which roll matters.",
+      "rolls": [
+        {
+          "statRef": "#% increased Armour and Evasion",
+          "importance": "filler",
+          "why": "No current guide found that uses this item or grades its rolls.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "No current guide found that uses this item or grades its rolls.",
+          "evidence": []
+        },
+        {
+          "statRef": "Gain #% of Evasion Rating as extra Armour",
+          "importance": "filler",
+          "why": "No current guide found that uses this item or grades its rolls.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Decree_of_Acuity",
+          "title": "Decree of Acuity - poe2db",
+          "note": "Current ranges; added 0.5.0; Runemastered Ancient Visor recipe.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Decree of Flight": {
+      "tier": "B",
+      "summary": "Bought as a cheap mobility boot for dodge-roll travel; buyers want a high faster Dodge Roll roll, ideally 30%.",
+      "rolls": [
+        {
+          "statRef": "#% faster Dodge Roll",
+          "importance": "key",
+          "thresholds": {
+            "good": 27,
+            "great": 30
+          },
+          "why": "Maxroll's 0.5.5 guide says to aim for a high faster Dodge Roll value; a 0.5.5 forum guide asks for 30+%. great = 30 (top of 20-30, per the forum guide); good = 27 is the 70% default.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Gain Guard equal to #% of missing Energy Shield for 4 seconds when you Dodge Roll",
+          "importance": "good",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "One 0.5 forum guide (pre-0.5.5, item unchanged since) lists the 20% Guard on dodge as a defence highlight. Thresholds are the 70%/90% default of 10-20.",
+          "evidence": [
+            "G3",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Armour and Energy Shield",
+          "importance": "filler",
+          "why": "No guide read names the Armour/ES roll; builds wear it for dodge speed.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/flameblast-oil-grenade-gemling-build-guide",
+          "title": "Flameblast Oil Grenade Gemling Build Guide - Path of Exile 2 (maxroll, 0.5.5)",
+          "date": "2026-09-09"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://www.pathofexile.com/forum/view-thread/3990660",
+          "title": "Flameblast & Verglas, Oil Grenade, Contagion, Torn. = 1.5+ M DPS screen-wide @ 20+ divine [BOTL 0.55]",
+          "date": "2026-10-25"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://www.pathofexile.com/forum/view-thread/3981749",
+          "title": "[0.5] Thor's Plasma Blast Blood Mage (One Button Build, No Crit, No Charge)",
+          "date": "2026-07-05"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Decree_of_Flight",
+          "title": "Decree of Flight - poe2db",
+          "note": "Current mod ranges; added 0.5.0, no later balance changes; Runemastered Ancient Leggings recipe.",
           "date": "2026-11-03"
         }
       }
@@ -1016,6 +1347,37 @@
         }
       }
     },
+    "Hand of Wisdom and Action": {
+      "tier": "B",
+      "summary": "Dex/Int attack gloves whose attack speed and lightning damage grow with Dexterity and Intelligence; no guide ranks the attribute rolls, and Runemastered copies sell for about ten times a regular one.",
+      "rolls": [
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "Feeds the per-20-Dex attack speed line, but no current guide found that names this roll; guides that quote ideal rolls describe the pre-0.2 version.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "Feeds the per-20-Int lightning line, but no current guide found that names this roll; guides that quote ideal rolls describe the pre-0.2 version.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Hand_of_Wisdom_and_Action",
+          "title": "Hand of Wisdom and Action - poe2db",
+          "note": "Per-20 Dex/Int lines fixed since 0.2.0; Runemastered Spiral Wraps adds Runic Ward 67 (Level 55), unique mods unchanged.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Headhunter": {
       "tier": "A",
       "summary": "Bought for the Rare-kill modifier-stealing effect; Life, Strength and Dexterity rolls barely move its value.",
@@ -1242,6 +1604,51 @@
           "url": "https://poe2db.tw/us/Heart_of_the_Well",
           "title": "Heart of the Well - PoE2DB",
           "note": "4 hidden desecrated mods (2 prefix, 2 suffix) from a 73-mod pool; current ranges.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Hrimnor's Hymn": {
+      "tier": "C",
+      "summary": "Wanted for its fixed extra Aftershock on Slams; the Runemastered Oak Greathammer copy (111-207 base phys, made from a Runeforged one) is the valuable version, and higher Physical Damage % helps it most.",
+      "rolls": [
+        {
+          "statRef": "#% increased Physical Damage",
+          "importance": "filler",
+          "thresholds": {
+            "good": 108,
+            "great": 116
+          },
+          "why": "The only roll that scales the weapon's damage, which is what the Runemastered base adds; no guide read names it, so filler. Thresholds are the 70%/90% default of 80-120.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Causes #% increased Stun Buildup",
+          "importance": "filler",
+          "why": "The base implicit (20-40); no guide comments on it.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Strength",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "Gain # Life per enemy killed",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Hrimnors_Hymn",
+          "title": "Hrimnor's Hymn - poe2db",
+          "note": "Mod lines (Stun Buildup is the base implicit), 0.1.1 phys change, Runeforged (73-135, L38) and Runemastered (111-207, L55) recipes.",
           "date": "2026-11-03"
         }
       }
@@ -1859,6 +2266,79 @@
         }
       }
     },
+    "Nightfall": {
+      "tier": "B",
+      "summary": "Nightfall Titan players want the highest increased Armour roll, since Soaring Midnight's slam damage scales with the shield's Armour; Runemastered copies (Runic Ward) sell for far more.",
+      "rolls": [
+        {
+          "statRef": "#% increased Armour",
+          "importance": "key",
+          "thresholds": {
+            "good": 420,
+            "great": 440
+          },
+          "why": "Two 0.5 Titan guides say to buy the highest-armour copy because the slam adds flat damage per shield Armour. No breakpoint given: 70%/90% default of 350-450. Both guides are from 0.5.0, not 0.5.5.",
+          "evidence": [
+            "G1",
+            "G2",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Block chance",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% to Cold Resistance",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% of Fire damage taken as Cold damage",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% of Lightning damage taken as Cold damage",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://kami-labs.fr/en/path-of-exile-2/builds-path-of-exile-2/build-guerrier-nightfall-titan-shield-saison-5/",
+          "title": "S-TIER | BUILD GUERRIER NIGHTFALL TITAN SHIELD (@Lexd) | SAISON 5",
+          "date": "2026-07-16"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://note.com/ub_buff552/n/nb228aea8adca?hl=en",
+          "title": "【Path of Exile 2 0.5】One-Button Nightfall Titan Build Guide｜UB",
+          "date": "2026-07-01"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Nightfall",
+          "title": "Nightfall - poe2db",
+          "note": "New in 0.5.0, no number changes since; Runemastered Glacial Fortress adds Runic Ward 53.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Olroth's Resolve": {
       "tier": "A",
       "summary": "Runic Ward flask (0.5 rework) bought by Ward builds; no guide ranks its rolls, Ward regeneration is the one that adds Ward.",
@@ -1907,6 +2387,165 @@
           "kind": "mechanic",
           "url": "https://poe2db.tw/us/Olroths_Resolve",
           "title": "Olroth's Resolve - PoE2DB",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Perfidy": {
+      "tier": "B",
+      "summary": "Armour/Evasion chest with five 10-30% avoid-damage lines and Intimidate; no guide names a wanted roll, so higher avoid and defence rolls are a judgement call.",
+      "rolls": [
+        {
+          "statRef": "#% increased Armour and Evasion",
+          "importance": "filler",
+          "thresholds": {
+            "good": 405,
+            "great": 435
+          },
+          "why": "No guide read names a wanted roll for this line. 70%/90% default of 300-450.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% chance to Avoid Physical Damage from Hits",
+          "importance": "filler",
+          "thresholds": {
+            "good": 24,
+            "great": 28
+          },
+          "why": "No guide read names a wanted roll for this line; Maxroll's Twister Gemling guide only lists Perfidy as an optional chest. 70%/90% default of 10-30.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% chance to Avoid Fire Damage from Hits",
+          "importance": "filler",
+          "thresholds": {
+            "good": 24,
+            "great": 28
+          },
+          "why": "No guide read names a wanted roll for this line; Maxroll's Twister Gemling guide only lists Perfidy as an optional chest. 70%/90% default of 10-30.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% chance to Avoid Cold Damage from Hits",
+          "importance": "filler",
+          "thresholds": {
+            "good": 24,
+            "great": 28
+          },
+          "why": "No guide read names a wanted roll for this line; Maxroll's Twister Gemling guide only lists Perfidy as an optional chest. 70%/90% default of 10-30.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% chance to Avoid Lightning Damage from Hits",
+          "importance": "filler",
+          "thresholds": {
+            "good": 24,
+            "great": 28
+          },
+          "why": "No guide read names a wanted roll for this line; Maxroll's Twister Gemling guide only lists Perfidy as an optional chest. 70%/90% default of 10-30.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% chance to Avoid Chaos Damage from Hits",
+          "importance": "filler",
+          "thresholds": {
+            "good": 24,
+            "great": 28
+          },
+          "why": "No guide read names a wanted roll for this line; Maxroll's Twister Gemling guide only lists Perfidy as an optional chest. 70%/90% default of 10-30.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Perfidy",
+          "title": "Perfidy - poe2db",
+          "note": "All lines fixed set, ranges current since 0.4.0 (fire/cold/lightning avoid added then).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Pragmatism": {
+      "tier": "C",
+      "summary": "Charm-build chest (Charms use no Charges); buyers want high elemental resistances and Armour/Evasion, and the Runemastered base (Runic Ward) sells far above the regular one.",
+      "rolls": [
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "why": "A seller page calls 20% ele res part of the perfect copy (seller source, one only). Thresholds are the 70%/90% default of the 10-20 range. Set to filler on review: the only source is a product listing in a seller's shop, not a guide.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Armour and Evasion",
+          "importance": "filler",
+          "why": "Same seller page names 300% Armour/Evasion as the perfect roll (seller source, one only). Thresholds are the 70%/90% default of the 200-300 range. Set to filler on review: the only source is a product listing in a seller's shop, not a guide.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://instant-carry.com/product/buy-poe-2-pragmatism/",
+          "title": "Buy PoE 2 Pragmatism - Path of Exile 2 Item - InstantCarry",
+          "date": "2026-11-03"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Pragmatism",
+          "title": "Pragmatism - poe2db",
+          "note": "Current mods and ranges (Chaos Resistance fixed -17%), Runemastered Explorer Armour recipe (199 Armour, 180 Evasion, 56 Runic Ward, L55 49/49, mods unchanged).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Prism Guardian": {
+      "tier": "B",
+      "summary": "Shield bought for its fixed +50 Spirit (minion builds); the rolled resistances, Dexterity and defence lines are secondary.",
+      "rolls": [
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "thresholds": {
+            "good": 17,
+            "great": 19
+          },
+          "why": "No guide read names a wanted roll for this line; 0.5.5 Maxroll minion guides use the shield only for its fixed Spirit. 70%/90% default of 10-20.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "thresholds": {
+            "good": 27,
+            "great": 29
+          },
+          "why": "No guide read names a wanted roll for this line. 70%/90% default of 20-30.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Armour and Energy Shield",
+          "importance": "filler",
+          "thresholds": {
+            "good": 185,
+            "great": 195
+          },
+          "why": "No guide read names a wanted roll for this line. 70%/90% default of 150-200.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Prism_Guardian",
+          "title": "Prism Guardian - poe2db",
+          "note": "+50 Spirit and buff reservation line fixed since 0.4.0; three rolled lines.",
           "date": "2026-11-03"
         }
       }
@@ -2365,6 +3004,117 @@
         }
       }
     },
+    "Silks of Veneration": {
+      "tier": "C",
+      "summary": "An ES caster body armour; buyers want high Spirit, Energy Shield and Recharge Rate, and the Runemastered copy (ES 124 + 86 Runic Ward, level 75) is the one that sells; pre-0.4.0 copies lack the % Energy Shield line.",
+      "rolls": [
+        {
+          "statRef": "# to Spirit",
+          "importance": "good",
+          "thresholds": {
+            "good": 44,
+            "great": 48
+          },
+          "why": "A 0.5.5 guide picks it as a budget body armour with 'most of the important modifiers', naming Spirit for that slot. No breakpoint given; 70%/90% default of 30-50. One guide only.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Energy Shield",
+          "importance": "good",
+          "thresholds": {
+            "good": 185,
+            "great": 195
+          },
+          "why": "Same guide: the body armour is the build's 'biggest source of Energy Shield'. 70%/90% default of 150-200; legacy pre-0.4.0 copies have no such line.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Energy Shield Recharge Rate",
+          "importance": "good",
+          "thresholds": {
+            "good": 44,
+            "great": 48
+          },
+          "why": "Same guide names Recharge Rate as a wanted body armour stat. 70%/90% default of 30-50.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "No guide asks for it.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Mana Regeneration Rate",
+          "importance": "filler",
+          "why": "The (40-50)% line shown as an implicit; no guide comments on it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/barya-of-kelari-disciple-of-varashta-poe2-build",
+          "title": "Barya of Kelari Disciple of Varashta PoE2 Build (Odealo)",
+          "date": "2026-08-29"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Silks_of_Veneration",
+          "title": "Silks of Veneration - poe2db",
+          "note": "Mod lines, 0.4.0 change (ele res removed, % ES added; old items keep old mods), Runemastered Enlightened Robe recipe (Exceptional Verisium x55 + Uhtred's Crest).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Sine Aequo": {
+      "tier": "B",
+      "summary": "Bought for halved Immobilise buildup (Heavy Stun, Freeze, Electrocute, Pin at 50%); no guide ranks its rolls, and Runemastered copies (Runic Ward) sell for about ten times a regular one.",
+      "rolls": [
+        {
+          "statRef": "#% increased Skill Speed",
+          "importance": "filler",
+          "why": "No current guide found that names this roll; the fixed Immobilise line is what the item is used for.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Armour, Evasion and Energy Shield",
+          "importance": "filler",
+          "why": "No current guide found that names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Damage against Immobilised Enemies",
+          "importance": "filler",
+          "why": "No current guide found that names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Sine_Aequo",
+          "title": "Sine Aequo - poe2db",
+          "note": "Current ranges since 0.5.0; Runemastered Grand Manchettes adds Runic Ward 70, unique mods unchanged.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Skin of the Loyal": {
       "tier": "A",
       "summary": "Its only roll is all elemental resistances (5-40%), which also scales the Armour, Energy Shield and Evasion it gains from uncapped resistance; the Runeforged Garment adds Runic Ward and sells far higher.",
@@ -2445,6 +3195,33 @@
           "kind": "mechanic",
           "url": "https://poe2db.tw/us/Snakepit",
           "title": "Snakepit - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Solus Ipse": {
+      "tier": "C",
+      "summary": "Bought for the fixed extra Lineage Support copies, not its rolls; the Runemastered Grand Visage copy (less Armour/Evasion/ES, adds 99 Runic Ward) is the one that sells, on very few listings.",
+      "rolls": [
+        {
+          "statRef": "#% increased Armour, Evasion and Energy Shield",
+          "importance": "filler",
+          "why": "The (150-200)% defence line; no guide read comments on its roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Mana",
+          "importance": "filler",
+          "why": "The +(60-100) Mana line; no guide read comments on its roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Solus_Ipse",
+          "title": "Solus Ipse - poe2db",
+          "note": "Mod lines and ranges, 0.4.0 changes, Runemastered Grand Visage recipe (Verisium x310 + Vorana's Crest) and base stats.",
           "date": "2026-11-03"
         }
       }
@@ -2770,6 +3547,20 @@
         }
       }
     },
+    "The Desperate Alliance": {
+      "tier": "A",
+      "summary": "Sanctum relic with only fixed lines: buyers pay for the guaranteed Against the Darkness drop from Zarokh, so its price follows that item, not a roll.",
+      "rolls": [],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Desperate_Alliance",
+          "title": "The Desperate Alliance - PoE2DB",
+          "note": "Vase Relic; Zarokh drops Against the Darkness, deals 100% more damage, takes 75% less damage; destroyed when applied to a Trial. All values fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "The Fall of the Axe": {
       "tier": "B",
       "summary": "Nothing on it rolls (it is used when you are Slowed and grants Onslaught), so every copy is the same and only quality or corruption sets one apart.",
@@ -2892,6 +3683,45 @@
           "url": "https://poe2db.tw/us/The_Taming",
           "title": "The Taming - poe2db",
           "note": "Mod list and ranges; Wind Skills lines are fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Vertex": {
+      "tier": "B",
+      "summary": "Comes as a Skill Gems or an Equipment no-attribute-requirements variant, and corrupted copies can gain +3-5 Curse Skill levels; no current guide says which roll buyers pay for.",
+      "rolls": [
+        {
+          "statRef": "# to Level of all Curse Skills",
+          "importance": "filler",
+          "why": "Only on Vaal-Cultivated copies (+3-5 since 0.5.0). Likely what curse builds pay for, but no current guide read names it, so it stays ungraded.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Evasion and Energy Shield",
+          "importance": "filler",
+          "why": "No current guide found that grades this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Critical Hit Chance",
+          "importance": "filler",
+          "why": "No current guide found that grades this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% to Chaos Resistance",
+          "importance": "filler",
+          "why": "No current guide found that grades this roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Vertex",
+          "title": "The Vertex - poe2db",
+          "note": "Current ranges, Skill Gems / Equipment no-attribute-requirement variants (since 0.4.0), Vaal Cultivation pool incl. +3-5 Curse Skill levels (since 0.5.0), Runemastered Tribal Mask recipe.",
           "date": "2026-11-03"
         }
       }
