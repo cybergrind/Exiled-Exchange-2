@@ -468,3 +468,35 @@ def test_load_only_splits_on_real_descriptions(tmp_path):
 
     desc.load()
     assert len(desc.data) == 3
+
+
+def test_parse_description_keeps_positive_matcher_over_same_text_negated():
+    # The game reuses the "increased" text for the negative branch of
+    # map_verisium_stack_size_+% (stat_descriptions.csd, patch 0.5.5); the
+    # text reads as a positive roll, so the positive matcher must win.
+    string = (
+        "1 map_verisium_stack_size_+%\n2\n"
+        '1|# "Monsters from [ContainsExpedition2|Verisium Remnants] drop {0}% increased Verisium"\n'
+        '#|-1 "Monsters from [ContainsExpedition2|Verisium Remnants] drop {0}% increased Verisium" negate 1'
+    )
+    desc = Description("en", "dummy.csd")
+
+    parsed = desc.parse_description(string)
+
+    assert parsed["matchers"] == [
+        {"string": "Monsters from Verisium Remnants drop #% increased Verisium"}
+    ]
+
+
+def test_parse_line_drops_plus_before_a_mid_text_placeholder():
+    # The app's parser reads "+35" as one number, so "+#" could never match.
+    desc = Description("en", "dummy.csd")
+
+    _, text, _ = desc.parse_line(
+        '# "Expeditions have +{0}% Surpassing chance to contain an additional [ContainsExpedition2|Verisium Remnant]"'
+    )
+
+    assert (
+        text
+        == "Expeditions have #% Surpassing chance to contain an additional Verisium Remnant"
+    )

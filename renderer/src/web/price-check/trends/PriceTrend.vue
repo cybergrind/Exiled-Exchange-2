@@ -210,7 +210,6 @@ import { confidenceNote } from "./confidenceNote";
 import type { ConfidenceNote } from "./confidenceNote";
 import { tabletSummary } from "./tabletNote";
 import type { TabletSummary } from "./tabletNote";
-import { unparsedRef } from "../tablets/tabletRating";
 import type { TabletVerdictLevel } from "../tablets/tabletRating";
 
 // Matches the tier badges on the mods (TabletModBadge.vue).
@@ -355,19 +354,13 @@ export default defineComponent({
         data.tablet = tabletSummary(
           detailsId.name,
           detailsId.variant,
-          [
-            ...props.item.statsByType.map((calc) => ({
-              statRef: calc.stat.ref,
-              value: calc.sources.reduce(
-                (sum, source) => sum + (source.contributes?.value ?? 0),
-                0,
-              ),
-            })),
-            // Valued mods the parser does not know (UNPARSED_REFS).
-            ...props.item.unknownModifiers.map((mod) => ({
-              statRef: unparsedRef(mod.text),
-            })),
-          ],
+          props.item.statsByType.map((calc) => ({
+            statRef: calc.stat.ref,
+            value: calc.sources.reduce(
+              (sum, source) => sum + (source.contributes?.value ?? 0),
+              0,
+            ),
+          })),
           normal ? formatPrice(autoCurrency(normal.primaryValue)) : undefined,
         );
       }

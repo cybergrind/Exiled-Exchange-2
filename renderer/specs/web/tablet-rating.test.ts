@@ -3,8 +3,6 @@ import {
   rateTablet,
   TABLET_RATINGS,
   tabletModRating,
-  UNPARSED_REFS,
-  unparsedRef,
 } from "@/web/price-check/tablets/tabletRating.ts";
 import type { TabletModInput } from "@/web/price-check/tablets/tabletRating.ts";
 import fs from "fs";
@@ -66,7 +64,7 @@ describe("tabletModRating", () => {
     );
     const missing = Object.values(TABLET_RATINGS)
       .flatMap((base) => Object.keys(base))
-      .filter((ref) => !refs.has(ref) && !UNPARSED_REFS.includes(ref));
+      .filter((ref) => !refs.has(ref));
     expect(missing).toEqual([]);
   });
 });
@@ -159,12 +157,13 @@ describe("rateTablet", () => {
     ).toBeUndefined();
   });
 
-  it("rates the Expedition Remnant mod from its unparsed text", () => {
-    const ref = unparsedRef(
-      "Expeditions have +35% Surpassing chance to contain an additional Verisium Remnant",
-    );
-    expect(UNPARSED_REFS).toContain(ref);
-    const verdict = rateTablet("Expedition Tablet", "Rare", [mod(ref)])!;
+  it("rates the Expedition Remnant mod", () => {
+    const verdict = rateTablet("Expedition Tablet", "Rare", [
+      mod(
+        "Expeditions have #% Surpassing chance to contain an additional Verisium Remnant",
+        35,
+      ),
+    ])!;
     expect(verdict.text).toBe("Always money: Extra Remnant");
   });
 

@@ -2,10 +2,8 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { setupTests } from "@specs/vitest.setup";
 import { init } from "@/assets/data";
 import { parseClipboard } from "@/parser";
-import {
-  rateTablet,
-  unparsedRef,
-} from "@/web/price-check/tablets/tabletRating";
+import { createExactStatFilters } from "@/web/price-check/filters/create-stat-filters";
+import { rateTablet } from "@/web/price-check/tablets/tabletRating";
 
 // Clipboard text through the parser into the rating, as the price check does.
 function rate(text: string) {
@@ -18,7 +16,6 @@ function rate(text: string) {
         0,
       ),
     })),
-    ...item.unknownModifiers.map((mod) => ({ statRef: unparsedRef(mod.text) })),
   ]);
 }
 
@@ -79,12 +76,70 @@ describe("tablet rating from clipboard text", () => {
     ]);
   });
 
-  it("finds the Expedition Remnant mod among the unparsed lines", () => {
+  it("reads the Expedition Remnant mod and the Mirror Shards mod", () => {
     const verdict = rate(
       tablet("Magic", "Expedition Tablet", [
         "Expeditions have +35% Surpassing chance to contain an additional Verisium Remnant",
       ]),
     )!;
     expect(verdict.text).toBe("Always money: Extra Remnant");
+    expect(verdict.rated[0].roll).toBe(0.5);
+    const shards = rate(
+      tablet("Magic", "Delirium Tablet", [
+        "Delirium Fog in Map spawns 19% increased Mirror Shards",
+      ]),
+    )!;
+    expect(shards.text).toBe("Good mod: Mirror Shards");
+  });
+
+  it("reads a mod with a plus sign inside its text", () => {
+    // stats.ndjson had "+#%" mid-text, which the parser never matches.
+    const verdict = rate(
+      tablet("Magic", "Expedition Tablet", [
+        "Verisium Remnants have +30% chance to add an additional Runic Modifier in Map",
+      ]),
+    )!;
+    expect(verdict.text).toBe("Good mod: Runic Modifier");
+    expect(verdict.rated[0].roll).toBe(0.5);
+  });
+
+  it("reads the Verisium mod as a positive roll", () => {
+    const item = parseClipboard(
+      tablet("Magic", "Expedition Tablet", [
+        "Monsters from Verisium Remnants drop 20% increased Verisium",
+      ]),
+    )._unsafeUnwrap();
+    expect(item.statsByType[0].sources[0].contributes?.value).toBe(20);
+  });
+});
+
+describe("tablet search filters from clipboard text", () => {
+  beforeAll(async () => {
+    setupTests();
+    await init("en");
+  });
+
+  const enabledRefs = (text: string, defaultAllSelected = false) => {
+    const item = parseClipboard(text)._unsafeUnwrap();
+    return createExactStatFilters(item, item.statsByType, {
+      searchStatRange: 10,
+      defaultAllSelected,
+    })
+      .filter((f) => !f.disabled)
+      .map((f) => f.statRef);
+  };
+
+  it("ticks the rated mods of a rare ritual tablet, not the filler", () => {
+    const text = tablet("Rare", "Ritual Tablet", [
+      "Ritual Favours in Map have 60% increased chance to be Omens",
+      "Map has 2 additional random Modifiers",
+      "25% increased Gold found in Map",
+    ]);
+    expect(enabledRefs(text)).toEqual([
+      "Ritual Favours in Map have #% increased chance to be Omens",
+      "Map has # additional random Modifier",
+    ]);
+    // The "select all mods" setting still wins.
+    expect(enabledRefs(text, true)).toContain("#% increased Gold found in Map");
   });
 });

@@ -176,6 +176,9 @@ class Description:
         text = self.parse_matcher(parts[1].strip())
         if text.startswith("+"):
             text = text[1:]
+        # The app reads a signed number ("+35") as one value, so a literal
+        # "+" before a placeholder would never match.
+        text = text.replace("+#", "#")
         flags = parts[2].strip() if len(parts) > 2 and parts[2].strip() else None
         value_placeholders = tuple(pre_quote.split())
         return value_placeholders, text, flags
@@ -225,6 +228,12 @@ class Description:
             decimal = self.parse_dp(flags, line_string)
             if decimal and dp is None:
                 dp = decimal
+            same = [m for m in matchers if m["string"] == line_string]
+            if out.get("negate") and any(not m.get("negate") for m in same):
+                # The game reuses a positive text for the negative branch
+                # (map_verisium_stack_size_+% in 0.5.5): the text reads as
+                # the positive roll, so keep that matcher.
+                continue
             matchers = [m for m in matchers if m["string"] != line_string]
             matchers.append(out)
 

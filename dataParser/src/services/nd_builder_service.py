@@ -36,6 +36,24 @@ from stores.trade_store import TradeStore
 logger = logging.getLogger(__name__)
 
 
+UNIQUE_WORDLIST = 6
+
+
+def unique_renames(words: pd.DataFrame) -> dict[str, str]:
+    """
+    Display name -> Words key for uniques GGG renamed: English Words keeps the
+    old name in Text and the new one in Text2 (e.g. "Sekhema's Resolve Cold"
+    shows as "Eshtera's Path"). A display name that is itself a key is left
+    alone.
+    """
+    uniques = words[words["Wordlist"] == UNIQUE_WORDLIST]
+    keys = set(uniques["Text"])
+    renamed = uniques[
+        (uniques["Text"] != uniques["Text2"]) & ~uniques["Text2"].isin(keys)
+    ]
+    return dict(zip(renamed["Text2"], renamed["Text"]))
+
+
 class NdBuilderService:
     local_lookup: dict[str, str]
     stats: pd.DataFrame
@@ -371,12 +389,12 @@ class NdBuilderService:
         unique_items = ts_items.loc[unique_mask].copy()
         unique_items["namespace"] = "UNIQUE"
 
-        # Edge case fix: Rename specific items
+        # The trade site lists a renamed unique by its new name (Words
+        # Text2); Words still keys it by the old one (Text).
         outdated_names = {
             "Sekhema's Resolve": "Sekhema's Resolve Fire",
             "The Road Warrior": "The Immortan",
-            "Byrnabas": "Brynabas",
-            "Splinter of Lorrata": "Splinter of Loratta",
+            **unique_renames(self.ref_game_store.get(WORDS)),
         }
         unique_items["name"] = unique_items["name"].replace(outdated_names)
 

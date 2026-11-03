@@ -26,6 +26,7 @@ import { filterItemProp, filterBasePercentile } from "./pseudo/item-property";
 import { decodeOils, applyAnointmentRules } from "./pseudo/anointments";
 import { StatBetter, CLIENT_STRINGS, CATALYST_TYPES } from "@/assets/data";
 import { explicitModifierCount, maxUsefulItemLevel } from "./common";
+import { applyTabletKeyMods } from "../tablets/tabletSearch";
 import { getMaxSockets } from "@/parser/Parser";
 
 export interface FiltersCreationContext {
@@ -197,6 +198,10 @@ export function createExactStatFilters(
         isNegated: false,
       },
     });
+  }
+
+  if (item.category === ItemCategory.Tablet) {
+    applyTabletKeyMods(ctx.filters, item.info.refName, item.rarity);
   }
 
   if (item.category === ItemCategory.ClusterJewel) {

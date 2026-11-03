@@ -134,7 +134,7 @@ export const TABLET_RATINGS: Record<string, Ratings> = {
       "Splinter stacks",
       [15, 30],
     ),
-    "Delirium Fog in Map spawns #% increased MirrorShards": rate(
+    "Delirium Fog in Map spawns #% increased Mirror Shards": rate(
       "good",
       "Mirror Shards",
       [12, 26],
@@ -210,8 +210,7 @@ export const TABLET_RATINGS: Record<string, Ratings> = {
   },
   "Expedition Tablet": {
     ...UNIVERSAL,
-    // Not in stats.ndjson: read from the item's unparsed lines (UNPARSED_REFS).
-    "Expeditions have +#% Surpassing chance to contain an additional Verisium Remnant":
+    "Expeditions have #% Surpassing chance to contain an additional Verisium Remnant":
       rate("money", "Extra Remnant", [30, 40]),
     "Verisium Remnants have #% chance to add an additional Runic Modifier in Map":
       rate("good", "Runic Modifier", [25, 35]),
@@ -246,19 +245,6 @@ export const TABLET_RATINGS: Record<string, Ratings> = {
     ),
   },
 };
-
-/**
- * Rated mods the app cannot parse, as their text with each number replaced
- * by "#": the price check reads them from the item's unknown modifiers.
- */
-export const UNPARSED_REFS = [
-  "Expeditions have +#% Surpassing chance to contain an additional Verisium Remnant",
-];
-
-/** "Expeditions have +35% Surpassing ..." -> "Expeditions have +#% Surpassing ...". */
-export function unparsedRef(text: string): string {
-  return text.replace(/\d+(?:\.\d+)?/g, "#");
-}
 
 export interface TabletModInput {
   statRef: string;

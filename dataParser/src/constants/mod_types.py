@@ -8,6 +8,7 @@ MOD_TYPE = Literal[
     "rune",
     "augment",
     "desecrated",
+    "crafted",
     "sanctum",
     "skill",
     "pseudo",
@@ -20,6 +21,7 @@ ENCHANT: MOD_TYPE = "enchant"
 RUNE: MOD_TYPE = "rune"
 AUGMENT: MOD_TYPE = "augment"
 DESECRATED: MOD_TYPE = "desecrated"
+CRAFTED: MOD_TYPE = "crafted"
 SANCTUM: MOD_TYPE = "sanctum"
 SKILL: MOD_TYPE = "skill"
 PSEUDO: MOD_TYPE = "pseudo"
@@ -31,6 +33,7 @@ MOD_TYPES: list[MOD_TYPE] = [
     ENCHANT,
     AUGMENT,
     DESECRATED,
+    CRAFTED,
     SANCTUM,
     SKILL,
     PSEUDO,

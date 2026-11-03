@@ -165,7 +165,9 @@ class AugmentBuilder:
         for matcher in sorted_matchers:
             if not matcher.get("value"):
                 return matcher["string"]
-        raise ValueError("No non-negated matcher found")
+        # Every matcher carries a value (one fixed roll): use the shortest.
+        logger.warning(f"Only valued matchers: {sorted_matchers[0]['string']}")
+        return sorted_matchers[0]["string"]
 
     def rune_stat_id(self, ids: dict[str, dict[str, list[str]]] | None):
         return (ids.get("ids") or {}).get("rune") if ids else None
