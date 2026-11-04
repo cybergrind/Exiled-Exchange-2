@@ -4,8 +4,21 @@
       <thead>
         <tr class="text-xs uppercase tracking-wide text-gray-500">
           <th class="text-left font-normal pb-1">Currency Exchange</th>
-          <th class="text-right font-normal pb-1">Rate</th>
-          <th class="text-left font-normal pb-1 pl-4">Range, 6 h</th>
+          <th class="text-right font-normal pb-1" title="Average over 6 h">
+            Rate
+          </th>
+          <th
+            class="text-right font-normal pb-1 pl-3"
+            title="Sell at once into buy orders: the lowest price paid in the last traded hour"
+          >
+            Sell now
+          </th>
+          <th
+            class="text-right font-normal pb-1 pl-3"
+            title="List and wait: the last traded hour's average. In game, list just under the Market Ratio to be the cheapest seller"
+          >
+            List at
+          </th>
           <th class="text-right font-normal pb-1">Traded</th>
         </tr>
       </thead>
@@ -24,10 +37,16 @@
           <td
             class="text-right text-base"
             :class="{ 'font-semibold': row.currency === selected }"
+            :title="`6 h range ${row.range}`"
           >
             {{ row.typical }}
           </td>
-          <td class="pl-4 text-gray-400">{{ row.range }}</td>
+          <td class="text-right pl-3 text-gray-400" data-sell>
+            {{ row.sell }}
+          </td>
+          <td class="text-right pl-3 text-gray-400" data-list>
+            {{ row.list }}
+          </td>
           <td class="text-right text-gray-500">
             <span v-if="row.thin" class="text-yellow-500 pr-1">thin</span
             >{{ row.traded }}
@@ -85,6 +104,9 @@ const rows = computed(() =>
         ...CURRENCIES[currency],
         typical: formatRate(pair.typical),
         range: formatRange(pair.low, pair.high),
+        // Snapshots written before `last` existed have no hour to read.
+        sell: pair.last ? formatRate(pair.last.low) : "–",
+        list: pair.last ? formatRate(pair.last.typical) : "–",
         traded: formatCount(pair.traded),
         thin: pair.traded < THIN_TRADED,
       },

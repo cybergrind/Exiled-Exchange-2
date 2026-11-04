@@ -6,7 +6,13 @@ import type { ItemPairs, PairStat } from "@/web/background/market/types.ts";
 
 const ASOF = 1793599200; // 06:00 UTC; the hour's data is complete at 07:00
 
-function stat(typical: number, low: number, high: number, traded: number) {
+function stat(
+  typical: number,
+  low: number,
+  high: number,
+  traded: number,
+  last?: PairStat["last"],
+) {
   return {
     typical,
     low,
@@ -15,6 +21,7 @@ function stat(typical: number, low: number, high: number, traded: number) {
     quoteTraded: typical * traded,
     hours: 6,
     asOfHour: ASOF,
+    ...(last ? { last } : {}),
   } satisfies PairStat;
 }
 
@@ -43,7 +50,7 @@ function text(s: string) {
 }
 
 describe("PairRates", () => {
-  it("shows typical value and range for every pair", () => {
+  it("shows the typical value for every pair, the range on hover", () => {
     const rows = render().findAll("[data-pair]");
     expect(rows.map((r) => r.attributes("data-pair"))).toEqual([
       "exalted",
@@ -52,15 +59,51 @@ describe("PairRates", () => {
     ]);
     const ex = text(rows[0].text());
     expect(ex).toContain("4.9");
-    expect(ex).toContain("3 – 14");
     expect(ex).toContain("2.5k");
+    expect(text(rows[0].findAll("td")[1].attributes("title")!)).toBe(
+      "6 h range 3 – 14",
+    );
   });
 
   it("writes rates below one as fractions, as the game does", () => {
     const rows = render().findAll("[data-pair]");
     expect(text(rows[1].text())).toContain("1/6.4");
-    expect(text(rows[1].text())).toContain("1/20 – 1/4");
+    expect(text(rows[1].findAll("td")[1].attributes("title")!)).toContain(
+      "1/20 – 1/4",
+    );
     expect(text(rows[2].text())).toContain("1/53");
+  });
+
+  it("suggests selling now into buy orders or listing at the last hour's average", () => {
+    // Omen of the Blessed: buy orders filled from 64 ex, the hour averaged 146.
+    const rows = render({
+      pairs: {
+        exalted: stat(121, 64, 200, 55, {
+          hour: ASOF,
+          typical: 3355 / 23,
+          low: 64,
+          high: 200,
+          traded: 23,
+        }),
+        divine: stat(1 / 3.4, 1 / 4, 1 / 3, 1500, {
+          hour: ASOF,
+          typical: 36 / 129,
+          low: 1 / 4,
+          high: 1 / 3,
+          traded: 129,
+        }),
+      },
+    }).findAll("[data-pair]");
+    expect(text(rows[0].find("[data-sell]").text())).toBe("64");
+    expect(text(rows[0].find("[data-list]").text())).toBe("146");
+    expect(text(rows[1].find("[data-sell]").text())).toBe("1/4");
+    expect(text(rows[1].find("[data-list]").text())).toBe("1/3.6");
+  });
+
+  it("shows a dash where an old snapshot has no last hour", () => {
+    const rows = render().findAll("[data-pair]");
+    expect(text(rows[0].find("[data-sell]").text())).toBe("–");
+    expect(text(rows[0].find("[data-list]").text())).toBe("–");
   });
 
   it("marks the pair the headline uses", () => {
@@ -86,7 +129,9 @@ describe("PairRates", () => {
 
   it("labels the columns and names the currencies in full", () => {
     const wrapper = render();
-    expect(text(wrapper.find("thead").text())).toMatch(/Rate.*Range.*Traded/);
+    expect(text(wrapper.find("thead").text())).toMatch(
+      /Rate.*Sell now.*List at.*Traded/,
+    );
     const rows = wrapper.findAll("[data-pair]");
     expect(rows.map((r) => r.find("td").text().trim())).toEqual([
       "Exalted",

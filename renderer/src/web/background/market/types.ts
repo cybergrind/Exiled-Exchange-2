@@ -38,6 +38,20 @@ export interface PairStat {
   hours: number;
   /** Newest unix hour included. */
   asOfHour: number;
+  /**
+   * The newest hour with trades on this pair alone. Its low end is what
+   * sellers got by filling buy orders (sell now); its average is a price a
+   * listing filled at. Absent in snapshots written before it existed.
+   */
+  last?: LastHour;
+}
+
+export interface LastHour {
+  hour: number;
+  typical: number;
+  low: number;
+  high: number;
+  traded: number;
 }
 
 export type ItemPairs = Partial<Record<QuoteCurrency, PairStat>>;

@@ -192,3 +192,55 @@ describe("aggregatePairs input handling", () => {
     expect(aggregatePairs([], FR)).toEqual({});
   });
 });
+
+describe("aggregatePairs: the newest hour on its own", () => {
+  // Omen of the Blessed against exalted, two hours from the live feed.
+  const OMEN = "Metadata/Items/Currency/OmenOnDivineRerollImplicits";
+  function hour(
+    h: number,
+    omens: number,
+    exalts: number,
+    cheap: number,
+    dear: number,
+  ): CxHourEntry {
+    const market: CxMarket = {
+      league: FR,
+      market_id: `${OMEN}|${EXALTED}`,
+      market_pair: [OMEN, EXALTED],
+      volume_traded: { [OMEN]: omens, [EXALTED]: exalts },
+      lowest_stock: { [OMEN]: 4, [EXALTED]: 11559 },
+      highest_stock: { [OMEN]: 17, [EXALTED]: 12989 },
+      lowest_ratio: { [OMEN]: 1, [EXALTED]: dear },
+      highest_ratio: { [OMEN]: 1, [EXALTED]: cheap },
+    };
+    return { hour: h, digest: { next_change_id: 0, markets: [market] } };
+  }
+  const hours = [
+    hour(1793728800, 32, 3310, 65, 200),
+    hour(1793732400, 23, 3355, 64, 200),
+  ];
+
+  it("keeps the newest hour's low and average beside the window's", () => {
+    const ex = aggregatePairs(hours, FR)[OMEN]!.exalted!;
+    expect(ex.typical).toBeCloseTo(6665 / 55, 6);
+    expect(ex.last).toEqual({
+      hour: 1793732400,
+      typical: 3355 / 23,
+      low: 64,
+      high: 200,
+      traded: 23,
+    });
+  });
+
+  it("reads the newest hour whatever the input order", () => {
+    expect(aggregatePairs([...hours].reverse(), FR)).toEqual(
+      aggregatePairs(hours, FR),
+    );
+  });
+
+  it("skips a newer hour with no trades on the pair", () => {
+    const quiet = hour(1793736000, 0, 0, 0, 0);
+    const ex = aggregatePairs([...hours, quiet], FR)[OMEN]!.exalted!;
+    expect(ex.last!.hour).toBe(1793732400);
+  });
+});

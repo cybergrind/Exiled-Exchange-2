@@ -3,6 +3,7 @@
 import type {
   CxHour,
   CxMarket,
+  LastHour,
   PairStat,
   PairTable,
   QuoteCurrency,
@@ -62,6 +63,14 @@ interface Acc {
   high: number;
   hours: Set<number>;
   asOfHour: number;
+  /** The same sums for the newest hour seen so far. */
+  last: {
+    hour: number;
+    traded: number;
+    quoteTraded: number;
+    low: number;
+    high: number;
+  };
 }
 
 /**
@@ -97,6 +106,13 @@ export function aggregatePairs(
             high: -Infinity,
             hours: new Set(),
             asOfHour: hour,
+            last: {
+              hour,
+              traded: 0,
+              quoteTraded: 0,
+              low: Infinity,
+              high: -Infinity,
+            },
           };
           byQuote.set(quote, acc);
         }
@@ -104,11 +120,29 @@ export function aggregatePairs(
         acc.quoteTraded += quoteTraded;
         acc.hours.add(hour);
         acc.asOfHour = Math.max(acc.asOfHour, hour);
+        if (hour > acc.last.hour) {
+          acc.last = {
+            hour,
+            traded: 0,
+            quoteTraded: 0,
+            low: Infinity,
+            high: -Infinity,
+          };
+        }
+        const last = hour === acc.last.hour ? acc.last : undefined;
+        if (last) {
+          last.traded += traded;
+          last.quoteTraded += quoteTraded;
+        }
         for (const ratio of [market.lowest_ratio, market.highest_ratio]) {
           const rate = quotePerItem(ratio, item, quoteId);
           if (rate === undefined) continue;
           acc.low = Math.min(acc.low, rate);
           acc.high = Math.max(acc.high, rate);
+          if (last) {
+            last.low = Math.min(last.low, rate);
+            last.high = Math.max(last.high, rate);
+          }
         }
       }
     }
@@ -128,10 +162,22 @@ export function aggregatePairs(
         quoteTraded: acc.quoteTraded,
         hours: acc.hours.size,
         asOfHour: acc.asOfHour,
+        last: lastHour(acc.last),
       };
       pairs[quote] = stat;
     }
     table[item] = pairs;
   }
   return table;
+}
+
+function lastHour(last: Acc["last"]): LastHour {
+  const typical = last.quoteTraded / last.traded;
+  return {
+    hour: last.hour,
+    typical,
+    low: Number.isFinite(last.low) ? last.low : typical,
+    high: Number.isFinite(last.high) ? last.high : typical,
+    traded: last.traded,
+  };
 }
