@@ -224,10 +224,14 @@ export const usePoeninja = createGlobalState(() => {
   // PRICES_DB is not reactive; this counts its replacements so computed
   // values that read it (the ladder) rerun when prices arrive.
   const dbVersion = shallowRef(0);
+  // When the relay overview behind PRICES_DB was fetched (epoch ms), so the
+  // panel can mark a saved price as old. Undefined while there is none.
+  const pricesFetchedAt = shallowRef<number | undefined>(undefined);
   let categoryCache = new Map<string, CategoryLines>();
   function setPricesDb(db: PriceDatabase) {
     PRICES_DB = db;
     categoryCache = new Map();
+    if (!db.length) pricesFetchedAt.value = undefined;
     dbVersion.value++;
   }
   // Exchange rates arrive separately from poe.ninja's; either invalidates.
@@ -307,11 +311,12 @@ export const usePoeninja = createGlobalState(() => {
       if (!response.ok) throw new Error(`Relay: HTTP ${response.status}`);
       const jsonBlob = await response.text();
 
-      applyRelay(jsonBlob, ninjaSchema);
+      const fetchedAt = Date.now();
+      applyRelay(jsonBlob, ninjaSchema, fetchedAt);
       relayState = {
         league: league.id,
         text: jsonBlob,
-        fetchedAt: new Date().toISOString(),
+        fetchedAt: new Date(fetchedAt).toISOString(),
         etag: response.headers?.get("etag") ?? undefined,
       };
 
@@ -346,10 +351,15 @@ export const usePoeninja = createGlobalState(() => {
   }
 
   /** Makes a relay overview (its text form) the price database. */
-  function applyRelay(jsonBlob: string, ninjaSchema: NinjaSchema) {
+  function applyRelay(
+    jsonBlob: string,
+    ninjaSchema: NinjaSchema,
+    fetchedAt: number,
+  ) {
     const ninjaXchg = parseXchg(jsonBlob);
 
     setPricesDb(splitJsonBlob(jsonBlob, ninjaSchema));
+    pricesFetchedAt.value = fetchedAt;
 
     // TODO: update to search for requested currency instead of divine
     const divineRates = ninjaXchg.rates;
@@ -375,12 +385,13 @@ export const usePoeninja = createGlobalState(() => {
 
   /**
    * WP-23: the league's snapshot from user data, so the first price check
-   * has prices (with their age) before, or without, the network. Used only
-   * if it is this league's and under 6 hours old; the refresh still runs.
+   * has prices (with their age) before, or without, the network. Used if it
+   * is this league's, however old: the panel dims a price past STALE_HOURS
+   * with its age. The refresh still runs.
    */
   async function boot(leagueId: string) {
     const snapshot = await readSnapshotFile(localFetch, leagueId);
-    if (!isUsableBootSnapshot(snapshot, leagueId, Date.now())) return;
+    if (!isUsableBootSnapshot(snapshot, leagueId)) return;
     if (leagues.selectedId.value !== leagueId) return;
 
     if (snapshot.uniques) uniques.restore(leagueId, snapshot.uniques);
@@ -391,7 +402,11 @@ export const usePoeninja = createGlobalState(() => {
         const text = overviewText(snapshot.relay.overview);
         if (!ITEM_DROP.value.length) ITEM_DROP.value = BUNDLED_ITEM_DROP ?? [];
         setupCoreCurrencies();
-        applyRelay(text, RELAY_NAMESPACE_MAP);
+        applyRelay(
+          text,
+          RELAY_NAMESPACE_MAP,
+          Date.parse(snapshot.relay.fetchedAt),
+        );
         relayState = {
           league: leagueId,
           text,
@@ -743,13 +758,19 @@ export const usePoeninja = createGlobalState(() => {
     load(true);
   });
 
-  watch(selectedCoreCurrencyId, (curr, prev) => {
-    if (curr === prev) return;
-    xchgRateCurrency.value = curr ?? "exalted";
-    xchgRate.value = undefined;
-    setPricesDb([]);
-    load(true);
-  });
+  // The configured currency, not selectedCoreCurrencyId: that one reads
+  // "exalted" until setupCoreCurrencies runs, so the first setup (as in boot)
+  // looked like a change to a saved "chaos" and wiped the saved prices.
+  watch(
+    () => AppConfig<PriceCheckWidget>("price-check")!.coreCurrency,
+    (curr, prev) => {
+      if (curr === prev) return;
+      xchgRateCurrency.value = curr ?? "exalted";
+      xchgRate.value = undefined;
+      setPricesDb([]);
+      load(true);
+    },
+  );
 
   return {
     xchgRate: readonly(xchgRate),
@@ -762,6 +783,7 @@ export const usePoeninja = createGlobalState(() => {
     queuePricesFetch,
     cachedCurrencyByQuery,
     initialLoading: () => isLoading.value && !PRICES_DB.length,
+    pricesFetchedAt: readonly(pricesFetchedAt),
     availableCoreCurrencies: readonly(availableCoreCurrencies),
     ITEM_DROP,
     // math

@@ -136,6 +136,10 @@ describe("boot from the snapshot", () => {
     expect(shown.currency).toBe("exalted");
     expect(shown.min).toBeCloseTo(4.908, 2);
     expect(prices.initialLoading()).toBe(false);
+    // The relay's own age, for the panel's stale note.
+    const age = Date.now() - prices.pricesFetchedAt.value!;
+    expect(age).toBeGreaterThanOrEqual(2 * HOUR_MS);
+    expect(age).toBeLessThan(2 * HOUR_MS + 60_000);
     // What PairRates prints next to the rates.
     expect(formatAge(market.asOfHour.value!, (NEWEST + 3 * 3600) * 1000)).toBe(
       "2 h ago",
@@ -150,7 +154,7 @@ describe("boot from the snapshot", () => {
     expect(route.calls("POST")).toEqual([]);
   });
 
-  it("ignores a snapshot over 6 hours old", async () => {
+  it("uses a snapshot over 6 hours old too, with its age", async () => {
     const { usePoeninja } = await import("@/web/background/Prices");
     const { useMarket } = await import("@/web/background/marketStore");
     selectedId.value = "Runes of Aldur";
@@ -159,10 +163,17 @@ describe("boot from the snapshot", () => {
         "/market/runes-of-aldur.json",
       );
     });
-    await settle();
-    expect(useMarket().asOfHour.value).toBeUndefined();
-    expect(useMarket().valueFor(ETCHER.ns, ETCHER.name, "exalted")).toBeNull();
-    expect(usePoeninja().findPriceByQuery(ETCHER)).toBeNull();
+    // The fixtures are Forbidden Rites hours, so no pair is this league's.
+    await until(() => {
+      expect(usePoeninja().findPriceByQuery(ETCHER)?.primaryValue).toBe(
+        0.01816,
+      );
+    });
+    expect(useMarket().asOfHour.value).toBe(NEWEST);
+    // The panel dims a price this old and names its age (staleNote).
+    const age = Date.now() - usePoeninja().pricesFetchedAt.value!;
+    expect(age).toBeGreaterThanOrEqual(7 * HOUR_MS);
+    expect(age).toBeLessThan(7 * HOUR_MS + 60_000);
   });
 
   it("ignores a snapshot whose league is not the selected one", async () => {
@@ -197,5 +208,7 @@ describe("boot from the snapshot", () => {
       proxy.mock.calls.some(([url]) => url.endsWith("/overviewData.json")),
     ).toBe(true);
     expect(usePoeninja().findPriceByQuery(ETCHER)?.primaryValue).toBe(0.01816);
+    // Fresh data is no longer stale.
+    expect(usePoeninja().pricesFetchedAt.value).toBeGreaterThanOrEqual(before);
   });
 });

@@ -133,6 +133,41 @@ describe("exchangeValue", () => {
     ).toBe("exalted");
   });
 
+  it("a core pair past the thin bar yields when a busier pair disagrees", () => {
+    // Omen of the Blessed as seen in-game: 154 at 76 ex, while 566 went at
+    // 2.7 chaos and 1.5K at 1/3.4 div (both about 200 ex).
+    const pairs: ItemPairs = {
+      exalted: stat(76, 154, 65, 149),
+      chaos: stat(2.7, 566, 2, 4),
+      divine: stat(1 / 3.4, 1500, 1 / 4, 1 / 2),
+    };
+    const v = exchangeValue({ pairs, core: "exalted", table: TABLE })!;
+    expect(v.rule).toBe(2);
+    expect(v.currency).toBe("divine");
+    expect(v.value).toBeCloseTo(1 / 3.4, 6);
+  });
+
+  it("a core pair past the thin bar stays when the busier pair agrees", () => {
+    const pairs: ItemPairs = {
+      exalted: stat(190, 154),
+      divine: stat(1 / 3.4, 1500),
+    };
+    const v = exchangeValue({ pairs, core: "exalted", table: TABLE })!;
+    expect(v.rule).toBe(1);
+    expect(v.value).toBe(190);
+  });
+
+  it("a busy core pair is kept for cheap items, whose divine fills are coarse", () => {
+    // Orb of Alchemy: 2.44 ex on 16K trades; 0.0063 div on 65K.
+    const pairs: ItemPairs = {
+      exalted: stat(2.44, 16328),
+      divine: stat(0.0063, 65556),
+    };
+    const v = exchangeValue({ pairs, core: "exalted", table: TABLE })!;
+    expect(v.rule).toBe(1);
+    expect(v.value).toBe(2.44);
+  });
+
   it("rule 3: poe.ninja's value, converted and marked, when no pair is liquid", () => {
     const v = exchangeValue({
       pairs: { exalted: stat(12, 3) },
@@ -146,6 +181,35 @@ describe("exchangeValue", () => {
     expect(v.value).toBeCloseTo(0.01816 * 681.2, 6);
     expect(v.low).toBeUndefined();
     expect(v.ordering).toBe(v.value);
+  });
+
+  it("a thin pair beats poe.ninja when no pair is liquid, marked thin", () => {
+    // Owl Idol: 6 at 6.3 ex and 7 at 4.1 c over 3 hours; poe.ninja read
+    // the chaos pair (about 310 ex). In game it sold from 6 ex.
+    const pairs: ItemPairs = {
+      exalted: { ...stat(6.33, 6, 5, 8), hours: 3 },
+      chaos: { ...stat(4.14, 7, 3, 6), hours: 3 },
+    };
+    const v = exchangeValue({
+      pairs,
+      core: "exalted",
+      table: TABLE,
+      ninja: { primaryValue: 0.4361 },
+    })!;
+    expect(v.source).toBe("ggg");
+    expect(v.rule).toBe(1);
+    expect(v.value).toBe(6.33);
+    expect(v.thin).toBe(true);
+  });
+
+  it("a thin pair from a single hour still falls to poe.ninja", () => {
+    const v = exchangeValue({
+      pairs: { exalted: { ...stat(6.33, 8), hours: 1 } },
+      core: "exalted",
+      table: TABLE,
+      ninja: NINJA_ETCHER,
+    })!;
+    expect(v.rule).toBe(3);
   });
 
   it("rule 3 also applies when the feed has no data for the item", () => {

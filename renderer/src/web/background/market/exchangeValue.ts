@@ -4,7 +4,11 @@
 
 import {
   BUSIER_FACTOR,
+  DISAGREE_RATIO,
+  MIN_THIN_HOURS,
+  MIN_THIN_TRADED,
   MIN_TRADED,
+  OVERRIDE_MIN_RATE,
   QUOTE_IDS,
   THIN_TRADED,
 } from "./constants.ts";
@@ -34,6 +38,8 @@ export interface ExchangeValue {
   high?: number;
   traded?: number;
   asOfHour?: number;
+  /** Read from a pair under MIN_TRADED: shown, but marked unreliable. */
+  thin?: true;
   /** In the core currency, converted once; for ranking and sums only. */
   ordering: number;
 }
@@ -54,6 +60,25 @@ export function quoteRate(
   return undefined;
 }
 
+/**
+ * Whether the core pair's rate is far from the other pair's, compared in the
+ * core currency (for the choice only; the display is never converted).
+ */
+function disagrees(
+  coreTypical: number,
+  other: QuoteCurrency,
+  pairs: ItemPairs,
+  table: PairTable,
+  core: CoreCurrency,
+): boolean {
+  const otherTypical = pairs[other]!.typical;
+  if (otherTypical < OVERRIDE_MIN_RATE[other]) return false;
+  const rate = quoteRate(table, other, core);
+  if (rate === undefined) return false;
+  const ratio = coreTypical / (otherTypical * rate);
+  return ratio > DISAGREE_RATIO || ratio < 1 / DISAGREE_RATIO;
+}
+
 export function exchangeValue(query: ExchangeQuery): ExchangeValue | null {
   const { pairs, core, table, ninja } = query;
 
@@ -61,17 +86,39 @@ export function exchangeValue(query: ExchangeQuery): ExchangeValue | null {
     const pair = pairs?.[currency];
     return pair != null && pair.traded >= MIN_TRADED && pair.typical > 0;
   });
+  // With no liquid pair, a thin one still beats poe.ninja: its PoE2 exchange
+  // price is the same feed, read from whichever pair traded most (Owl Idol:
+  // 7 trades at 4.1 c beat 6 at 6.3 ex, about 310 ex against 6).
+  const thin = liquid.length
+    ? []
+    : ORDER.filter((currency) => {
+        const pair = pairs?.[currency];
+        return (
+          pair != null &&
+          pair.traded >= MIN_THIN_TRADED &&
+          pair.hours >= MIN_THIN_HOURS &&
+          pair.typical > 0
+        );
+      });
+  const candidates = liquid.length ? liquid : thin;
 
-  // The core pair wins unless it is thin and another pair clearly traded
-  // more; a near tie keeps the price in the core currency.
-  const busiest = [...liquid].sort(
+  // The core pair wins unless another pair clearly traded more and the core
+  // pair is thin or its rate disagrees with that busier pair; a near tie
+  // keeps the price in the core currency.
+  const busiest = [...candidates].sort(
     (a, b) => pairs![b]!.traded - pairs![a]!.traded,
   )[0];
-  const coreTraded = liquid.includes(core) ? pairs![core]!.traded : 0;
+  const coreTraded = candidates.includes(core) ? pairs![core]!.traded : 0;
+  const clearlyBusier =
+    busiest !== undefined &&
+    pairs![busiest]!.traded >= BUSIER_FACTOR * coreTraded;
   const own =
     coreTraded > 0 &&
-    (coreTraded >= THIN_TRADED ||
-      pairs![busiest]!.traded < BUSIER_FACTOR * coreTraded)
+    !(
+      clearlyBusier &&
+      (coreTraded < THIN_TRADED ||
+        disagrees(pairs![core]!.typical, busiest, pairs!, table, core))
+    )
       ? core
       : busiest;
 
@@ -88,6 +135,7 @@ export function exchangeValue(query: ExchangeQuery): ExchangeValue | null {
       traded: pair.traded,
       asOfHour: pair.asOfHour,
       ordering: rate === undefined ? NaN : pair.typical * rate,
+      ...(liquid.length ? {} : { thin: true as const }),
     };
   }
 

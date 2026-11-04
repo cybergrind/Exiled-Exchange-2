@@ -34,6 +34,11 @@ export interface RollEntry {
   statRef: string;
   importance: Importance;
   thresholds?: RollThresholds;
+  /**
+   * The item shows the stat's negated line ("reduced", "fewer"), so the
+   * thresholds are in its units and run the other way round.
+   */
+  negated?: true;
   why: string;
   evidence: string[];
 }
@@ -73,6 +78,8 @@ export interface ValidationError {
 export interface ValidateOptions {
   /** StatBetter of a stats.ndjson ref (-1, 0, 1); undefined if the ref is unknown. */
   statBetter: (ref: string) => number | undefined;
+  /** If given, a roll marked `negated` needs a stat with a negated matcher. */
+  statNegatable?: (ref: string) => boolean;
   /** If given, every unique name must be known to the app. */
   hasUnique?: (name: string) => boolean;
 }
@@ -193,7 +200,14 @@ function nonEmptyString(value: unknown): value is string {
 
 const FILE_KEYS = ["schemaVersion", "league", "verifiedOn", "uniques"];
 const UNIQUE_KEYS = ["tier", "summary", "rolls", "evidence"];
-const ROLL_KEYS = ["statRef", "importance", "thresholds", "why", "evidence"];
+const ROLL_KEYS = [
+  "statRef",
+  "importance",
+  "thresholds",
+  "negated",
+  "why",
+  "evidence",
+];
 const EVIDENCE_KEYS = ["kind", "note", "url", "title", "sample", "date"];
 const THRESHOLD_KEYS = ["good", "great"];
 
@@ -365,7 +379,21 @@ export function validateRollProfile(
         }
       }
 
-      // Thresholds, in the stat's better direction.
+      let negated = false;
+      if (roll.negated !== undefined) {
+        if (roll.negated !== true) {
+          err(`${rat}.negated`, "expected true, or leave it out");
+        } else if (
+          better !== undefined &&
+          opts.statNegatable &&
+          !opts.statNegatable(roll.statRef as string)
+        ) {
+          err(`${rat}.negated`, "stat has no negated line");
+        } else negated = true;
+      }
+
+      // Thresholds, in the stat's better direction (on the shown number, so
+      // the other way round on a negated line).
       const th = roll.thresholds;
       if (th === undefined) {
         if ((importance === "key" || importance === "good") && better) {
@@ -383,6 +411,7 @@ export function validateRollProfile(
           }
         }
         if (numeric && better !== undefined) {
+          if (negated) better = -better;
           const good = th.good as number;
           const great = th.great as number;
           if (better === 0) {
@@ -416,6 +445,21 @@ export function statLookupFromNdjson(
     if (typeof stat.ref === "string") better.set(stat.ref, stat.better ?? 0);
   }
   return (ref) => better.get(ref);
+}
+
+/** Refs with a negated matcher ("reduced", "fewer") in a stats.ndjson text. */
+export function negatableRefsFromNdjson(text: string): Set<string> {
+  const refs = new Set<string>();
+  for (const line of text.split("\n")) {
+    if (!line.trim()) continue;
+    const stat = JSON.parse(line) as {
+      ref?: string;
+      matchers?: Array<{ negate?: boolean }>;
+    };
+    if (typeof stat.ref === "string" && stat.matchers?.some((m) => m.negate))
+      refs.add(stat.ref);
+  }
+  return refs;
 }
 
 /** Names of UNIQUE entries in the text of an items.ndjson file. */

@@ -83,6 +83,24 @@ describe("unique roll badges from clipboard text", () => {
     expect(result.get("# to maximum Energy Shield")).toEqual({});
   });
 
+  it("grades a 'reduced' drawback where less is better (Blackflame)", () => {
+    const grade = (shown: number) =>
+      new Map(
+        badges(
+          unique("Rings", "Blackflame", "Amethyst Ring", [
+            `${shown}(60-75)% reduced Ignite Duration on Enemies`,
+          ]),
+        ),
+      ).get("#% increased Ignite Duration on Enemies");
+    // Thresholds good 65 / great 62 on the shown number.
+    expect(grade(61)).toMatchObject({ importance: "good", grade: "top" });
+    expect(grade(64)).toMatchObject({ importance: "good", grade: "good" });
+    expect(grade(70)).toEqual({
+      importance: "good",
+      why: expect.any(String),
+    });
+  });
+
   it("grades a 'fewer' roll by the number shown (Constricting Command)", () => {
     const result = new Map(
       badges(

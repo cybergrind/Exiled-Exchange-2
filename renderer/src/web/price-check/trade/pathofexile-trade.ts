@@ -30,6 +30,7 @@ import {
   usePoeninja,
 } from "@/web/background/Prices";
 import { getCurrencyDetailsId } from "../trends/getDetailsId";
+import { tradePriceOption } from "./liquidCurrency";
 import { areaLevelByAscendancyPoints } from "../filters/create-item-filters";
 
 export const CATEGORY_TO_TRADE_ID = new Map([
@@ -590,12 +591,9 @@ export function createTradeRequest(
   };
   const { query } = body;
 
-  if (filters.trade.currency) {
-    propSet(
-      query.filters,
-      "trade_filters.filters.price.option",
-      filters.trade.currency,
-    );
+  const priceOption = tradePriceOption(filters.trade.currency);
+  if (priceOption) {
+    propSet(query.filters, "trade_filters.filters.price.option", priceOption);
   }
 
   if (filters.trade.collapseListings === "api") {

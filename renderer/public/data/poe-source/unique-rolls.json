@@ -34,6 +34,46 @@
         }
       }
     },
+    "Adonia's Ego": {
+      "tier": "B",
+      "summary": "Bought for its +3 spell levels and Pinnacle of Power; no current guide grades the Mana or Cast Speed rolls, and the Power Charge roll is a build choice (fewer charges also means less resistance lost).",
+      "rolls": [
+        {
+          "statRef": "# to maximum Mana",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Maximum Power Charges",
+          "importance": "filler",
+          "why": "Rolls -1 to +1 and each charge costs 10% all resistances. A May 2026 (0.5.0) guide asks for the -1 version; another 0.5 guide reportedly says the charge count does not matter (page blocked, not read). No 0.5.5 guide found, and the app treats higher as better here, so no thresholds.",
+          "evidence": [
+            "G1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://kami-labs.fr/path-of-exile-2/builds-path-of-exile-2/build-magicienne-comet-spark-stormweaver-saison-5/",
+          "title": "S-TIER | BUILD MAGICIENNE COMET SPARK STORMWEAVER (@mas0ny1) | SAISON 5 (Kami-labs)",
+          "date": "2026-05-31"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Adonias_Ego",
+          "title": "Adonia's Ego - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Against the Darkness": {
       "tier": "A",
       "summary": "Rolls 2 of 25 radius mods; buyers want Gain % of Damage as Extra Cold, Fire or Lightning on notables (matching their skill's element), with the +Spirit on notables mod also sought, and value depends on how many notables sit in its radius.",
@@ -158,6 +198,93 @@
           "url": "https://poe2db.tw/us/Alphas_Howl",
           "title": "Alpha's Howl - poe2db",
           "note": "Current mod lines; Runemastered Armoured Cap version changes only the base (Evasion 178, Runic Ward 113).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Atziri's Contempt": {
+      "tier": "B",
+      "summary": "Bloodstone Lance spear for Shattering Spite builds; a Vaal-cultivated copy with Elemental Damage with Attacks is the expensive upgrade.",
+      "rolls": [
+        {
+          "statRef": "#% increased Elemental Damage with Attacks",
+          "importance": "good",
+          "thresholds": {
+            "good": 135,
+            "great": 145
+          },
+          "why": "Cultivated line; a 0.5.5-era Blood Mage guide says cultivating it in gives a significant damage boost. 70%/90% default of the 100-150 range; only one guide.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% to Critical Hit Chance",
+          "importance": "filler",
+          "why": "Cultivated line with a disputed range: poe2db +2-4%, Odealo +3-5%.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Physical Damage",
+          "importance": "filler",
+          "why": "No readable guide names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Fire Damage",
+          "importance": "filler",
+          "why": "No readable guide names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Lightning Damage",
+          "importance": "filler",
+          "why": "No readable guide names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "No readable guide names this roll; Odealo notes cultivation may replace it.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Presence Area of Effect",
+          "importance": "filler",
+          "why": "Shattering Spite shatters Lances based on Presence area, but no guide names the roll as a buying point.",
+          "evidence": []
+        },
+        {
+          "statRef": "Hits have #% chance to treat Enemy Monster Elemental Resistance values as inverted",
+          "importance": "filler",
+          "why": "Cultivated line listed only by poe2db; no guide names it.",
+          "evidence": []
+        },
+        {
+          "statRef": "Projectiles have #% chance to Fork if you've dealt a Melee Hit in the past eight seconds",
+          "importance": "filler",
+          "why": "Cultivated line listed only by poe2db; no guide names it.",
+          "evidence": []
+        },
+        {
+          "statRef": "Grants Skill: Level # Shattering Spite",
+          "importance": "filler",
+          "why": "Range disputed: poe2db Level 17, Odealo Level 17-20.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/atziris-contempt-blood-mage-poe-2-build",
+          "title": "Atziri's Contempt Blood Mage POE 2 Build",
+          "date": "2026-09-14"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Atziris_Contempt",
+          "title": "Atziri's Contempt - poe2db",
+          "note": "Current mod lines, the Cultivated variant's 4 extra mods, 0.5.0 Shattering Spite changes.",
           "date": "2026-11-03"
         }
       }
@@ -390,6 +517,58 @@
         }
       }
     },
+    "Blackflame": {
+      "tier": "B",
+      "summary": "Chaos-ignite builds buy it for the chaos Ignite and Withered effects; one guide asks for a copy with a smaller Ignite Duration reduction, and no guide read names another roll.",
+      "rolls": [
+        {
+          "statRef": "#% increased Ignite Duration on Enemies",
+          "importance": "good",
+          "why": "The (60-75)% reduced drawback: a smaller reduction keeps Ignite up longer. A 0.5.x Flame Blast guide (seller site) says to look for 'relatively low Ignite Duration reduction'. Breakpoints on the shown number, lower is better.",
+          "evidence": [
+            "G1"
+          ],
+          "thresholds": {
+            "good": 65,
+            "great": 62
+          },
+          "negated": true
+        },
+        {
+          "statRef": "#% increased Ignite Magnitude",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for the (80-100)% line.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Mana Regeneration Rate",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% to Chaos Resistance",
+          "importance": "filler",
+          "why": "The Amethyst Ring implicit; no guide read asks for it.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://www.mmoexp.com/News/poe-2-flame-blast-gemling-build-the-infinite-ignite-whirling-slash-guide.html",
+          "title": "PoE 2 Flame Blast Gemling Build: The Infinite Ignite Whirling Slash Guide (mmoexp)",
+          "date": "2026-09-10"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Blackflame",
+          "title": "Blackflame - poe2db",
+          "note": "0.5.0 rework: chaos Ignite and Withered lines added; Ignite Magnitude 50% -> (80-100)%, reduced Ignite Duration 50% -> (60-75)%.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Blood of the Warrior": {
       "tier": "C",
       "summary": "Cheap Rage flask that Minion Army Spirit Walker uses for its on-use Rage; no guide asks for particular rolls.",
@@ -529,6 +708,43 @@
           "url": "https://odealo.com/articles/molten-shower-autobomber-acolyte-of-chayula-poe2-build",
           "title": "[0.5] Molten Shower Autobomber Acolyte of Chayula POE2 Build Guide - Odealo",
           "date": "2026-08-16"
+        }
+      }
+    },
+    "Bursting Decay": {
+      "tier": "A",
+      "summary": "Scarce ring bought by life-stacking attack builds for its fixed skill slot and attack damage from max Life; its Rarity and Chaos Resistance rolls barely matter.",
+      "rolls": [
+        {
+          "statRef": "#% increased Rarity of Items found",
+          "importance": "filler",
+          "why": "No guide read names this roll. Guides describe the ring by its fixed attack damage from Life.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% to Chaos Resistance",
+          "importance": "filler",
+          "why": "No guide read names this roll. Guides describe the ring by its fixed attack damage from Life.",
+          "evidence": [
+            "G1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/best-path-of-exile-2-unique-items",
+          "title": "The Best and Most Expensive Unique Items in Path of Exile 2 (Odealo)",
+          "date": "2026-05-31"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Bursting_Decay",
+          "title": "Bursting Decay - poe2db",
+          "note": "Only Rarity (15-25)% and Chaos Resistance +(17-23)% roll; the skill slot, 5% life loss and 3% of max Life attack damage are fixed.",
+          "date": "2026-11-03"
         }
       }
     },
@@ -942,6 +1158,41 @@
         }
       }
     },
+    "Death Rush": {
+      "tier": "B",
+      "summary": "Levelling ring bought for its fixed Onslaught on kill and physical life leech, mostly by attack builds; the Accuracy and Evasion rolls barely matter.",
+      "rolls": [
+        {
+          "statRef": "# to Accuracy Rating",
+          "importance": "filler",
+          "why": "Maxroll's levelling list values the ring only for its fixed Onslaught and leech lines. The implicit 120-160 and the explicit 75-125 share this ref.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "# to Evasion Rating",
+          "importance": "filler",
+          "why": "No guide names the Evasion roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/meta/the-best-leveling-uniques",
+          "title": "The Best Leveling Uniques for Path of Exile 2 Return of the Ancients 0.5.4 - Maxroll",
+          "date": "2026-07-04"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Death_Rush",
+          "title": "Death Rush - poe2db",
+          "note": "Mod list and ranges; leech and Onslaught lines are fixed; no balance changes since 0.1.0.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Decree of Acuity": {
       "tier": "C",
       "summary": "Regular copies are near worthless and no current guide uses it; only the Runemastered version sells, and no guide says which roll matters.",
@@ -1154,6 +1405,56 @@
           "kind": "mechanic",
           "url": "https://poe2db.tw/us/Dream_Fragments",
           "title": "Dream Fragments - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Drillneck": {
+      "tier": "B",
+      "summary": "Bought for pierce scaling and the returning projectiles on bow builds; no current guide grades its rolls, but a low Return count and high per-pierce Damage and Crit are the obvious lines to check.",
+      "rolls": [
+        {
+          "statRef": "Projectiles deal #% increased Damage with Hits for each time they have Pierced",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Projectiles have #% increased Critical Hit chance for each time they have Pierced",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Attack Projectiles Return if they Pierced at least # times",
+          "importance": "filler",
+          "why": "Lower is better (fewer pierces before return), but no guide grades it and the app treats this stat as higher-is-better, so no thresholds.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Gain Deflection Rating equal to #% of Evasion Rating",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Drillneck",
+          "title": "Drillneck - poe2db",
           "date": "2026-11-03"
         }
       }
@@ -1522,6 +1823,77 @@
         }
       }
     },
+    "Fury of the King": {
+      "tier": "B",
+      "summary": "Fire Bear talisman for Smith of Kitava and Shaman bears; buyers look for the 5 Glory every 2 seconds roll.",
+      "rolls": [
+        {
+          "statRef": "Skills which require Glory generate # Glory every 2 seconds",
+          "importance": "good",
+          "thresholds": {
+            "good": 4,
+            "great": 5
+          },
+          "why": "A 0.5 Smith of Kitava guide says to get the 5 Glory per 2 seconds copy for the uber bear variant; great 5 per that guide, good 4 is the 70% default of 2-5. Only a boosting-site guide, so not key.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Adds # to # Fire Damage",
+          "importance": "filler",
+          "why": "Odealo says most of the bear build's damage comes from this talisman, but no guide read names the added fire roll itself.",
+          "evidence": [
+            "G2"
+          ]
+        },
+        {
+          "statRef": "#% increased Flammability Magnitude",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Strength",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "The 15-20% reduced Attack Speed drawback; no guide names its size.",
+          "evidence": []
+        },
+        {
+          "statRef": "Grants Skill: Level # Molten Crash",
+          "importance": "filler",
+          "why": "Range disputed: Odealo lists Level 16-20, poe2db shows no level range.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://boostmatch.gg/blog/poe-2/articles/poe2-smith-of-kitava-best-build",
+          "title": "PoE 2 Smith of Kitava Best Build Guide",
+          "date": "2026-05-29"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/bear-form-shaman-poe2-build",
+          "title": "Bear Form Shaman POE2 Build",
+          "date": "2026-07-17"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Fury_of_the_King",
+          "title": "Fury of the King - poe2db",
+          "note": "Current mod lines and ranges; no variants listed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Grand Spectrum": {
       "tier": "A",
       "summary": "No rolls to grade: each base has one fixed line (Ruby 2% max Life, Emerald 2% Spirit, Sapphire +6% all ele res, per socketed Grand Spectrum), so the price depends on the base, and buyers stack up to three.",
@@ -1539,6 +1911,54 @@
           "url": "https://raw.githubusercontent.com/PathOfBuildingCommunity/PathOfBuilding-PoE2/dev/src/Data/Uniques/jewel.lua",
           "title": "Path of Building PoE2 unique jewel data",
           "note": "Ruby, Emerald and Sapphire Grand Spectrum, Limited to 3, fixed values; Sapphire has Pre 0.4.0 (+4%) and Current (+6%) variants.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Greymake": {
+      "tier": "B",
+      "summary": "Mostly bought to forge the Legacy of Greymake rune (a fixed +50 to all Attributes) or as a leveling helmet, so its attribute rolls hardly matter.",
+      "rolls": [
+        {
+          "statRef": "# to Strength",
+          "importance": "filler",
+          "why": "The Legacy of Greymake rune gives a fixed +50 whatever the helmet rolled, and no guide read names this roll.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "The Legacy of Greymake rune gives a fixed +50 whatever the helmet rolled, and no guide read names this roll.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "The Legacy of Greymake rune gives a fixed +50 whatever the helmet rolled, and no guide read names this roll.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://gamerblurb.com/articles/poe-2-legacy-of-greymake-how-to-get-50-all-attributes",
+          "title": "PoE 2 Legacy of Greymake: How To Get +50 All Attributes (GamerBlurb)",
+          "date": "2026-06-20"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Legacy_of_Greymake",
+          "title": "Legacy of Greymake - poe2db",
+          "note": "Forge recipe 1x Aldur's Legacy + 1x Greymake; rune line 'Helmets: +50 to all Attributes' has no range.",
           "date": "2026-11-03"
         }
       }
@@ -1573,6 +1993,60 @@
           "url": "https://poe2db.tw/us/Guiding_Palm_of_the_Eye",
           "title": "Guiding Palm of the Eye - PoE2DB",
           "note": "Ranges current since 0.2.1; 25% extra cold, regen share, light radius and shrine are fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Guiding Palm of the Heart": {
+      "tier": "B",
+      "summary": "Bought for the fixed 25% of Damage as Extra Fire, Purity of Fire and the Meteoric Shrine buff; its two rolls (ally added fire damage, Strength) barely change what it is worth.",
+      "rolls": [
+        {
+          "statRef": "Allies in your Presence deal # to # added Attack Fire Damage",
+          "importance": "filler",
+          "why": "No 0.5.5 guide found that uses this sceptre or names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Strength",
+          "importance": "filler",
+          "why": "No 0.5.5 guide found that uses this sceptre or names this roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Guiding_Palm_of_the_Heart",
+          "title": "Guiding Palm of the Heart - PoE2DB",
+          "note": "Ranges current since 0.2.1; 25% extra fire, regen share, light radius and Meteoric Shrine are fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Guiding Palm of the Mind": {
+      "tier": "B",
+      "summary": "Bought for the fixed 25% of Damage as Extra Lightning, Purity of Lightning and the Tempest Shrine buff; its two rolls (ally added lightning damage, Dexterity) barely change what it is worth.",
+      "rolls": [
+        {
+          "statRef": "Allies in your Presence deal # to # added Attack Lightning Damage",
+          "importance": "filler",
+          "why": "No 0.5.5 guide found that uses this sceptre or names this roll; only the maximum (56-70) varies.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Dexterity",
+          "importance": "filler",
+          "why": "No 0.5.5 guide found that uses this sceptre or names this roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Guiding_Palm_of_the_Mind",
+          "title": "Guiding Palm of the Mind - PoE2DB",
+          "note": "Ranges current since 0.2.1; 25% extra lightning, regen share, light radius and Tempest Shrine are fixed.",
           "date": "2026-11-03"
         }
       }
@@ -1911,6 +2385,48 @@
         }
       }
     },
+    "Heroic Tragedy": {
+      "tier": "B",
+      "summary": "The leader name decides the keystone; Vorana (Black Scythe Training, Strength to Energy Shield) is the one a 0.5.5 guide asks for, and the seed number does not matter for it.",
+      "rolls": [
+        {
+          "statRef": "Remembrancing # songworthy deeds by the line of Vorana",
+          "importance": "good",
+          "why": "Vorana gives Black Scythe Training; the 0.5.5 Supporting Fire Tactician guide says the jewel must say Vorana and 'the number doesn't matter', so no seed thresholds. Only one guide host, so not key.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "Remembrancing # songworthy deeds by the line of Medved",
+          "importance": "filler",
+          "why": "Circular Teachings (Dexterity to Armour); no 0.5.5 guide read asks for this variant.",
+          "evidence": []
+        },
+        {
+          "statRef": "Remembrancing # songworthy deeds by the line of Olroth",
+          "importance": "filler",
+          "why": "Knightly Tenets (Intelligence to Evasion); no 0.5.5 guide read asks for this variant.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/supporting-fire-tactician-build-guide",
+          "title": "Supporting Fire Tactician Build Guide - Path of Exile 2 (Maxroll, 0.5.5)",
+          "date": "2026-10-19"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Heroic_Tragedy",
+          "title": "Heroic Tragedy - PoE2DB",
+          "note": "Three leader variants map to three keystones; seed 100-8000 picks notables in radius; Historic.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Hrimnor's Hymn": {
       "tier": "C",
       "summary": "Wanted for its fixed extra Aftershock on Slams; the Runemastered Oak Greathammer copy (111-207 base phys, made from a Runeforged one) is the valuable version, and higher Physical Damage % helps it most.",
@@ -2213,6 +2729,63 @@
           "url": "https://poe2db.tw/us/Leopolds_Applause",
           "title": "Leopold's Applause - poe2db",
           "note": "Current mod lines: three rolled lines (ES, Mana, Rarity) plus fixed 10% elemental penetration and the -50% penetration floor. Runemastered version listed with no mod changes.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Liminal Coil": {
+      "tier": "B",
+      "summary": "Curse-stacking Coiling Bolts casters buy it for the per-curse extra damage, and the build guide read asks for max rolls on both extra Chaos and extra Physical lines.",
+      "rolls": [
+        {
+          "statRef": "Spell Hits Gain #% of Damage as Extra Chaos Damage per Curse on target",
+          "importance": "good",
+          "thresholds": {
+            "good": 29,
+            "great": 31
+          },
+          "why": "Blood Mage guide: 'Try to get the maximum rolls on both Extra Damage modifiers.' Thresholds are the 70%/90% default of 23-31 (rounded up). Only one guide, written for 0.5.0, but the item has not changed since.",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "Spell Hits Gain #% of Damage as Extra Physical Damage per Curse on target",
+          "importance": "good",
+          "thresholds": {
+            "good": 29,
+            "great": 31
+          },
+          "why": "Same guide line as the Chaos version: max rolls on both Extra Damage modifiers. Thresholds are the 70%/90% default of 23-31 (rounded up).",
+          "evidence": [
+            "G1"
+          ]
+        },
+        {
+          "statRef": "#% increased Spell Damage",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for it. The Blood Mage guide ranks spell damage low in its stat priority.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/liminal-coil-blood-mage-poe-2-build",
+          "title": "Liminal Coil Blood Mage POE 2 Build",
+          "date": "2026-06-17"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Liminal_Coil",
+          "title": "Liminal Coil - poe2db",
+          "note": "Mod ranges; added 0.5.0, no later changes listed.",
           "date": "2026-11-03"
         }
       }
@@ -3011,6 +3584,44 @@
           "url": "https://poe2db.tw/us/Perfidy",
           "title": "Perfidy - poe2db",
           "note": "All lines fixed set, ranges current since 0.4.0 (fire/cold/lightning avoid added then).",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Periphery": {
+      "tier": "B",
+      "summary": "Bought for its granted Azmerian Swarms skill and the elemental-ailment line; no current guide grades its added damage or Attack Speed rolls.",
+      "rolls": [
+        {
+          "statRef": "Adds # to # Fire Damage",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Cold Damage",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "Adds # to # Lightning Damage",
+          "importance": "filler",
+          "why": "No current guide found that asks for a particular roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "filler",
+          "why": "Range is disputed: poe2db gives 8-14%, poe2ref gives 7-17%. No guide asks for it either.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Periphery",
+          "title": "Periphery - poe2db",
           "date": "2026-11-03"
         }
       }
@@ -4036,6 +4647,65 @@
         }
       }
     },
+    "Skysliver": {
+      "tier": "B",
+      "summary": "Fast lightning spear for Whirling Slash movement on Twister builds; buyers want max Attack Speed.",
+      "rolls": [
+        {
+          "statRef": "#% increased Attack Speed",
+          "importance": "good",
+          "thresholds": {
+            "good": 26,
+            "great": 30
+          },
+          "why": "A 0.5 Twister guide asks for Skysliver 'with maximum attack speed' (great 30); good 26 is the 70% default of 15-30. Odealo and Maxroll use it for its speed but do not name the roll.",
+          "evidence": [
+            "G1",
+            "G2",
+            "G3"
+          ]
+        },
+        {
+          "statRef": "Adds # to # Lightning Damage",
+          "importance": "filler",
+          "why": "The spear is used for movement, not damage; no guide names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased chance to Shock",
+          "importance": "filler",
+          "why": "No guide read names this roll.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://kami-labs.fr/en/path-of-exile-2/builds-path-of-exile-2/build-chasseresse-spirit-walker-twisters-saison-5/",
+          "title": "S-Tier Build Chasseresse Spirit Walker Twisters (GuyThatDies) Saison 5",
+          "date": "2026-05-31"
+        },
+        "G2": {
+          "kind": "guide",
+          "url": "https://odealo.com/articles/twister-spirit-walker-poe2-build",
+          "title": "[0.5] Twister Spirit Walker POE2 Build Guide - Odealo",
+          "date": "2026-06-10"
+        },
+        "G3": {
+          "kind": "guide",
+          "url": "https://maxroll.gg/poe2/build-guides/twister-deadeye-build-guide",
+          "title": "Twister Deadeye Build Guide - Path of Exile 2",
+          "date": "2026-09-04"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Skysliver",
+          "title": "Skysliver - poe2db",
+          "note": "Current mod lines; Runeforged variant exists and is priced separately.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Snakepit": {
       "tier": "B",
       "summary": "Bought for its fixed ring-slot effects (spell projectiles fork in the left slot, chain +1 in the right) and as a Loreweave crafting input; spell damage and cast speed rolls matter little.",
@@ -4943,6 +5613,51 @@
         }
       }
     },
+    "The Raven's Flock": {
+      "tier": "C",
+      "summary": "Minion builds buy it for the granted Spiraling Conspiracy skill; no guide read names a roll that matters, so any copy usually does.",
+      "rolls": [
+        {
+          "statRef": "Minions deal #% increased Damage",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Spirit Reservation Efficiency of Skills",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Cast Speed",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to Intelligence",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        },
+        {
+          "statRef": "Minions have #% chance to inflict Gruelling Madness on Hit",
+          "importance": "filler",
+          "why": "No guide read gives roll advice for this line.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Ravens_Flock",
+          "title": "The Ravens Flock - poe2db",
+          "note": "Mod ranges; added 0.5.0, bug fixes in 0.5.2 and 0.5.3.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "The Taming": {
       "tier": "A",
       "summary": "Twister builds buy it for the fixed Wind Skills ground-surface lines (all three grounds at once); the resistance and ailment-damage rolls are minor.",
@@ -4978,6 +5693,45 @@
           "url": "https://poe2db.tw/us/The_Taming",
           "title": "The Taming - poe2db",
           "note": "Mod list and ranges; Wind Skills lines are fixed.",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "The Unleashed": {
+      "tier": "B",
+      "summary": "Druid spell-and-shapeshift body armour bought for Runic Bindings into Unbound Potential and +1% max elemental resistances; no current guide names a roll that matters.",
+      "rolls": [
+        {
+          "statRef": "#% increased Armour and Energy Shield",
+          "importance": "filler",
+          "why": "No 0.5.5 guide found that uses the item or names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Strength and Intelligence",
+          "importance": "filler",
+          "why": "No 0.5.5 guide found that uses the item or names this roll.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% of Damage taken from Hits bypasses Energy Shield if Energy Shield is below half",
+          "importance": "filler",
+          "why": "Drawback line (lower is better). No guide names its size as something buyers check.",
+          "evidence": [
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/The_Unleashed",
+          "title": "The Unleashed - poe2db",
+          "note": "Added in 0.5.0, no later changes listed. The same lines and ranges appear on Fextralife (edited 2026-09-22).",
           "date": "2026-11-03"
         }
       }
@@ -5354,6 +6108,105 @@
         }
       }
     },
+    "Ventor's Gamble": {
+      "tier": "B",
+      "summary": "A lottery ring for magic-find builds: every line rolls from a wide range, and buyers pay for high Rarity with positive resistances, plus Life and Spirit.",
+      "rolls": [
+        {
+          "statRef": "#% increased Rarity of Items found",
+          "importance": "good",
+          "thresholds": {
+            "good": 10,
+            "great": 20
+          },
+          "why": "Timesaver says to filter for a minimum rarity roll. Thresholds are the 70%/90% default of the explicit -25 to 25 range; the 6-15 implicit shares this ref.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to maximum Life",
+          "importance": "good",
+          "thresholds": {
+            "good": 56,
+            "great": 72
+          },
+          "why": "Timesaver says to filter for a life floor. Thresholds are the 70%/90% default of the 0-80 range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "# to Spirit",
+          "importance": "good",
+          "thresholds": {
+            "good": 14,
+            "great": 18
+          },
+          "why": "Timesaver calls the spirit roll quietly valuable. Thresholds are the 70%/90% default of the 0-20 range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% to Fire Resistance",
+          "importance": "good",
+          "thresholds": {
+            "good": 16,
+            "great": 32
+          },
+          "why": "Can roll negative; Timesaver says buyers filter for positive resistances. Thresholds are the 70%/90% default of the -40 to 40 range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% to Cold Resistance",
+          "importance": "good",
+          "thresholds": {
+            "good": 16,
+            "great": 32
+          },
+          "why": "Can roll negative; Timesaver says buyers filter for positive resistances. Thresholds are the 70%/90% default of the -40 to 40 range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% to Lightning Resistance",
+          "importance": "good",
+          "thresholds": {
+            "good": 16,
+            "great": 32
+          },
+          "why": "Can roll negative; Timesaver says buyers filter for positive resistances. Thresholds are the 70%/90% default of the -40 to 40 range.",
+          "evidence": [
+            "G1",
+            "M1"
+          ]
+        }
+      ],
+      "evidence": {
+        "G1": {
+          "kind": "guide",
+          "url": "https://timesaver.gg/blog/poe2-ventors-gamble-guide",
+          "title": "PoE2 Ventor's Gamble guide (Timesaver, 0.5.x)",
+          "date": "2026-07-30"
+        },
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Ventors_Gamble",
+          "title": "Ventor's Gamble - poe2db",
+          "note": "Mod list and ranges; 0.2.0 narrowed the explicit Rarity line from -40..40 to -25..25.",
+          "date": "2026-11-03"
+        }
+      }
+    },
     "Vestige of Darkness": {
       "tier": "C",
       "summary": "Bought for the Bodach ally, Blind and physical-to-freeze effects, which are fixed; only the defence and attribute rolls vary and no current guide read ranks them.",
@@ -5388,6 +6241,53 @@
           "kind": "mechanic",
           "url": "https://poe2db.tw/us/Vestige_of_Darkness",
           "title": "Vestige of Darkness - poe2db",
+          "date": "2026-11-03"
+        }
+      }
+    },
+    "Yoke of Suffering": {
+      "tier": "B",
+      "summary": "Cheap ailment-damage amulet used for levelling and early maps; buyers want the 'enemies take increased damage per Elemental Ailment type' line, but no current guide names a roll to look for.",
+      "rolls": [
+        {
+          "statRef": "Enemies take #% increased Damage for each Elemental Ailment type among\nyour Ailments on them",
+          "importance": "filler",
+          "why": "The reason to use the amulet (15-20% per ailment type), but no guide read names a roll target; the Maxroll 0.5.5 guide only calls it a great DPS amulet.",
+          "evidence": [
+            "M1"
+          ]
+        },
+        {
+          "statRef": "#% increased Elemental Damage",
+          "importance": "filler",
+          "why": "No current guide names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% to all Elemental Resistances",
+          "importance": "filler",
+          "why": "No current guide names this roll.",
+          "evidence": []
+        },
+        {
+          "statRef": "# to maximum Life",
+          "importance": "filler",
+          "why": "Bloodstone Amulet implicit (30-40); no guide names it.",
+          "evidence": []
+        },
+        {
+          "statRef": "#% increased Duration of Ignite, Shock and Chill on Enemies",
+          "importance": "filler",
+          "why": "Drawback line (30-40% reduced ailment duration); the item text matches this ref as a negated matcher.",
+          "evidence": []
+        }
+      ],
+      "evidence": {
+        "M1": {
+          "kind": "mechanic",
+          "url": "https://poe2db.tw/us/Yoke_of_Suffering",
+          "title": "Yoke of Suffering - poe2db",
+          "note": "Mod list and ranges; 0.2.1 raised the per-ailment damage line to 15-20% and the duration drawback to 30-40%.",
           "date": "2026-11-03"
         }
       }

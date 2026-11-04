@@ -264,4 +264,3 @@ export function mergeHistory(
     skipped: old.skipped + fresh.skipped,
   };
 }
-

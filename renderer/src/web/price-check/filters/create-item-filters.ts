@@ -1,4 +1,5 @@
 import type { ItemFilters } from "./interfaces";
+import { LIQUID_CURRENCY } from "../trade/liquidCurrency";
 import { ParsedItem, ItemCategory, ItemRarity } from "@/parser";
 import { tradeTag } from "../trade/common";
 import { ModifierType } from "@/parser/modifiers";
@@ -49,7 +50,8 @@ export function createFilters(
       onlineInLeague: false,
       listingType: opts.listingType ?? "securable",
       listed: undefined,
-      currency: opts.currency,
+      // Exalted or Divine, then Chaos: never Vaal Orbs and other illiquid ones.
+      currency: opts.currency ?? LIQUID_CURRENCY,
       league: opts.league,
       collapseListings: opts.collapseListings,
     },

@@ -93,9 +93,12 @@
             <ui-radio
               class="mt-3"
               v-model="filters.trade.currency"
-              :value="undefined"
-              >{{ t(":currency_any") }}</ui-radio
+              :value="LIQUID_CURRENCY"
+              >{{ t(":currency_liquid") }}</ui-radio
             >
+            <ui-radio v-model="filters.trade.currency" :value="ANY_CURRENCY">{{
+              t(":currency_any")
+            }}</ui-radio>
             <ui-radio v-model="filters.trade.currency" value="exalted">{{
               t(":currency_only_exalted")
             }}</ui-radio>
@@ -123,6 +126,7 @@ import UiToggle from "@/web/ui/UiToggle.vue";
 import UiPopover from "@/web/ui/Popover.vue";
 import type { ItemFilters } from "../filters/interfaces";
 import { useLeagues } from "@/web/background/Leagues";
+import { ANY_CURRENCY, LIQUID_CURRENCY } from "./liquidCurrency";
 
 export default defineComponent({
   components: { UiRadio, UiToggle, UiPopover },
@@ -146,6 +150,8 @@ export default defineComponent({
 
     return {
       t,
+      LIQUID_CURRENCY,
+      ANY_CURRENCY,
       tradeLeagues: leagues.list,
       showLeagueName: () =>
         leagues.selectedId.value !== props.filters.trade.league,
@@ -153,7 +159,8 @@ export default defineComponent({
         Boolean(
           (props.filters.trade.listed &&
             ["1day", "3days", "1week"].includes(props.filters.trade.listed)) ||
-            props.filters.trade.currency,
+            (props.filters.trade.currency &&
+              props.filters.trade.currency !== LIQUID_CURRENCY),
         ),
       onOfflineUpdate(offline: boolean) {
         const { filters } = props;

@@ -12,6 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {
+  negatableRefsFromNdjson,
   statLookupFromNdjson,
   uniqueNamesFromNdjson,
   validateRollProfile,
@@ -45,11 +46,17 @@ function main(argv: string[]): number {
     return 0;
   }
   const files = argv.length ? argv : defaultFiles();
-  const statBetter = statLookupFromNdjson(fs.readFileSync(STATS_FILE, "utf8"));
+  const statsText = fs.readFileSync(STATS_FILE, "utf8");
+  const statBetter = statLookupFromNdjson(statsText);
+  const negatable = negatableRefsFromNdjson(statsText);
   const uniques = uniqueNamesFromNdjson(
     ITEMS_FILES.map((file) => fs.readFileSync(file, "utf8")).join("\n"),
   );
-  const opts = { statBetter, hasUnique: (name: string) => uniques.has(name) };
+  const opts = {
+    statBetter,
+    statNegatable: (ref: string) => negatable.has(ref),
+    hasUnique: (name: string) => uniques.has(name),
+  };
 
   let failed = 0;
   for (const file of files) {

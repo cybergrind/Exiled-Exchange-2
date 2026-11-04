@@ -15,6 +15,12 @@
       <div class="flex-1"></div>
       <trade-links v-if="list" :get-link="makeTradeLink" />
     </div>
+    <div
+      v-if="floorNote"
+      class="mb-2 mx-2 px-2 py-1 rounded bg-gray-700 text-orange-400 leading-snug"
+    >
+      {{ floorNote }}
+    </div>
 
     <div class="layout-column overflow-y-auto overflow-x-hidden">
       <table class="table-stripped w-full">
@@ -151,7 +157,10 @@ import ItemQuickPrice from "@/web/ui/ItemQuickPrice.vue";
 import OnlineFilter from "./OnlineFilter.vue";
 import TradeLinks from "./TradeLinks.vue";
 import TradeItem from "./TradeItem.vue";
-import { useTradeApi } from "./trade-api";
+import { divineValueOfListing, useTradeApi } from "./trade-api";
+import { floorGap, floorGapText } from "./listingFloor";
+import { displayRounding, usePoeninja } from "@/web/background/Prices";
+import { getDetailsId } from "../trends/getDetailsId";
 import { GEM, GRANTS_REAL_SKILL } from "@/parser/meta";
 import ItemSumPrice from "@/web/ui/ItemSumPrice.vue";
 import ExtractionValue from "./ExtractionValue.vue";
@@ -197,6 +206,28 @@ export default defineComponent({
 
     const { error, searchResult, groupedResults, search } = useTradeApi();
 
+    const { findPriceByQuery, autoCurrency } = usePoeninja();
+    // Listings far from poe.ninja's price, when the search asks for no more
+    // than poe.ninja's line does (no stat filters on).
+    const floorNote = computed(() => {
+      if (!slowdown.isReady.value || !searchResult.value) return undefined;
+      if (props.stats.some((stat) => !stat.disabled)) return undefined;
+      const id = getDetailsId(props.item);
+      const entry = id ? findPriceByQuery(id) : undefined;
+      if (!entry) return undefined;
+      const gap = floorGap(
+        groupedResults.value.map(divineValueOfListing),
+        entry.primaryValue,
+      );
+      if (!gap) return undefined;
+      const format = (div: number) => {
+        const value = autoCurrency(div);
+        const unit = value.currency === "exalted" ? "ex" : value.currency;
+        return `${displayRounding(value.min, true)} ${unit}`;
+      };
+      return floorGapText(gap, format(gap.floor), format(gap.ninja));
+    });
+
     const showBrowser = inject<(url: string) => void>("builtin-browser")!;
 
     const { t } = useI18nNs("trade_result");
@@ -235,6 +266,7 @@ export default defineComponent({
     return {
       t,
       list: searchResult,
+      floorNote,
       groupedResults: computed(() => {
         if (!slowdown.isReady.value) {
           return Array<undefined>(SHOW_RESULTS);

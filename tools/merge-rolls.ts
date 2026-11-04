@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {
   ROLL_PROFILE_SCHEMA_VERSION,
+  negatableRefsFromNdjson,
   statLookupFromNdjson,
   uniqueNamesFromNdjson,
   validateRollProfile,
@@ -21,16 +22,20 @@ const OUT = path.join(DATA, "poe-source/unique-rolls.json");
 
 function main(argv: string[]): number {
   const check = argv.includes("--check");
-  const statBetter = statLookupFromNdjson(
-    fs.readFileSync(path.join(DATA, "en/stats.ndjson"), "utf8"),
-  );
+  const statsText = fs.readFileSync(path.join(DATA, "en/stats.ndjson"), "utf8");
+  const statBetter = statLookupFromNdjson(statsText);
+  const negatable = negatableRefsFromNdjson(statsText);
   // items-patch.ndjson serves uniques the generated file lacks (renamed ones).
   const uniques = uniqueNamesFromNdjson(
     ["items.ndjson", "items-patch.ndjson"]
       .map((name) => fs.readFileSync(path.join(DATA, "en", name), "utf8"))
       .join("\n"),
   );
-  const opts = { statBetter, hasUnique: (name: string) => uniques.has(name) };
+  const opts = {
+    statBetter,
+    statNegatable: (ref: string) => negatable.has(ref),
+    hasUnique: (name: string) => uniques.has(name),
+  };
 
   const files = fs
     .readdirSync(RESEARCH)

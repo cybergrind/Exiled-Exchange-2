@@ -51,4 +51,21 @@ Remove all Explosive Rhythm on reaching 10 to gain Explosive Fervour for 10 Seco
     expect(calc.sources[0].contributes?.value).toBe(2);
     expect(calc.stat.better).toBe(-1);
   });
+
+  it("Drillneck: fewer Pierces needed to Return is the better roll", () => {
+    const item = parseClipboard(`Item Class: Quivers
+Rarity: Unique
+Drillneck
+Penetrating Quiver
+--------
+Item Level: 80
+--------
+{ Unique Modifier }
+Attack Projectiles Return if they Pierced at least 2(2-4) times
+`)._unsafeUnwrap();
+    const calc = item.statsByType.find((c) =>
+      c.stat.ref.startsWith("Attack Projectiles Return"),
+    )!;
+    expect(calc.stat.better).toBe(-1);
+  });
 });

@@ -7,12 +7,12 @@ import {
   isUsableBootSnapshot,
   overviewText,
   readSnapshotFile,
-  SNAPSHOT_MAX_HOURS,
   SYNC_INTERVAL_MS,
   snapshotUrl,
   writeSnapshotFile,
 } from "@/web/background/market/sync.ts";
 import type { FetchLike } from "@/web/background/market/sync.ts";
+import { STALE_HOURS } from "@/web/background/market/constants.ts";
 import { aggregatePairs } from "@/web/background/market/cx.ts";
 import {
   serializeSnapshot,
@@ -62,9 +62,9 @@ function fakeFetch(status: number, body = "") {
 }
 
 describe("constants", () => {
-  it("refreshes hourly and boots from snapshots under 6 hours", () => {
+  it("refreshes hourly and calls prices over 6 hours old stale", () => {
     expect(SYNC_INTERVAL_MS).toBe(60 * 60 * 1000);
-    expect(SNAPSHOT_MAX_HOURS).toBe(6);
+    expect(STALE_HOURS).toBe(6);
   });
 });
 
@@ -80,28 +80,21 @@ describe("routes", () => {
 });
 
 describe("isUsableBootSnapshot", () => {
-  it("uses the selected league's snapshot under 6 hours old", () => {
-    const s = snapshot();
-    expect(isUsableBootSnapshot(s, "Forbidden Rites", NOW)).toBe(true);
-    expect(
-      isUsableBootSnapshot(s, "Forbidden Rites", NOW + 5.9 * HOUR_MS),
-    ).toBe(true);
-  });
-
-  it("ignores one over 6 hours old", () => {
-    expect(
-      isUsableBootSnapshot(snapshot(), "Forbidden Rites", NOW + 6.1 * HOUR_MS),
-    ).toBe(false);
+  it("uses the selected league's snapshot, however old", () => {
+    // Old prices are shown dimmed with their age, not dropped.
+    const old = snapshot({
+      writtenAt: new Date(NOW - 3 * 24 * HOUR_MS).toISOString(),
+    });
+    expect(isUsableBootSnapshot(snapshot(), "Forbidden Rites")).toBe(true);
+    expect(isUsableBootSnapshot(old, "Forbidden Rites")).toBe(true);
   });
 
   it("ignores another league's", () => {
-    expect(isUsableBootSnapshot(snapshot(), "HC Forbidden Rites", NOW)).toBe(
-      false,
-    );
+    expect(isUsableBootSnapshot(snapshot(), "HC Forbidden Rites")).toBe(false);
   });
 
   it("ignores none at all", () => {
-    expect(isUsableBootSnapshot(undefined, "Forbidden Rites", NOW)).toBe(false);
+    expect(isUsableBootSnapshot(undefined, "Forbidden Rites")).toBe(false);
   });
 });
 

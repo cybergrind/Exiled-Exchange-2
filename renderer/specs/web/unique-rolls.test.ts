@@ -5,6 +5,7 @@ import os from "os";
 import path from "path";
 import {
   findAccountLikeFields,
+  negatableRefsFromNdjson,
   statLookupFromNdjson,
   uniqueNamesFromNdjson,
   validateRollProfile,
@@ -23,7 +24,14 @@ const UNIQUES = uniqueNamesFromNdjson(
     .map((name) => fs.readFileSync(path.join(DATA, "en", name), "utf8"))
     .join("\n"),
 );
-const OPTS = { statBetter: STATS, hasUnique: (n: string) => UNIQUES.has(n) };
+const NEGATABLE = negatableRefsFromNdjson(
+  fs.readFileSync(path.join(DATA, "en/stats.ndjson"), "utf8"),
+);
+const OPTS = {
+  statBetter: STATS,
+  statNegatable: (ref: string) => NEGATABLE.has(ref),
+  hasUnique: (n: string) => UNIQUES.has(n),
+};
 const SHIPPED = path.join(DATA, "poe-source/unique-rolls.json");
 const CLI = path.resolve(__dirname, "../../../tools/validate-rolls.ts");
 
@@ -327,6 +335,30 @@ describe("validateRollProfile", () => {
       const p = sample();
       sv(p).rolls[0].thresholds = { good: 4, great: 10 };
       expect(paths(p)).toEqual(['$.uniques["Svalinn"].rolls[0].thresholds']);
+    });
+
+    // Blackflame shows "(60-75)% reduced Ignite Duration": the "increased"
+    // ref is higher-is-better, but on the shown number lower is better.
+    it("reads thresholds in the shown units of a negated line", () => {
+      const p = sample();
+      Object.assign(sv(p).rolls[1], {
+        statRef: "#% increased Ignite Duration on Enemies",
+        thresholds: { good: 65, great: 62 },
+        negated: true,
+      });
+      expect(errorsOf(p)).toEqual([]);
+      delete sv(p).rolls[1].negated;
+      expect(paths(p)).toEqual(['$.uniques["Svalinn"].rolls[1].thresholds']);
+    });
+
+    it("rejects negated on a stat without a negated line, or not true", () => {
+      const p = sample();
+      sv(p).rolls[0].negated = true;
+      sv(p).rolls[1].negated = false;
+      expect(paths(p)).toEqual([
+        '$.uniques["Svalinn"].rolls[0].negated',
+        '$.uniques["Svalinn"].rolls[1].negated',
+      ]);
     });
 
     it("accepts good equal to great", () => {

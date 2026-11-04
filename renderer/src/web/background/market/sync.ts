@@ -4,12 +4,7 @@
 // injected. Erasable TypeScript only; see types.ts.
 import { aggregatePairs } from "./cx.ts";
 import type { CxHourEntry } from "./cx.ts";
-import {
-  isSnapshotStale,
-  leagueSlug,
-  parseSnapshot,
-  serializeSnapshot,
-} from "./snapshot.ts";
+import { leagueSlug, parseSnapshot, serializeSnapshot } from "./snapshot.ts";
 import type { Snapshot } from "./snapshot.ts";
 import { HISTORY_CONTENT_TYPE, SNAPSHOT_CONTENT_TYPE } from "./marketFiles.ts";
 import { historyPoint, parseHistory, serializePoint } from "./history.ts";
@@ -17,9 +12,6 @@ import type { HistoryPoint } from "./history.ts";
 
 /** Refresh period while the price check is in use. §7 SYNC_MINUTES. */
 export const SYNC_INTERVAL_MS = 60 * 60 * 1000;
-
-/** A snapshot older than this is not used at start. §7 SNAPSHOT_MAX_HOURS. */
-export const SNAPSHOT_MAX_HOURS = 6;
 
 /** The part of fetch() used here; window.fetch fits. */
 export type FetchLike = (
@@ -40,13 +32,16 @@ export function historyUrl(league: string): string {
   return `/market/${leagueSlug(league)}.history`;
 }
 
-/** Start-up rule (D4): the selected league's own snapshot, under 6 hours old. */
+/**
+ * Start-up rule (D4): the selected league's own snapshot, however old. The
+ * price panel dims a price past STALE_HOURS and names its age; the refresh
+ * still runs on its usual schedule.
+ */
 export function isUsableBootSnapshot(
   snapshot: Snapshot | undefined,
   league: string,
-  nowMs: number,
 ): snapshot is Snapshot {
-  return !isSnapshotStale(snapshot, SNAPSHOT_MAX_HOURS * 60, nowMs, league);
+  return snapshot !== undefined && snapshot.league === league;
 }
 
 /**

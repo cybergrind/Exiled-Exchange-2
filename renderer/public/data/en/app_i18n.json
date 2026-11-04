@@ -247,6 +247,7 @@
     "currency_only_div": "Divine Orb",
     "currency_chaos_div": "Both Orbs",
     "currency_exalted_div": "Ex/Div Orbs",
+    "currency_liquid": "Ex/Div, then Chaos",
     "currency_only_exalted": "Exalted Orbs",
     "ratio_tooltip": "Ratio used for sorting locally\nDefault on trade site is 7.5:1"
   },

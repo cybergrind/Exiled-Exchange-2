@@ -60,10 +60,12 @@ export function formatCount(count: number): string {
  * age counts from `asOfHour + 1h`.
  */
 export function formatAge(asOfHour: number, nowMs: number): string {
-  const minutes = Math.max(
-    0,
-    Math.floor((nowMs / 1000 - asOfHour - 3600) / 60),
-  );
+  return formatAgeMs(nowMs - (asOfHour + 3600) * 1000);
+}
+
+/** 25 min -> "25 min ago", 9 h -> "9 h ago", 3 days -> "3 d ago". */
+export function formatAgeMs(ageMs: number): string {
+  const minutes = Math.max(0, Math.floor(ageMs / 60_000));
   if (minutes < 60) return `${minutes} min ago`;
   const hours = Math.floor(minutes / 60);
   if (hours < 48) return `${hours} h ago`;

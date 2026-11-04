@@ -9,6 +9,8 @@ import {
   requestTradeResultList,
   requestResults,
 } from "@/web/price-check/trade/pathofexile-trade";
+import { usePoeninja } from "@/web/background/Prices";
+import { mergeByValue, needsChaosSearch } from "./liquidCurrency";
 
 const API_FETCH_LIMIT = 100;
 const MIN_NOT_GROUPED = 7;
@@ -123,10 +125,83 @@ export function useTradeApi() {
         }
       }
       await fetchMore();
+
+      // Exalted or Divine found few: fill in with a Chaos-only search.
+      if (needsChaosSearch(filters.trade.currency, _searchResult.total)) {
+        await addChaosListings(filters, stats, item, _searchId, _fetchResults);
+      }
     } catch (err) {
       error.value = (err as Error).message;
     }
   }
 
+  async function addChaosListings(
+    filters: ItemFilters,
+    stats: StatFilter[],
+    item: ParsedItem,
+    _searchId: number,
+    exDivResults: PricingResult[],
+  ) {
+    const exDivSearch = searchResult.value!;
+    let chaosResults: PricingResult[] = [];
+    let chaosSearch: SearchResult;
+    try {
+      chaosSearch = await requestTradeResultList(
+        createTradeRequest(
+          { ...filters, trade: { ...filters.trade, currency: "chaos" } },
+          stats,
+          item,
+        ),
+        filters.trade.league,
+      );
+      const ids = chaosSearch.result.slice(0, 20);
+      for (let i = 0; i < ids.length; i += 10) {
+        if (_searchId !== searchId) return;
+        chaosResults.push(
+          ...(await requestResults(chaosSearch.id, ids.slice(i, i + 10), {
+            accountName: AppConfig().accountName,
+          })),
+        );
+      }
+    } catch (err) {
+      // The Exalted or Divine listings stand on their own.
+      console.warn("Chaos-only search failed:", err);
+      return;
+    }
+    if (_searchId !== searchId) return;
+    chaosResults = chaosResults.filter((r) => r != null);
+    fetchResults.value = mergeByValue(
+      exDivResults.filter((r) => r != null),
+      chaosResults,
+      divineValueOfListing,
+    );
+    // The trade link keeps opening the Exalted or Divine search.
+    searchResult.value = {
+      ...exDivSearch,
+      total: exDivSearch.total + chaosSearch.total,
+      inexact: exDivSearch.inexact || chaosSearch.inexact,
+    };
+  }
+
   return { error, searchResult, groupedResults, search };
+}
+
+/** A listing's price in divines, for the liquid currencies only. */
+export function divineValueOfListing(
+  result: PricingResult,
+): number | undefined {
+  const name =
+    result.priceCurrency === "exalted"
+      ? "Exalted Orb"
+      : result.priceCurrency === "chaos"
+        ? "Chaos Orb"
+        : undefined;
+  if (result.priceCurrency === "divine") return result.priceAmount;
+  if (!name) return undefined;
+  const perOrb = usePoeninja().divineValueByQuery({
+    ns: "ITEM",
+    name,
+    variant: undefined,
+  });
+  return perOrb === undefined ? undefined : perOrb * result.priceAmount;
 }

@@ -1,131 +1,122 @@
 <template>
   <template v-if="priceData">
     <div class="flex items-center pb-4" style="min-height: 3rem">
+      <!-- Prices come from memory (the saved snapshot, then each background
+           refresh), so they are shown at once; no fake "getting price" wait. -->
       <div
-        v-if="!isValuableBasetype && !slowdown.isReady.value"
-        class="flex flex-1 justify-center"
+        v-if="priceData.volume && volumeSetting !== 'none'"
+        @click="openNinja"
+        class="flex flex-col items-center gap-y-1 rounded hover:bg-gray-700 px-1 cursor-pointer"
       >
-        <div><i class="fas fa-dna fa-spin text-gray-600"></i></div>
-        <i18n-t keypath="trade_result.getting_price" class="pl-2">
-          <span class="text-gray-600">{{ t(":getting_price_from") }}</span>
-        </i18n-t>
+        <!-- Currency per hour -->
+        <div
+          v-if="volumeSetting === 'value' || volumeSetting === 'both'"
+          class="flex flex-row items-center"
+        >
+          {{ priceData.volume.primaryVolumePerHour }}
+          <div class="w-6 h-6 flex items-center justify-center shrink-0">
+            <core-currency-img :currency="priceData.volume.currency" />
+          </div>
+          <div class="text-xs text-gray-500">/hr</div>
+        </div>
+        <!-- Items per hour -->
+        <div
+          v-if="volumeSetting === 'item' || volumeSetting === 'both'"
+          class="flex flex-row items-center"
+        >
+          {{ priceData.volume.itemsPerHour }}
+          <div class="w-6 h-6 flex items-center justify-center shrink-0">
+            <ui-item-img :icon="item.info.icon" overflow-hidden />
+          </div>
+          <div class="text-xs text-gray-500">/hr</div>
+        </div>
       </div>
-      <template v-else>
+      <item-quick-price
+        class="flex-1 text-base justify-center"
+        :class="{
+          'opacity-50': priceData.confidence?.dim || priceData.variant,
+        }"
+        :price="priceData.price"
+        :fraction="filters.stackSize != null"
+        :item-img="item.info.icon"
+        :item-base="item.info"
+      >
+        <template #item v-if="isValuableBasetype">
+          <span class="text-gray-400">{{ t(":base_item") }}</span>
+        </template>
+      </item-quick-price>
+      <div
+        v-if="priceData.change || priceData.volume"
+        class="flex flex-col items-center"
+      >
         <div
-          v-if="priceData.volume && volumeSetting !== 'none'"
-          @click="openNinja"
-          class="flex flex-col items-center gap-y-1 rounded hover:bg-gray-700 px-1 cursor-pointer"
+          v-if="priceData.change"
+          @click="openTrend"
+          data-trend
+          :class="$style['trend-btn']"
+          :title="hasHistory ? 'Price history' : 'Open poe.ninja'"
         >
-          <!-- Currency per hour -->
-          <div
-            v-if="volumeSetting === 'value' || volumeSetting === 'both'"
-            class="flex flex-row items-center"
-          >
-            {{ priceData.volume.primaryVolumePerHour }}
-            <div class="w-6 h-6 flex items-center justify-center shrink-0">
-              <core-currency-img :currency="priceData.volume.currency" />
+          <div class="text-center">
+            <div class="leading-tight">
+              <i
+                v-if="priceData.change.forecast === 'down'"
+                class="fas fa-angle-double-down pr-1 text-red-600"
+              ></i>
+              <i
+                v-if="priceData.change.forecast === 'up'"
+                class="fas fa-angle-double-up pr-1 text-green-500"
+              ></i>
+              <span
+                v-if="priceData.change.forecast === 'const'"
+                class="pr-1 text-gray-600 font-sans leading-none"
+                >±</span
+              >
+              <span>{{ priceData.change.text }}</span>
             </div>
-            <div class="text-xs text-gray-500">/hr</div>
+            <div class="text-xs text-gray-500 leading-none">
+              {{ t(":graph_7d") }}
+            </div>
           </div>
-          <!-- Items per hour -->
-          <div
-            v-if="volumeSetting === 'item' || volumeSetting === 'both'"
-            class="flex flex-row items-center"
-          >
-            {{ priceData.volume.itemsPerHour }}
-            <div class="w-6 h-6 flex items-center justify-center shrink-0">
-              <ui-item-img :icon="item.info.icon" overflow-hidden />
-            </div>
-            <div class="text-xs text-gray-500">/hr</div>
+          <div v-if="priceData.change" class="w-12 h-8">
+            <vue-apexcharts
+              type="area"
+              :options="{
+                chart: {
+                  sparkline: { enabled: true },
+                  animations: { enabled: false },
+                },
+                stroke: {
+                  curve: 'smooth',
+                  width: 1,
+                  colors: ['#a0aec0' /* gray.500 */],
+                },
+                fill: { colors: ['#4a5568' /* gray.700 */], type: 'solid' },
+                tooltip: { enabled: false },
+                plotOptions: { area: { fillTo: 'end' } },
+                yaxis: {
+                  show: false,
+                  min: priceData.change.graph.drawMin,
+                  max: priceData.change.graph.drawMax,
+                },
+              }"
+              :series="[
+                {
+                  data: priceData.change.graph.points,
+                },
+              ]"
+            />
           </div>
         </div>
-        <item-quick-price
-          class="flex-1 text-base justify-center"
-          :class="{
-            'opacity-50': priceData.confidence?.dim || priceData.variant,
-          }"
-          :price="priceData.price"
-          :fraction="filters.stackSize != null"
-          :item-img="item.info.icon"
-          :item-base="item.info"
-        >
-          <template #item v-if="isValuableBasetype">
-            <span class="text-gray-400">{{ t(":base_item") }}</span>
-          </template>
-        </item-quick-price>
-        <div
-          v-if="priceData.change || priceData.volume"
-          class="flex flex-col items-center"
-        >
-          <div
-            v-if="priceData.change"
-            @click="openTrend"
-            data-trend
-            :class="$style['trend-btn']"
-            :title="hasHistory ? 'Price history' : 'Open poe.ninja'"
-          >
-            <div class="text-center">
-              <div class="leading-tight">
-                <i
-                  v-if="priceData.change.forecast === 'down'"
-                  class="fas fa-angle-double-down pr-1 text-red-600"
-                ></i>
-                <i
-                  v-if="priceData.change.forecast === 'up'"
-                  class="fas fa-angle-double-up pr-1 text-green-500"
-                ></i>
-                <span
-                  v-if="priceData.change.forecast === 'const'"
-                  class="pr-1 text-gray-600 font-sans leading-none"
-                  >±</span
-                >
-                <span>{{ priceData.change.text }}</span>
-              </div>
-              <div class="text-xs text-gray-500 leading-none">
-                {{ t(":graph_7d") }}
-              </div>
-            </div>
-            <div v-if="priceData.change" class="w-12 h-8">
-              <vue-apexcharts
-                type="area"
-                :options="{
-                  chart: {
-                    sparkline: { enabled: true },
-                    animations: { enabled: false },
-                  },
-                  stroke: {
-                    curve: 'smooth',
-                    width: 1,
-                    colors: ['#a0aec0' /* gray.500 */],
-                  },
-                  fill: { colors: ['#4a5568' /* gray.700 */], type: 'solid' },
-                  tooltip: { enabled: false },
-                  plotOptions: { area: { fillTo: 'end' } },
-                  yaxis: {
-                    show: false,
-                    min: priceData.change.graph.drawMin,
-                    max: priceData.change.graph.drawMax,
-                  },
-                }"
-                :series="[
-                  {
-                    data: priceData.change.graph.points,
-                  },
-                ]"
-              />
-            </div>
-          </div>
-          <div v-if="priceData.volume" class="flex flex-row items-center">
-            <div class="text-xs text-gray-500">{{ t(":highest_volume") }}</div>
+        <div v-if="priceData.volume" class="flex flex-row items-center">
+          <div class="text-xs text-gray-500">{{ t(":highest_volume") }}</div>
 
-            <div class="w-6 h-6 flex items-center justify-center shrink-0">
-              <core-currency-img
-                :currency="priceData.volume.highestVolumeCurrency"
-              />
-            </div>
+          <div class="w-6 h-6 flex items-center justify-center shrink-0">
+            <core-currency-img
+              :currency="priceData.volume.highestVolumeCurrency"
+            />
           </div>
         </div>
-      </template>
+      </div>
     </div>
     <div
       v-if="priceData.confidence"
@@ -254,7 +245,7 @@ import PriceHistory from "./PriceHistory.vue";
 import { historySeries } from "./historySeries";
 import { useMarketHistory } from "@/web/background/marketHistory";
 import { useUniqueLines } from "@/web/background/uniquesStore";
-import { confidenceNote } from "./confidenceNote";
+import { confidenceNote, staleNote, withStale } from "./confidenceNote";
 import type { ConfidenceNote } from "./confidenceNote";
 import { tabletSummary } from "./tabletNote";
 import type { TabletSummary } from "./tabletNote";
@@ -279,14 +270,11 @@ import type { ItemPairs, QuoteCurrency } from "@/web/background/market/types";
 import ItemQuickPrice from "@/web/ui/ItemQuickPrice.vue";
 import VueApexcharts from "vue3-apexcharts";
 import { ItemCategory, ParsedItem } from "@/parser";
-import { artificialSlowdown } from "../trade/artificial-slowdown";
 import { ItemFilters } from "../filters/interfaces";
 import { AppConfig } from "@/web/Config";
 import { PriceCheckWidget } from "@/web/overlay/interfaces";
 import UiItemImg from "@/web/ui/UiItemImg.vue";
 import CoreCurrencyImg from "@/web/ui/CoreCurrencyImg.vue";
-
-const slowdown = artificialSlowdown(800);
 
 export default defineComponent({
   components: {
@@ -309,7 +297,12 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useI18nNs("trade_result");
-    const { findPriceByQuery, autoCurrency, xchgRateCurrency } = usePoeninja();
+    const {
+      findPriceByQuery,
+      autoCurrency,
+      xchgRateCurrency,
+      pricesFetchedAt,
+    } = usePoeninja();
     const market = useMarket();
     const uniqueLines = useUniqueLines();
     const history = useMarketHistory();
@@ -339,8 +332,7 @@ export default defineComponent({
 
     watch(
       () => props.item,
-      (item) => {
-        slowdown.reset(item);
+      () => {
         showHistory.value = false;
         showAllBuilds.value = false;
       },
@@ -405,6 +397,14 @@ export default defineComponent({
         };
       }
 
+      if (exchangeValue?.source === "ggg" && exchangeValue.thin) {
+        data.confidence = {
+          level: "low",
+          dim: true,
+          text: `Thin exchange: ${exchangeValue.traded} traded in ${market.hours.value.length || 6} h, an unreliable price`,
+        };
+      }
+
       if (detailsId.ns === "UNIQUE" && detailsId.variant) {
         const line = uniqueLines.lineFor(detailsId.name, detailsId.variant);
         if (line) data.confidence = confidenceNote(line.listingCount);
@@ -449,6 +449,21 @@ export default defineComponent({
           normal ? formatPrice(autoCurrency(normal.primaryValue)) : undefined,
         );
       }
+
+      // A saved price past STALE_HOURS: dimmed, with its age (D4).
+      const fetchedAt =
+        headline.source === "ggg"
+          ? market.asOfHour.value !== undefined
+            ? (market.asOfHour.value + 3600) * 1000
+            : undefined
+          : pricesFetchedAt.value;
+      data.confidence = withStale(
+        data.confidence,
+        staleNote(
+          headline.source,
+          fetchedAt === undefined ? undefined : Date.now() - fetchedAt,
+        ),
+      );
 
       if (!entry) return data;
 
@@ -542,7 +557,6 @@ export default defineComponent({
       isValuableBasetype: computed(() => {
         return isValuableBasetype(props.item);
       }),
-      slowdown,
       volumeSetting,
       TABLET_LEVEL_CLASS,
       rollSummary,
