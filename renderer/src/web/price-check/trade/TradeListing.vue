@@ -151,14 +151,19 @@ import { getTradeEndpoint } from "./common";
 import { AppConfig } from "@/web/Config";
 import { PriceCheckWidget } from "@/web/overlay/interfaces";
 import { ItemFilters, StatFilter } from "../filters/interfaces";
-import { ItemCategory, ParsedItem } from "@/parser";
+import { ItemCategory, ItemRarity, ParsedItem } from "@/parser";
 import { artificialSlowdown } from "./artificial-slowdown";
 import ItemQuickPrice from "@/web/ui/ItemQuickPrice.vue";
 import OnlineFilter from "./OnlineFilter.vue";
 import TradeLinks from "./TradeLinks.vue";
 import TradeItem from "./TradeItem.vue";
 import { divineValueOfListing, useTradeApi } from "./trade-api";
-import { floorGap, floorGapText } from "./listingFloor";
+import {
+  floorGap,
+  floorGapText,
+  listingFloor,
+  noNinjaText,
+} from "./listingFloor";
 import { displayRounding, usePoeninja } from "@/web/background/Prices";
 import { getDetailsId } from "../trends/getDetailsId";
 import { GEM, GRANTS_REAL_SKILL } from "@/parser/meta";
@@ -207,24 +212,29 @@ export default defineComponent({
     const { error, searchResult, groupedResults, search } = useTradeApi();
 
     const { findPriceByQuery, autoCurrency } = usePoeninja();
-    // Listings far from poe.ninja's price, when the search asks for no more
-    // than poe.ninja's line does (no stat filters on).
+    // Listings far from poe.ninja's price, or the listings' price where
+    // poe.ninja has no line, when the search asks for no more than poe.ninja's
+    // line would (no stat filters on). The no-line note is for uniques only:
+    // rare and magic gear has a base-type id that poe.ninja never prices.
     const floorNote = computed(() => {
       if (!slowdown.isReady.value || !searchResult.value) return undefined;
       if (props.stats.some((stat) => !stat.disabled)) return undefined;
       const id = getDetailsId(props.item);
-      const entry = id ? findPriceByQuery(id) : undefined;
-      if (!entry) return undefined;
-      const gap = floorGap(
-        groupedResults.value.map(divineValueOfListing),
-        entry.primaryValue,
-      );
-      if (!gap) return undefined;
+      if (!id) return undefined;
+      const entry = findPriceByQuery(id);
+      const values = groupedResults.value.map(divineValueOfListing);
       const format = (div: number) => {
         const value = autoCurrency(div);
         const unit = value.currency === "exalted" ? "ex" : value.currency;
         return `${displayRounding(value.min, true)} ${unit}`;
       };
+      if (!entry) {
+        if (props.item.rarity !== ItemRarity.Unique) return undefined;
+        const floor = listingFloor(values);
+        return floor === undefined ? undefined : noNinjaText(format(floor));
+      }
+      const gap = floorGap(values, entry.primaryValue);
+      if (!gap) return undefined;
       return floorGapText(gap, format(gap.floor), format(gap.ninja));
     });
 

@@ -63,3 +63,12 @@ export function floorGapText(
   const times = gap.ratio.toFixed(1);
   return `Listings start at ${floorText}, ${times}× poe.ninja's ${ninjaText}. Your filters may be narrower than poe.ninja's line, or these sellers ask too much.`;
 }
+
+/**
+ * The note when poe.ninja has no line for an item it would normally price
+ * (Murkshaft, a unique quiver with 576 listings, has none): the listings are
+ * then the only price there is.
+ */
+export function noNinjaText(floorText: string): string {
+  return `poe.ninja has no price for this item. Listings start at ${floorText} (the middle of the 5 cheapest).`;
+}

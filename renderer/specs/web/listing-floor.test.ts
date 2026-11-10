@@ -3,6 +3,7 @@ import {
   floorGap,
   floorGapText,
   listingFloor,
+  noNinjaText,
 } from "@/web/price-check/trade/listingFloor";
 
 describe("listingFloor", () => {
@@ -39,5 +40,16 @@ describe("floorGap", () => {
     // Temple Tablet: poe.ninja 0.86 div, listings at 1 div.
     expect(floorGap(Array(20).fill(1), 0.86)).toBeUndefined();
     expect(floorGap(axe, undefined)).toBeUndefined();
+  });
+});
+
+describe("noNinjaText", () => {
+  it("prices from the listings when poe.ninja has no line", () => {
+    // Murkshaft: no poe.ninja line, 576 listings from 2 ex.
+    const floor = listingFloor([2, 2, 3, 3, 3].map((ex) => ex / 622));
+    expect(floor! * 622).toBeCloseTo(3, 6);
+    expect(noNinjaText("3 ex")).toBe(
+      "poe.ninja has no price for this item. Listings start at 3 ex (the middle of the 5 cheapest).",
+    );
   });
 });
