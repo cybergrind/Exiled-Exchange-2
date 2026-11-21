@@ -151,8 +151,42 @@ describe("rateTablet", () => {
     ).toBe("good");
     expect(
       tabletModRating(
-        "Abyss Tablet",
+        "Overseer Tablet",
         "Map is inhabited by # additional Rogue Exile",
+      ),
+    ).toBeUndefined();
+  });
+
+  it("follows the 2026-11-18 Abyss refresh (research/tablets/abyss-2026-11.md)", () => {
+    const abyss = (ref: string) => tabletModRating("Abyss Tablet", ref)?.tier;
+    // The Trove/Cranium farm's pair.
+    expect(
+      abyss("#% increased chance for Desecrated Currency from Abysses in Map"),
+    ).toBe("good");
+    expect(abyss("Abyss Pits in Map are twice as likely to have Rewards")).toBe(
+      "good",
+    );
+    // The Omen of Light farm's priorities, on Abyss only.
+    expect(abyss("Map has #% increased number of Rare Monsters")).toBe("good");
+    expect(abyss("Map is inhabited by # additional Rogue Exile")).toBe(
+      "multiplier",
+    );
+    expect(
+      tabletModRating(
+        "Ritual Tablet",
+        "Map has #% increased number of Rare Monsters",
+      )?.tier,
+    ).toBe("multiplier");
+    // No 0.5.5 source after 2026-10-22: filler.
+    expect(
+      abyss(
+        "Abyssal Monsters have #% increased Effectiveness for each closed Pit, up to 100%",
+      ),
+    ).toBeUndefined();
+    // Reported to work in reverse; never highlighted.
+    expect(
+      abyss(
+        "Abysses in Map have #% increased chance to lead to an Abyssal Depths",
       ),
     ).toBeUndefined();
   });

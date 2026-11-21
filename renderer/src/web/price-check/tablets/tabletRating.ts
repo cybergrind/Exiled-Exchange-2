@@ -161,8 +161,24 @@ export const TABLET_RATINGS: Record<string, Ratings> = {
       "good",
       "Pit rewards",
     ),
-    "Abyssal Monsters have #% increased Effectiveness for each closed Pit, up to 100%":
-      rate("good", "Pit effectiveness", [8, 12]),
+    // 2026-11-18 refresh (research/tablets/abyss-2026-11.md): the Trove/Cranium
+    // farm pairs pit rewards with Desecrated currency; the Omen of Light farm
+    // wants rare monsters and a Rogue Exile next to abyssal modifiers. Pit
+    // effectiveness lost its demand once omens and craniums moved to Depths.
+    "#% increased chance for Desecrated Currency from Abysses in Map": rate(
+      "good",
+      "Desecrated currency",
+      [20, 30],
+    ),
+    "Map has #% increased number of Rare Monsters": rate(
+      "good",
+      "Rare monsters",
+      [25, 35],
+    ),
+    "Map is inhabited by # additional Rogue Exile": rate(
+      "multiplier",
+      "Rogue Exile",
+    ),
   },
   "Irradiated Tablet": {
     ...UNIVERSAL,

@@ -559,10 +559,17 @@ function createGemFilters(
     };
   }
 
-  filters.gemLevel = {
-    value: item.gemLevel!,
-    disabled: item.gemLevel! < 19,
-  };
+  // The exact level, on by default (guide/poe-source.html WP-76). A gem's
+  // price does not always rise with level: on 2026-11-20 level 20 Powered by
+  // Verisium listed at 1 div and level 18 at 5 to 9 div, so a minimum alone
+  // still matches the cheaper copies.
+  if (item.gemLevel !== undefined) {
+    filters.gemLevel = {
+      value: item.gemLevel,
+      max: item.gemLevel,
+      disabled: false,
+    };
+  }
 
   return filters;
 }

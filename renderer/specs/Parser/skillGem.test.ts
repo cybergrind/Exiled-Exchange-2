@@ -10,6 +10,8 @@ import {
 } from "./items";
 import { init } from "@/assets/data";
 import { createFilters } from "@/web/price-check/filters/create-item-filters";
+import { createTradeRequest } from "@/web/price-check/trade/pathofexile-trade";
+import { createTestCreateOptions } from "../helper";
 
 describe("isItemMissingItemClass", () => {
   beforeEach(async () => {
@@ -97,5 +99,48 @@ describe("Create Filter for uncut gems", () => {
 
     expect(result.searchExact).toBeTruthy();
     expect(result.gemLevel).toBeUndefined();
+  });
+});
+
+// guide/poe-source.html WP-76: a gem's price depends on its exact level, and
+// not always upward. On 2026-11-20 a level 18 Powered by Verisium searched
+// with no level filter met eight level 20 copies at 1 div; level 18 copies
+// listed at 5 to 9 div.
+describe("Create Filter for skill gems", () => {
+  beforeEach(async () => {
+    setupTests();
+    await init("en");
+  });
+
+  // Shaped like the MetaSkillGem fixture: tags line, then the level.
+  const gem = (level: number) => `Item Class: Skill Gems
+Rarity: Gem
+Powered by Verisium
+--------
+Attack, Runeforged
+Level: ${level}
+--------
+Sockets: S S
+--------
+Some description.`;
+
+  it.each([1, 18, 20])("searches level %i exactly", (level) => {
+    const item = parseClipboard(gem(level))._unsafeUnwrap();
+    const filters = createFilters(item, createTestCreateOptions());
+    expect(filters.gemLevel).toEqual({
+      value: level,
+      max: level,
+      disabled: false,
+    });
+    expect(
+      createTradeRequest(filters, [], item).query.filters.misc_filters?.filters
+        .gem_level,
+    ).toEqual({ min: level, max: level });
+  });
+
+  it("searches a meta gem's level exactly", () => {
+    const item = parseClipboard(MetaSkillGem.rawText)._unsafeUnwrap();
+    const filters = createFilters(item, createTestCreateOptions());
+    expect(filters.gemLevel).toEqual({ value: 14, max: 14, disabled: false });
   });
 });

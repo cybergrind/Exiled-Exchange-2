@@ -21,6 +21,7 @@
     >
       {{ floorNote }}
     </div>
+    <tablet-mod-probe :filters="filters" :stats="stats" :item="item" />
 
     <div class="layout-column overflow-y-auto overflow-x-hidden">
       <table class="table-stripped w-full">
@@ -169,6 +170,7 @@ import { getDetailsId } from "../trends/getDetailsId";
 import { GEM, GRANTS_REAL_SKILL } from "@/parser/meta";
 import ItemSumPrice from "@/web/ui/ItemSumPrice.vue";
 import ExtractionValue from "./ExtractionValue.vue";
+import TabletModProbe from "../tablets/TabletModProbe.vue";
 
 const slowdown = artificialSlowdown(900);
 
@@ -177,6 +179,7 @@ const SHOW_RESULTS = 20;
 export default defineComponent({
   components: {
     ExtractionValue,
+    TabletModProbe,
     ItemQuickPrice,
     ItemSumPrice,
     OnlineFilter,
