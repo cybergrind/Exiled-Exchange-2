@@ -67,11 +67,15 @@ describe("tablet rating from clipboard text", () => {
       ]),
     )!;
     expect(verdict.level).toBe("money");
-    expect(verdict.text).toBe("Always money: Favour rerolls, Random map mods");
+    // 2026-11-24 market study: omen chance is money, and with rerolls a
+    // priced set (T-8).
+    expect(verdict.text).toBe(
+      "Always money: Favour rerolls, Omen chance, Random map mods · Favour rerolls + Omen chance: ~55 div (asks, 2026-11-24)",
+    );
     expect(verdict.rated.map((m) => [m.short, m.roll])).toEqual([
       ["Favour rerolls", 0.5],
-      ["Random map mods", 1],
       ["Omen chance", (60 - 35) / 35],
+      ["Random map mods", 1],
       ["Cheaper rerolls", 0.5],
     ]);
   });
@@ -99,7 +103,8 @@ describe("tablet rating from clipboard text", () => {
         "Verisium Remnants have +30% chance to add an additional Runic Modifier in Map",
       ]),
     )!;
-    expect(verdict.text).toBe("Good mod: Runic Modifier");
+    // A multiplier since the 2026-11-24 market study.
+    expect(verdict.text).toBe("Multiplier only: Runic Modifier");
     expect(verdict.rated[0].roll).toBe(0.5);
   });
 

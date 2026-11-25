@@ -11,7 +11,12 @@ const TODAY = [
   "Hardcore",
 ];
 // The order the old index-2 rule was written for.
-const LEGACY = ["Standard", "Hardcore", "Forbidden Rites", "HC Forbidden Rites"];
+const LEGACY = [
+  "Standard",
+  "Hardcore",
+  "Forbidden Rites",
+  "HC Forbidden Rites",
+];
 
 describe("pickDefaultLeague", () => {
   it("picks the current challenge league in today's order", () => {

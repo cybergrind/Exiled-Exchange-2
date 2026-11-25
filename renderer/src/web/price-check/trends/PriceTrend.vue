@@ -182,11 +182,19 @@
         data-tablet-headline
         class="text-base font-semibold"
         :class="TABLET_LEVEL_CLASS[priceData.tablet.level]"
+        :title="priceData.tablet.comboNote"
       >
         {{ priceData.tablet.headline }}
       </div>
       <div data-tablet-note class="text-sm text-gray-500">
         {{ priceData.tablet.detail }}
+      </div>
+      <div
+        v-if="priceData.tablet.floor"
+        data-tablet-floor
+        class="text-sm text-gray-500"
+      >
+        {{ priceData.tablet.floor }}
       </div>
     </div>
     <pair-rates

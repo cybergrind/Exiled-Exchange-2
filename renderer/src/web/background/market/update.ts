@@ -22,11 +22,7 @@ import type {
   SnapshotRelay,
   SnapshotUniques,
 } from "./snapshot.ts";
-import {
-  mergeUniqueLines,
-  STASH_TYPES,
-  uniqueOverviewUrl,
-} from "./uniques.ts";
+import { mergeUniqueLines, STASH_TYPES, uniqueOverviewUrl } from "./uniques.ts";
 import type { StashType } from "./uniques.ts";
 import type { CxHour } from "./types.ts";
 

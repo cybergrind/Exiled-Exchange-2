@@ -99,7 +99,10 @@ describe("variantNote", () => {
     const mods = ["Ruby", "Gold", "Jade", "Topaz", "Bismuth", "Amethyst"].map(
       (gem) => mod(LEGACY, `Legacy of ${gem}`, { option: true }),
     );
-    const note = variantNote({ name: "Mageblood", base: "Utility Belt" }, mods)!;
+    const note = variantNote(
+      { name: "Mageblood", base: "Utility Belt" },
+      mods,
+    )!;
     expect(note.mods).toHaveLength(6);
     expect(note.detail).toBe(
       "This one: Legacy of Ruby · Legacy of Gold · Legacy of Jade · Legacy of Topaz, and 2 more. Search prices it.",

@@ -12,9 +12,7 @@
           {{ plan.length }} searches, fresh listings (1 week), online sellers
         </template>
         <template v-else-if="values.floorAll !== undefined">
-          With all rated mods: {{ format(values.floorAll) }} ({{
-            totals[0]
-          }}
+          With all rated mods: {{ format(values.floorAll) }} ({{ totals[0] }}
           listed)
         </template>
         <template v-else>

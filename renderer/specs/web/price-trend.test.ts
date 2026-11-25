@@ -28,6 +28,11 @@ const state = {
     value: number;
     currency: "exalted";
   },
+  detailsId: { ns: "ITEM", name: "Arcanist's Etcher" } as {
+    ns: string;
+    name: string;
+    variant?: string;
+  },
 };
 
 vi.mock("@/web/background/Prices", () => ({
@@ -77,7 +82,7 @@ vi.mock("@/web/i18n", () => ({
 }));
 vi.mock("@/web/price-check/trends/getDetailsId", () => ({
   isValuableBasetype: () => false,
-  getDetailsId: () => ({ ns: "ITEM", name: "Arcanist's Etcher" }),
+  getDetailsId: () => state.detailsId,
 }));
 vi.mock("@/web/Config", () => ({
   AppConfig: () => ({ currencyVolume: "none" }),
@@ -104,12 +109,12 @@ const ITEM = {
   statsByType: [],
 } as unknown as ParsedItem;
 
-async function render() {
+async function render(item: ParsedItem = ITEM) {
   const { default: PriceTrend } = await import(
     "@/web/price-check/trends/PriceTrend.vue"
   );
   return mount(PriceTrend, {
-    props: { item: ITEM, filters: {} as ItemFilters },
+    props: { item, filters: {} as ItemFilters },
     global: {
       stubs: {
         ItemQuickPrice,
@@ -130,6 +135,7 @@ describe("PriceTrend", () => {
     state.fetchedAt.value = Date.now();
     state.asOfHour.value = undefined;
     state.exchange = null;
+    state.detailsId = { ns: "ITEM", name: "Arcanist's Etcher" };
   });
 
   it("shows the in-memory price on the first render", async () => {
@@ -169,6 +175,71 @@ describe("PriceTrend", () => {
     expect(wrapper.find("[data-headline]").text()).toBe("4.908 exalted");
     expect(wrapper.find("[data-confidence]").text()).toBe(
       "Currency Exchange rate from 8 h ago",
+    );
+    vi.useRealTimers();
+  });
+
+  it("shows a measured Abyss pair's price and the dated floor", async () => {
+    state.detailsId = { ns: "ITEM", name: "Abyss Tablet", variant: "Rare" };
+    const stat = (ref: string, value: number) => ({
+      stat: { ref },
+      sources: [{ contributes: { value } }],
+    });
+    const tablet = {
+      ...ITEM,
+      info: { ...ITEM.info, refName: "Abyss Tablet" },
+      rarity: "Rare",
+      category: "TowerAugment",
+      statsByType: [
+        stat(
+          "Abysses in Map have #% increased chance to lead to an Abyssal Depths",
+          15,
+        ),
+        stat(
+          "#% increased chance for Desecrated Currency from Abysses in Map",
+          29,
+        ),
+      ],
+    } as unknown as ParsedItem;
+    const wrapper = await render(tablet);
+    const headline = wrapper.find("[data-tablet-headline]");
+    expect(headline.text()).toBe(
+      "Always money: Abyssal Depths · Depths + Desecrated: ~3 div (asks, 2026-11-24)",
+    );
+    expect(headline.attributes("title")).toContain("698 listed");
+    expect(wrapper.find("[data-tablet-floor]").text()).toContain(
+      "poe.ninja had 0.73 (1.6× higher)",
+    );
+    vi.useRealTimers();
+  });
+
+  it("shows another base's measured set and its dated floor", async () => {
+    // T-8: the 2026-11-24 Irradiated study.
+    state.detailsId = {
+      ns: "ITEM",
+      name: "Irradiated Tablet",
+      variant: "Rare",
+    };
+    const tablet = {
+      ...ITEM,
+      info: { ...ITEM.info, refName: "Irradiated Tablet" },
+      rarity: "Rare",
+      category: "TowerAugment",
+      statsByType: [
+        {
+          stat: { ref: "Map has # additional random Modifier" },
+          sources: [{ contributes: { value: 1 } }],
+        },
+      ],
+    } as unknown as ParsedItem;
+    const wrapper = await render(tablet);
+    const headline = wrapper.find("[data-tablet-headline]");
+    expect(headline.text()).toBe(
+      "Always money: Random map mods · Random map mods: ~2.3 div (asks, 2026-11-24)",
+    );
+    expect(headline.attributes("title")).toContain("8,210 listed");
+    expect(wrapper.find("[data-tablet-floor]").text()).toBe(
+      "Cheapest asks in ex/div/chaos, 10 uses, 2026-11-24: 0.03 div; poe.ninja had 0.092 on 2026-11-22 (3.1× higher)",
     );
     vi.useRealTimers();
   });

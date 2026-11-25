@@ -29,9 +29,9 @@ describe("trendFromSparkline", () => {
       trendFromSparkline({ totalChange: -0.29, data: [2, 8.8, -0.29] })!
         .forecast,
     ).toBe("const");
-    expect(
-      trendFromSparkline({ totalChange: 2, data: [1, 2] })!.forecast,
-    ).toBe("const");
+    expect(trendFromSparkline({ totalChange: 2, data: [1, 2] })!.forecast).toBe(
+      "const",
+    );
   });
 
   it("draws through gaps in the samples", () => {

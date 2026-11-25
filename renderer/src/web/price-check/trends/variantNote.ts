@@ -53,8 +53,7 @@ export function variantNote(
     .map((mod) => mod.text.replace(/\s*\n\s*/g, " "));
   if (!named.length) return undefined;
   const shown = named.slice(0, NAMED).join(" · ");
-  const more =
-    named.length > NAMED ? `, and ${named.length - NAMED} more` : "";
+  const more = named.length > NAMED ? `, and ${named.length - NAMED} more` : "";
   return {
     headline: `poe.ninja prices every version of ${unique.name} together`,
     detail: `This one: ${shown}${more}. Search prices it.`,

@@ -63,9 +63,7 @@ describe("getDetailsId for uniques", () => {
   });
 
   it("keeps the base as variant for other uniques", () => {
-    const line = linesOf("UniqueArmours").find(
-      (l) => l.name === "Temporalis",
-    )!;
+    const line = linesOf("UniqueArmours").find((l) => l.name === "Temporalis")!;
     expect(
       getDetailsId(parsedUnique(line, ItemCategory.BodyArmour))!.variant,
     ).toBe(line.variant);
